@@ -1,9 +1,6 @@
 // Nome do utilizador a analisar
 var targetUserName = $("#query").val(); //texto (val) que foi escrito na caixa de pesquisa
 
-// Array associativo com nome do utilizador como chave e valor de amizade como valor
-var amigos = {};
-
 //chave necessária para utilização da API
 var apikey = "Hr4r14bPbRdZq220clN8zGAvKvrO0TAz";
 
@@ -78,55 +75,8 @@ function processUserInfo(response) { //chamada na getUserInfo() - processa dados
     $("#dados").append(img);
     img.attr("src", image);
 
-    //ex7 - invocar a getUserFriends antes de terminar
-    getUserFriends();
 }
 
-
-function getUserFriends() { //ex8 - invoca o endpoint necessário para obter os amigos do utilizador
-
-    $.ajax({
-        url: users_url + targetUserName + "/followers",
-        dataType: "jsonp",
-        data: {
-            api_key: apikey,
-            per_page: 20
-            //sort: "views"
-        },
-        timeout: 1500,
-        success: processUserFollowers, //resposta vai ser tratada pela processUserFollowers
-        error: logError("a procurar seguidores") //em caso de erro - tratado pela logError
-    });
-
-    log("Obter amigos de " + targetUserName + " ...");
-
-    //implementar: pedir followers e followees
-
-}
-
-function processUserFollowers(response) { //trata a resposta da getUserFriends()
-
-    log("Processar seguidores de " + targetUserName + " ...");
-
-    for (var s in response.followers) {
-        amigos[s] = response.followers[s].display_name; //incializa o array amigos com os followers
-        console.log("follower: " + amigos[s]);
-
-        //acrescenta à div dados informações básicas sobre o utilizador
-        $("#dados").append("<br>Seguidor " + s + ": " + amigos[s]);
-    }
-
-
-    //implementar: processadores os seguidores e actualizar o array associativo amigos
-}
-
-
-function processUserFollowees(response) {
-
-    log("Processar seguidos por utilizador " + targetUserName + " ...");
-
-    //para o caso da rede distinguir entre seguidos e seguidores
-}
 
 function log(message) {
     $("#status").append(message + "<br>");
@@ -154,20 +104,4 @@ function searching() {
 function searchAgain() { //chamada quando utilizador procurado não existe
     $("#procura").show();
     $("#load").hide();
-}
-
-function updateTable() {
-
-    $("#load").hide();
-    $("#tabela").html("<table></table>");
-    $("#tabela>table").append("<tr><th>Amigo</th><th>Compatibilidade</th></tr>");
-
-    //implementar: ordenar amigos por compatibilidade e mostrar apenas primeiros 10
-
-    for (nome in amigos)
-        $("#tabela>table").append("<tr><td>" + nome + "</td><td>" + amigos[nome] + "</td></tr>");
-
-    $("#tabela>table>tbody>tr>*").css("border", "1px solid");
-    $("#tabela>table>tbody>tr>td:first-child").width("150px");
-    $("#tabela>table>tbody>tr>td:last-child").width("60px");
 }
