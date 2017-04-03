@@ -1,5 +1,7 @@
 // Nome do utilizador a analisar
-var targetUserName = $("#query").val(); //texto (val) que foi escrito na caixa de pesquisa
+var targetUserName = $("#name").val(); //texto (val) que foi escrito na caixa de pesquisa
+var targetUserName11 = $("#location").val(); 
+var targetUserName12 = $("#fields").val(); 
 
 // Array associativo com nome do utilizador como chave e valor de amizade como valor
 var amigos = {};
