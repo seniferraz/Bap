@@ -1,11 +1,3 @@
-// Nome do utilizador a analisar
-var targetUserName = $("#name").val(); //texto (val) que foi escrito na caixa de pesquisa
-var Location = $("#location").val(); 
-var fields = $("#fields").val(); 
- 
-// Array associativo com nome do utilizador como chave e valor de amizade como valor
-var amigos = {};
-
 //chave necessária para utilização da API
 var apikey = "Hr4r14bPbRdZq220clN8zGAvKvrO0TAz";
 
@@ -13,16 +5,32 @@ var apikey = "Hr4r14bPbRdZq220clN8zGAvKvrO0TAz";
 var users_url = "https://www.behance.net/v2/users/";
 
 
+// Nome do utilizador a analisar
+var targetUserName = $("#name").val(); //texto (val) que foi escrito na caixa de pesquisa
+var location = $("#location").val(); 
+var fields = $("#fields").val(); 
+ 
+// Array associativo com nome do utilizador como chave e valor de amizade como valor
+var amigos = {};
+
+
+
 $(function () {
-    $("#load").hide();
+    //$("#load").hide();
     $("#search").click(search);
 });
 
 
 function search() { //quando se carrega em 'Procurar'
     targetUserName = $("#query").val();
+    location = $("#location").val();
+    fields = $("#fields").val();
+    
+    console.log(Location + "LOCATION" );
+    console.log(fields + "fieldsaaa" );
+    
+    
     searching();
-
     getUserInfo();
 }
 
@@ -77,7 +85,9 @@ function processUserInfo(response) { //chamada na getUserInfo() - processa dados
     var img = $("<img></img>");
     $("#dados").append(img);
     img.attr("src", image);
-
+    
+    updateTable();
+    //getUserFriends();
 }
 
 
