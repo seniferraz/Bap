@@ -9,6 +9,7 @@ var apikey = "Hr4r14bPbRdZq220clN8zGAvKvrO0TAz";
 //URL base de pedidos / pesquisas relacionadas com os utilizadores
 var users_url = "https://www.behance.net/v2/users/";
 
+//https://api.behance.net/v2/users?q=ferraz&api_key=pGGIf6rZKW1YcIXnIrDHk7fTbvjwXsht - pelo que se escreve
 
 $(function () {
 
