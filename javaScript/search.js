@@ -5,33 +5,31 @@ var apikey = "Hr4r14bPbRdZq220clN8zGAvKvrO0TAz";
 var users_url = "https://www.behance.net/v2/users/";
 
 
-// Nome do utilizador a analisar
-var targetUserName = $("#name").val(); //texto (val) que foi escrito na caixa de pesquisa
-var location = $("#location").val(); 
-var fields = $("#fields").val(); 
- 
+//texto (val) que foi escrito na caixa de pesquisa
+var targetUserName = $("#name").val();
+var location = $("#location").val();
+var fields = $("#fields").val();
+
 // Array associativo com nome do utilizador como chave e valor de amizade como valor
 var amigos = {};
+
 
 
 //https://api.behance.net/v2/users?q=ferraz&api_key=pGGIf6rZKW1YcIXnIrDHk7fTbvjwXsht - pelo que se escreve
 
 $(function () {
-    //$("#load").hide();
+    $("#load").hide();
     $("#search").click(search);
 });
 
 
 function search() { //quando se carrega em 'Procurar'
-    targetUserName = $("#query").val();
-    location = $("#location").val();
+    targetUserName = $("#name").val();
+    Location = $("#location").val();
     fields = $("#fields").val();
-    
-    console.log(Location + "LOCATION" );
-    console.log(fields + "fieldsaaa" );
-    
-    
+
     searching();
+
     getUserInfo();
 }
 
@@ -49,10 +47,7 @@ function getUserInfo() { //chamada no search()
         success: processUserInfo, //resposta vai ser tratada pela processUserInfo
         error: logError("a procurar utilizador") //em caso de erro - tratado pela logError
     });
-
     log("Obter informação de " + targetUserName + " ...");
-
-
 }
 
 function processUserInfo(response) { //chamada na getUserInfo() - processa dados do utilizador (response) e mostra-os
@@ -79,16 +74,13 @@ function processUserInfo(response) { //chamada na getUserInfo() - processa dados
     console.log("imagem: " + image);
 
     //acrescenta à div dados informações básicas sobre o utilizador
-    $("#dados").append("Nome: " + display_name);
-    $("#dados").append("<br>Localização: " + city + ", " + pais);
-    $("#dados").append("<br>Campos de criação: " + fields + "<br>");
-
     var img = $("<img></img>");
     $("#dados").append(img);
     img.attr("src", image);
-    
-    updateTable();
-    //getUserFriends();
+
+    $("#dados").append("<br>Nome: " + display_name);
+    $("#dados").append("<br>Localização: " + city + ", " + pais);
+    $("#dados").append("<br>Campos de criação: " + fields + "<br>");
 }
 
 
