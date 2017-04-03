@@ -2,7 +2,7 @@
 var targetUserName = $("#name").val(); //texto (val) que foi escrito na caixa de pesquisa
 var targetUserName11 = $("#location").val(); 
 var targetUserName12 = $("#fields").val(); 
-
+ 
 // Array associativo com nome do utilizador como chave e valor de amizade como valor
 var amigos = {};
 
@@ -14,10 +14,8 @@ var users_url = "https://www.behance.net/v2/users/";
 
 
 $(function () {
-
     $("#load").hide();
     $("#search").click(search);
-
 });
 
 
