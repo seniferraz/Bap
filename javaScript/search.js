@@ -14,6 +14,7 @@ var fields = $("#fields").val();
 var amigos = {};
 
 
+//https://api.behance.net/v2/users?q=ferraz&api_key=pGGIf6rZKW1YcIXnIrDHk7fTbvjwXsht - pelo que se escreve
 
 $(function () {
     //$("#load").hide();
