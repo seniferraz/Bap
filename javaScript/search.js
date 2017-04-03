@@ -1,7 +1,10 @@
 // Nome do utilizador a analisar
 var targetUserName = $("#name").val(); //texto (val) que foi escrito na caixa de pesquisa
-var targetUserName11 = $("#location").val(); 
-var targetUserName12 = $("#fields").val(); 
+var Location = $("#location").val(); 
+var fields = $("#fields").val(); 
+ 
+// Array associativo com nome do utilizador como chave e valor de amizade como valor
+var amigos = {};
 
 //chave necessária para utilização da API
 var apikey = "Hr4r14bPbRdZq220clN8zGAvKvrO0TAz";
@@ -12,10 +15,8 @@ var users_url = "https://www.behance.net/v2/users/";
 //https://api.behance.net/v2/users?q=ferraz&api_key=pGGIf6rZKW1YcIXnIrDHk7fTbvjwXsht - pelo que se escreve
 
 $(function () {
-
     $("#load").hide();
     $("#search").click(search);
-
 });
 
 
