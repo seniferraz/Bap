@@ -1,5 +1,7 @@
 // Nome do utilizador a analisar
-var targetUserName = $("#query").val(); //texto (val) que foi escrito na caixa de pesquisa
+var targetUserName = $("#name").val(); //texto (val) que foi escrito na caixa de pesquisa
+var targetUserName11 = $("#location").val(); 
+var targetUserName12 = $("#fields").val(); 
 
 //chave necessária para utilização da API
 var apikey = "Hr4r14bPbRdZq220clN8zGAvKvrO0TAz";
