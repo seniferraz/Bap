@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // Nome do utilizador a analisar
 var targetUserName = $("#query").val(); //texto (val) que foi escrito na caixa de pesquisa
 
@@ -172,5 +171,3 @@ function updateTable() {
     $("#tabela>table>tbody>tr>td:first-child").width("150px");
     $("#tabela>table>tbody>tr>td:last-child").width("60px");
 }
-=======
->>>>>>> origin/master
