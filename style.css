@@ -1,7 +1,11 @@
 body {
     font-family: sans-serif;
+    margin: 3vw;
 }
 
+#conteudo {
+    float: right;
+}
 
 .userImage {
     border-radius: 50%;

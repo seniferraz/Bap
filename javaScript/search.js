@@ -29,7 +29,7 @@ $(function () {
     
     $('input').keypress(function (ev) {
         if (ev.keyCode === 13) {
-            search();    //ou quando se faz enter num input
+            search();           //ou quando se faz enter num input
         }
     });
 });
@@ -71,8 +71,9 @@ function getUserInfo() {
 
 function processUserInfo(response) {
 
-    //implementar: processar dados do utilizador (response) e mostrá-los
+    //processa dados do utilizador (response) e mostra-os
     for (var i = 0; i < response.users.length; i++) {
+        
         var userName = response.users[i].display_name;
         var fields = response.users[i].fields;
         var city = response.users[i].city;
@@ -125,11 +126,8 @@ function processUserInfo(response) {
             $("#user" + i).css("border-color", userColor);
 
         }
-
     }
-
 }
-
 
 
 function log(message) {
@@ -145,8 +143,7 @@ function logError(actividade) {
 }
 
 function searching() {
-    $("#procura").hide();
-    $("#load").show();
+    //$("#procura").hide();
     $("#status").empty();
 
     log("Procurando informação sobre " + query);
