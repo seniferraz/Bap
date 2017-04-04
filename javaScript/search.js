@@ -1,100 +1,138 @@
-//chave necessária para utilização da API
-var apikey = "Hr4r14bPbRdZq220clN8zGAvKvrO0TAz";
-
-//URL base de pedidos / pesquisas relacionadas com os utilizadores
-var users_url = "https://www.behance.net/v2/users/";
+//  —— inicializações   —————————————————————————————
 
 
-//texto (val) que foi escrito na caixa de pesquisa
-var targetUserName = $("#name").val();
-var location = $("#location").val();
-var fields = $("#fields").val();
+//var api_key = 'pGGIf6rZKW1YcIXnIrDHk7fTbvjwXsht';
+var api_key = 'Hr4r14bPbRdZq220clN8zGAvKvrO0TAz';
 
-// Array associativo com nome do utilizador como chave e valor de amizade como valor
-var amigos = {};
+//var URL = 'https://api.behance.net/v2/users/';
+var URL = 'https://api.behance.net/v2/users';
+
+// Nome do utilizador, localização e campos de criação a analisar
+var query;
+var locations;
+var fields;
 
 
+var colors = {
+    field: ['Animation', 'Graphic Design', 'Branding', 'Photography', 'Architecture', "Interaction Design", 'Drawing', 'Illustration', 'Typography', 'Packaging', 'Digital Art', 'Film', 'Design', 'UI/UX' ],
+    color: ['#c405cc','#0014ff','#ff7600','#00ff31','#ffff00','#00f5ff' ,'#6d6d6d', '#af4d4d','#000000','#774501','#e50be5', '#0b7b65', '#9d00ff', '#0076ff' ]
+};
 
-//https://api.behance.net/v2/users?q=ferraz&api_key=pGGIf6rZKW1YcIXnIrDHk7fTbvjwXsht - pelo que se escreve
+
+//  —— código   —————————————————————————————
+
 
 $(function () {
     $("#load").hide();
     $("#search").click(search);
 });
 
+function search() {
+    console.log("carregou");
 
-function search() { //quando se carrega em 'Procurar'
-    targetUserName = $("#name").val();
-    Location = $("#location").val();
+    query = $("#name").val();
+    locations = $("#location").val();
     fields = $("#fields").val();
+
+    console.log("QUERY == " + query);
+    console.log("location == " + locations);
+    console.log("fields == " + fields);
 
     searching();
 
     getUserInfo();
 }
 
-function getUserInfo() { //chamada no search()
+function getUserInfo() {
 
-    $("#load").hide();
-    //ex5 - pedido AJAX - invoca um endpoint que retorna informação básica do utilizador pesquisado à API
+    log("Obter informação de " + query + " ...");
+
     $.ajax({
-        url: users_url + targetUserName,
+        url: URL + "?q=" + query,
         dataType: "jsonp",
         data: {
-            api_key: apikey
+            api_key: api_key,
+            city: locations,
+            field: fields
         },
         timeout: 1500,
-        success: processUserInfo, //resposta vai ser tratada pela processUserInfo
-        error: logError("a procurar utilizador") //em caso de erro - tratado pela logError
+        success: processUserInfo,
+        error: logError("a procurar utilizador")
     });
-    log("Obter informação de " + targetUserName + " ...");
 }
 
-function processUserInfo(response) { //chamada na getUserInfo() - processa dados do utilizador (response) e mostra-os
 
-    //ex6 - resposta ao pedido AJAX
-    var display_name = response.user.display_name;
-    var city = response.user.city;
-    var pais = response.user.country;
+function processUserInfo(response) {
 
-    var fields = response.user.fields;
-    console.log(fields);
+    //implementar: processar dados do utilizador (response) e mostrá-los
+    for (var i = 0; i < response.users.length; i++) {
+        var userName = response.users[i].display_name;
+        var fields = response.users[i].fields;
+        var city = response.users[i].city;
+        var userURL = response.users[i].url;
 
-    var image = "";
-    for (var s in response.user.images) {
-        image = response.user.images[s]; //devolve última foto do array de fotos de perfil (iguais, tamanhos diferentes)
-        //break; //devolve a primeira (mais pequena)
+
+
+        //get most popular field of each user
+        var popularField = String(response.users[i].fields);
+        popularField = popularField.split(",")[0];
+        console.log("splited::" + popularField);
+
+
+        //atribuite color according to field
+        for (var k = 0; k < colors.field.length; k++) {
+            if (popularField === String(colors.field[k])) {
+                var userColor = colors.color[k];
+                console.log("USERCOLOR ==  " + userColor);
+            }
+
+        }
+
+
+        var image = "";
+        for (var s in response.users[i].images) {
+            image = response.users[i].images[s];
+            //break;
+        }
+
+        //apenas mostra as pessoas com campos de criação e com foto de perfil    
+
+        if (popularField && String(image) !== "https://a5.behance.net/cde687cc54a23e8cd2bf9d2c2fbd8894e2d15cb0/img/profile/no-image-138.jpg?cb=264615658") {
+
+            
+            $("#dados").append("<hr>");
+            $("#dados").append("<p>" + userName + "</p>");
+            
+            $("#dados").append("<a> href="  + userURL + "</a>");
+            
+            $("#dados").append('<img class = "userImage" id="user' + i + '" src=' + image + ' height="90" width="90" alt="Profile Image">');
+            $("#dados").append("<p> City: " + city + "</p>");
+            $("#dados").append("<p> Fields: " + fields + "</p>");
+            $("#dados").append("<p> FIELD MAIS POPULAR: " + popularField + "</p>");
+            $("#dados").append("<p> COR DO FIELD: " + userColor + "</p>");
+
+            var cor = "#0505cc";
+            //$("#user"+i).css("border","4px solid #0505cc");
+            $("#user" + i).css("border-weight", "4px");
+
+            $("#user" + i).css("border-color", userColor);
+
+        }
+
     }
 
-    console.log("nome: " + display_name);
-    console.log("cidade: " + city);
-    console.log("país: " + pais);
-    console.log("campos: " + fields);
-
-    console.log("imagem: " + image);
-
-    //acrescenta à div dados informações básicas sobre o utilizador
-    var img = $("<img></img>");
-    $("#dados").append(img);
-    img.attr("src", image);
-
-    $("#dados").append("<br>Nome: " + display_name);
-    $("#dados").append("<br>Localização: " + city + ", " + pais);
-    $("#dados").append("<br>Campos de criação: " + fields + "<br>");
 }
+
 
 
 function log(message) {
     $("#status").append(message + "<br>");
 }
 
-function logError(actividade) { //em caso de erros
+function logError(actividade) {
     return function (data) {
-        //erro no pedido AJAX
-        $("#status").append("Erro " + actividade + ": " + data.statusText + "<br/>");
-
-        //ex6 - no caso do nome do utilizador não existir
-        log("Utilizador não existe");
+        $("#status").append("Erro ao " + actividade + ": " + data.statusText + "<br/>");
+        $("#status").append("Utilizador não existe <br/>");
         searchAgain();
     }
 }
@@ -104,10 +142,10 @@ function searching() {
     $("#load").show();
     $("#status").empty();
 
-    log("Procurando informação sobre " + targetUserName);
+    log("Procurando informação sobre " + query);
 }
 
-function searchAgain() { //chamada quando utilizador procurado não existe
+function searchAgain() {
     $("#procura").show();
     $("#load").hide();
 }
