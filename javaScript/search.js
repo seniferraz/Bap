@@ -14,8 +14,8 @@ var fields;
 
 
 var colors = {
-    field: ['Animation', 'Graphic Design', 'Branding', 'Photography', 'Architecture', "Interaction Design", 'Drawing', 'Illustration', 'Typography', 'Packaging', 'Digital Art', 'Film', 'Design', 'UI/UX' ],
-    color: ['#c405cc','#0014ff','#ff7600','#00ff31','#ffff00','#00f5ff' ,'#6d6d6d', '#af4d4d','#000000','#774501','#e50be5', '#0b7b65', '#9d00ff', '#0076ff' ]
+    field: ['Animation', 'Graphic Design', 'Branding', 'Photography', 'Architecture', "Interaction Design", 'Drawing', 'Illustration', 'Typography', 'Packaging', 'Digital Art', 'Film', 'Design', 'UI/UX'],
+    color: ['#c405cc', '#0014ff', '#ff7600', '#00ff31', '#ffff00', '#00f5ff', '#6d6d6d', '#af4d4d', '#000000', '#774501', '#e50be5', '#0b7b65', '#9d00ff', '#0076ff']
 };
 
 
@@ -24,7 +24,14 @@ var colors = {
 
 $(function () {
     $("#load").hide();
-    $("#search").click(search);
+    
+    $("#search").click(search); //search quando se carrega no botão
+    
+    $('input').keypress(function (ev) {
+        if (ev.keyCode === 13) {
+            search();    //ou quando se faz enter num input
+        }
+    });
 });
 
 function search() {
@@ -99,12 +106,12 @@ function processUserInfo(response) {
 
         if (popularField && String(image) !== "https://a5.behance.net/cde687cc54a23e8cd2bf9d2c2fbd8894e2d15cb0/img/profile/no-image-138.jpg?cb=264615658") {
 
-            
+
             $("#dados").append("<hr>");
             $("#dados").append("<p>" + userName + "</p>");
-            
-            $("#dados").append("<a> href="  + userURL + "</a>");
-            
+
+            $("#dados").append("<a> href=" + userURL + "</a>");
+
             $("#dados").append('<img class = "userImage" id="user' + i + '" src=' + image + ' height="90" width="90" alt="Profile Image">');
             $("#dados").append("<p> City: " + city + "</p>");
             $("#dados").append("<p> Fields: " + fields + "</p>");
