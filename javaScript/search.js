@@ -1,6 +1,9 @@
 //  —— inicializações   —————————————————————————————
 
 
+//Google Maps api key
+var googleMapsApiKey = 'AIzaSyA2VPJOkLkP7xVjMsgQY6n7BA4yRqu3tQg';
+
 //var api_key = 'pGGIf6rZKW1YcIXnIrDHk7fTbvjwXsht';
 var api_key = 'Hr4r14bPbRdZq220clN8zGAvKvrO0TAz';
 
@@ -24,12 +27,12 @@ var colors = {
 
 $(function () {
     $("#load").hide();
-    
+
     $("#search").click(search); //search quando se carrega no botão
-    
+
     $('input').keypress(function (ev) {
         if (ev.keyCode === 13) {
-            search();           //ou quando se faz enter num input
+            search(); //ou quando se faz enter num input
         }
     });
 });
@@ -73,7 +76,7 @@ function processUserInfo(response) {
 
     //processa dados do utilizador (response) e mostra-os
     for (var i = 0; i < response.users.length; i++) {
-        
+
         var userName = response.users[i].display_name;
         var fields = response.users[i].fields;
         var city = response.users[i].city;
@@ -152,4 +155,21 @@ function searching() {
 function searchAgain() {
     $("#procura").show();
     $("#load").hide();
+}
+
+
+
+
+// 
+
+var map;
+
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {
+            lat: -34.397,
+            lng: 150.644
+        },
+        zoom: 8
+    });
 }
