@@ -7,7 +7,7 @@ var api_key = 'Hr4r14bPbRdZq220clN8zGAvKvrO0TAz';
 //var URL = 'https://api.behance.net/v2/users/';
 var URL = 'https://api.behance.net/v2/users';
 
-// Nome do utilizador, localização e campos de criação a analisar
+// Nome do utilizador (username, nome ou apelido), localização e campos de criação a analisar
 var query;
 var locations;
 var fields;
