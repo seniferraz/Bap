@@ -18,7 +18,7 @@ var fields;
 
 //foto perfil user
 var image = "";
-
+var testesdeimagem = [];
 
 var colors = {
     field: ['Animation', 'Graphic Design', 'Branding', 'Photography', 'Architecture', "Interaction Design", 'Drawing', 'Illustration', 'Typography', 'Packaging', 'Digital Art', 'Film', 'Design', 'UI/UX'],
@@ -108,11 +108,12 @@ function processUserInfo(response) {
             //break;
         }
 
+        testesdeimagem[i] = image;
         //apenas mostra as pessoas com campos de criação e com foto de perfil    
 
         if (popularField && String(image) !== "https://a5.behance.net/8dd1f2dd8a3d018de5e63f073e413867597ca251/img/profile/no-image-138.jpg?cb=264615658") {
 
-            
+
             $("#dados").append("<hr>");
             $("#dados").append("<p>" + userName + "</p>");
             $("#dados").append("<p><a href=" + userURL + ">Link Behance</a></p>");
@@ -173,7 +174,7 @@ function searchAgain() {
 
 
 
-var mark = ["marker1", "marker2"];
+var mark = ["marker1", "marker2", "marker3", "marker4", "marker5"];
 
 
 var map;
@@ -351,28 +352,40 @@ function initMap() {
     });
 
     markers();
+
+
+    
+    //centrar no resize
+    google.maps.event.addDomListener(window, 'load', initMap);
+    google.maps.event.addDomListener(window, "resize", function () {
+        var center = map.getCenter();
+        google.maps.event.trigger(map, "resize");
+        map.setCenter(center);
+    });
+
+
 }
 
 
 function markers() {
 
-    var randomize = Math.random()/10;
-    
+    var randomize = Math.random() / 10;
+
     var anda = (40.2033145 + randomize);
     var andaLa = (-8.4102573 + randomize);
-    
+
     var uluru = {
         lat: anda,
         lng: andaLa
     };
 
 
-    for (var i = 0; i < 2; i++) {
+    for (var i = 0; i < mark.length; i++) {
         mark[i] = new google.maps.Marker({
             position: uluru,
             map: map,
             name: "nome1",
-            icon: image
+            icon: testesdeimagem[i]
         });
     }
 }
