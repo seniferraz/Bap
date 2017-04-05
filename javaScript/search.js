@@ -356,6 +356,10 @@ function initMap() {
 
 function markers() {
 
+    var randomize = Math.random()/10;
+    
+    var anda = (40.2033145 + randomize);
+    
     var uluru = {
         lat: 40.2033145,
         lng: -8.4102573
