@@ -38,10 +38,11 @@ $(function () {
 });
 
 function search() {
+    $("#dados").empty();
     console.log("carregou");
 
     query = $("#name").val();
-    locations = $("#location").val();
+    locations = $("#city").val();
     fields = $("#fields").val();
 
     console.log("QUERY == " + query);

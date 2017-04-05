@@ -25,8 +25,8 @@
 
     <div id="conteudo">
         <div id="procura">
-            Location
-            <input type="text" id="location" value="coimbra">
+            City
+            <input type="text" id="city" value="coimbra">
             <br>Name
             <input type="text" id="name" value="ines">
             <br>Fields
@@ -36,12 +36,12 @@
             <button type="button" id="search">Search</button>
         </div>
         <div id="status"></div>
+
+        <br>
+
+        <div id="dados"></div>
+
     </div>
-
-    <br>
-
-    <div id="dados"></div>
-
 
 
 
@@ -56,6 +56,7 @@
         #map {
             height: 100%;
         }
+
     </style>
 
     <div id="map"></div>
@@ -71,9 +72,7 @@
                 zoom: 8
             });
         }
-        
-        
-        
+
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2VPJOkLkP7xVjMsgQY6n7BA4yRqu3tQg&callback=initMap" async defer></script>
 
