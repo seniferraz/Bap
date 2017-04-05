@@ -9,8 +9,29 @@ body {
     font-family: sans-serif;
 }
 
-#conteudo {
+#procura {
     margin: 2vw;
+    position: absolute;
+    z-index: 10;
+}
+
+#dados {
+    margin: 2vw;
+    z-index: 10;
+}
+
+input {
+    border: none;
+    box-shadow: 1px 1px 0px 0px lightgrey;
+    padding: 0.5vh 1vw;
+    margin-bottom: 0.5vh;
+}
+
+#search {
+    border: none;
+    background-color: lightgrey;
+    padding: 0.5vh 1vw;
+    box-shadow: 1px 1px 0px 0px grey;
 }
 
 .userImage {
@@ -21,3 +42,4 @@ body {
 #map {
     height: 80vh;
 }
+

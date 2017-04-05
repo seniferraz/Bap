@@ -103,7 +103,6 @@ function processUserInfo(response) {
         }
 
 
-
         for (var s in response.users[i].images) {
             image = response.users[i].images[s];
             //break;
@@ -113,13 +112,13 @@ function processUserInfo(response) {
 
         if (popularField && String(image) !== "https://a5.behance.net/8dd1f2dd8a3d018de5e63f073e413867597ca251/img/profile/no-image-138.jpg?cb=264615658") {
 
-
+            
             $("#dados").append("<hr>");
             $("#dados").append("<p>" + userName + "</p>");
+            $("#dados").append("<p><a href=" + userURL + ">Link Behance</a></p>");
 
             $("#dados").append('<img class = "userImage" id="user' + i + '" src=' + image + ' height="90" width="90" alt="Profile Image">');
 
-            $("#dados").append("<a href=" + userURL + ">Link Behance</a>");
 
             $("#dados").append("<p> City: " + city + "</p>");
             $("#dados").append("<p> Fields: " + fields + "</p>");
