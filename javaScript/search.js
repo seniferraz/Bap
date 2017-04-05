@@ -374,10 +374,7 @@ function markers() {
             name: "nome1",
             icon: image
         });
-
     }
-    
-
 }
 
 
