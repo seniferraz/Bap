@@ -359,10 +359,11 @@ function markers() {
     var randomize = Math.random()/10;
     
     var anda = (40.2033145 + randomize);
+    var andaLa = (-8.4102573 + randomize);
     
     var uluru = {
         lat: anda,
-        lng: -8.4102573
+        lng: andaLa
     };
 
 
