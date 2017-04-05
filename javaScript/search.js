@@ -104,7 +104,7 @@ function processUserInfo(response) {
 
         //apenas mostra as pessoas com campos de criação e com foto de perfil    
 
-        if (popularField && String(image) !== "https://a5.behance.net/cde687cc54a23e8cd2bf9d2c2fbd8894e2d15cb0/img/profile/no-image-138.jpg?cb=264615658") {
+        if (popularField && String(image) !== "https://a5.behance.net/8dd1f2dd8a3d018de5e63f073e413867597ca251/img/profile/no-image-138.jpg?cb=264615658") {
 
 
             $("#dados").append("<hr>");
