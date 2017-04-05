@@ -56,7 +56,7 @@ function search() {
 
 function getUserInfo() {
 
-    log("Obter informação de " + query + " ...");
+    //log("Obter informação de " + query + " ...");
 
     $.ajax({
         url: URL + "?q=" + query,
@@ -115,9 +115,10 @@ function processUserInfo(response) {
             $("#dados").append("<hr>");
             $("#dados").append("<p>" + userName + "</p>");
 
-            $("#dados").append("<a> href=" + userURL + "</a>");
-
             $("#dados").append('<img class = "userImage" id="user' + i + '" src=' + image + ' height="90" width="90" alt="Profile Image">');
+
+            $("#dados").append("<a href=" + userURL + ">Link Behance</a>");
+
             $("#dados").append("<p> City: " + city + "</p>");
             $("#dados").append("<p> Fields: " + fields + "</p>");
             $("#dados").append("<p> FIELD MAIS POPULAR: " + popularField + "</p>");
@@ -150,7 +151,7 @@ function searching() {
     //$("#procura").hide();
     $("#status").empty();
 
-    log("Procurando informação sobre " + query);
+    //log("Procurando informação sobre " + query);
 }
 
 function searchAgain() {
