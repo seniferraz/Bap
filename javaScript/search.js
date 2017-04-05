@@ -342,3 +342,21 @@ function initMap() {
 
     });
 }
+
+
+
+
+// Autocomplete search — ainda não dá
+
+//https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete
+
+var options = {
+  bounds: google.maps.LatLngBounds,
+  types: ['address']
+};
+
+var input = document.getElementById('teste');
+
+map.controls[google.maps.ControlPsoition.TOP_LEFT].push(input);
+
+var autocomplete = new google.maps.places.Autocomplete(input,options);
