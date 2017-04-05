@@ -358,7 +358,7 @@ function markers() {
 
     var randomize = Math.random()/10;
     
-    var anda = (40.2033145+randomize);
+    var anda = (40.2033145 + randomize);
     
     var uluru = {
         lat: anda,
@@ -372,12 +372,11 @@ function markers() {
             map: map,
             name: "nome1",
             icon: image
-            
         });
 
     }
     
-    initMap();
+
 }
 
 
