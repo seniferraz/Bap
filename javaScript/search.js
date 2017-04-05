@@ -84,13 +84,10 @@ function processUserInfo(response) {
         var city = response.users[i].city;
         var userURL = response.users[i].url;
 
-
-
         //get most popular field of each user
         var popularField = String(response.users[i].fields);
         popularField = popularField.split(",")[0];
         console.log("splited::" + popularField);
-
 
         //atribuite color according to field
         for (var k = 0; k < colors.field.length; k++) {
@@ -162,10 +159,7 @@ function searchAgain() {
 
 
 
-
-
-
-//GOOGLE MAPS API
+//GOOGLE MAPS API   ———————————————————
 
 
 var map;
