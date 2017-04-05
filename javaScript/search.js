@@ -10,10 +10,14 @@ var api_key = 'Hr4r14bPbRdZq220clN8zGAvKvrO0TAz';
 //var URL = 'https://api.behance.net/v2/users/';
 var URL = 'https://api.behance.net/v2/users';
 
+
 // Nome do utilizador (username, nome ou apelido), localização e campos de criação a analisar
 var query;
 var locations;
 var fields;
+
+//foto perfil user
+var image = "";
 
 
 var colors = {
@@ -99,7 +103,7 @@ function processUserInfo(response) {
         }
 
 
-        var image = "";
+
         for (var s in response.users[i].images) {
             image = response.users[i].images[s];
             //break;
@@ -128,9 +132,13 @@ function processUserInfo(response) {
 
             $("#user" + i).css("border-color", userColor);
 
+
         }
+        console.log("IMAGEMMMM  -- " + image + " --   MErda");
+        initMap();
     }
 }
+
 
 
 function log(message) {
@@ -159,7 +167,14 @@ function searchAgain() {
 
 
 
+
+
+
 //GOOGLE MAPS API   ———————————————————
+
+
+
+var mark = ["marker1", "marker2"];
 
 
 var map;
@@ -170,7 +185,7 @@ function initMap() {
             lat: 40.2033145,
             lng: -8.4102573
         },
-        zoom: 9,
+        zoom: 12,
         disableDefaultUI: true,
         //https://developers.google.com/maps/documentation/javascript/controls
 
@@ -335,7 +350,29 @@ function initMap() {
   }
 ]
     });
+
+    markers();
 }
+
+
+function markers() {
+
+    var uluru = {
+        lat: 40.2033145,
+        lng: -8.4102573
+    };
+
+
+    for (var i = 0; i < 2; i++) {
+        mark[i] = new google.maps.Marker({
+            position: uluru,
+            map: map,
+            name: "nome1",
+            icon: image
+        });
+    }
+}
+
 
 
 // Autocomplete search — ainda não dá
