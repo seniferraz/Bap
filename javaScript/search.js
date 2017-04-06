@@ -88,30 +88,30 @@ function processUserInfo(response) {
         var city = response.users[i].city;
         var userURL = response.users[i].url;
 
-        //get most popular field of each user
+        //get the most popular field of each user - [0] do split
         var popularField = String(response.users[i].fields);
         popularField = popularField.split(",")[0];
         console.log("splited::" + popularField);
 
-        //atribuite color according to field
+        //atribute color according to field
         for (var k = 0; k < colors.field.length; k++) {
             if (popularField === String(colors.field[k])) {
                 var userColor = colors.color[k];
                 console.log("USERCOLOR ==  " + userColor);
             }
-
         }
 
 
+        //array com foto de perfil de cada pessoa iguais mas tamanhos diferentes - guarda a última
         for (var s in response.users[i].images) {
             image = response.users[i].images[s];
             //break;
         }
 
         testesdeimagem[i] = image;
-        //apenas mostra as pessoas com campos de criação e com foto de perfil    
 
-        if (popularField && String(image) !== "https://a5.behance.net/8dd1f2dd8a3d018de5e63f073e413867597ca251/img/profile/no-image-138.jpg?cb=264615658") {
+        //apenas mostra as pessoas com campos de criação e com foto de perfil
+        if ((popularField != "") && (String(image) !== "https://a5.behance.net/8dd1f2dd8a3d018de5e63f073e413867597ca251/img/profile/no-image-138.jpg?cb=264615658")) {
 
 
             $("#dados").append("<hr>");
@@ -119,7 +119,6 @@ function processUserInfo(response) {
             $("#dados").append("<p><a href=" + userURL + ">Link Behance</a></p>");
 
             $("#dados").append('<img class = "userImage" id="user' + i + '" src=' + image + ' height="90" width="90" alt="Profile Image">');
-
 
             $("#dados").append("<p> City: " + city + "</p>");
             $("#dados").append("<p> Fields: " + fields + "</p>");
@@ -129,12 +128,12 @@ function processUserInfo(response) {
             var cor = "#0505cc";
             //$("#user"+i).css("border","4px solid #0505cc");
             $("#user" + i).css("border-weight", "4px");
-
             $("#user" + i).css("border-color", userColor);
 
-
         }
+
         console.log("IMAGEMMMM  -- " + image + " --   ME");
+        
         initMap();
     }
 }
@@ -355,7 +354,7 @@ function initMap() {
     markers();
 
 
-    
+
     //centrar no resize
     google.maps.event.addDomListener(window, 'load', initMap);
     google.maps.event.addDomListener(window, "resize", function () {
@@ -363,7 +362,6 @@ function initMap() {
         google.maps.event.trigger(map, "resize");
         map.setCenter(center);
     });
-
 
 }
 
@@ -382,7 +380,7 @@ function markers() {
 
 
     for (var i = 0; i < mark.length; i++) {
-        
+
         console.log("MMMMMMMMMMMMMMMMM:::::  " + testesdeimagem[i]);
         mark[i] = new google.maps.Marker({
             position: uluru,
