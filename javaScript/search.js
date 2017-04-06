@@ -1,13 +1,12 @@
 //  —— inicializações   —————————————————————————————
 
-
 //Google Maps api key
 var googleMapsApiKey = 'AIzaSyA2VPJOkLkP7xVjMsgQY6n7BA4yRqu3tQg';
 
 //var api_key = 'pGGIf6rZKW1YcIXnIrDHk7fTbvjwXsht';
 var api_key = 'Hr4r14bPbRdZq220clN8zGAvKvrO0TAz';
 
-//var URL = 'https://api.behance.net/v2/users/';
+//URL pedido behance
 var URL = 'https://api.behance.net/v2/users';
 
 
@@ -18,19 +17,22 @@ var fields;
 
 //foto perfil user
 var image = "";
-var testesdeimagem = [];
+var userImageMarker = [];
 
+var mark = [];
+
+//Campos de criação e respetiva cor 
 var colors = {
     field: ['Animation', 'Graphic Design', 'Branding', 'Photography', 'Architecture', "Interaction Design", 'Drawing', 'Illustration', 'Typography', 'Packaging', 'Digital Art', 'Film', 'Design', 'UI/UX'],
     color: ['#c405cc', '#0014ff', '#ff7600', '#00ff31', '#ffff00', '#00f5ff', '#6d6d6d', '#af4d4d', '#000000', '#774501', '#e50be5', '#0b7b65', '#9d00ff', '#0076ff']
 };
 
 
-//  —— código   —————————————————————————————
 
+//  —— BEhance api   —————————————————————————————
 
 $(function () {
-    $("#load").hide();
+    $(".spinner").hide();
 
     $("#search").click(search); //search quando se carrega no botão
 
@@ -60,8 +62,6 @@ function search() {
 
 function getUserInfo() {
 
-    //log("Obter informação de " + query + " ...");
-
     $.ajax({
         url: URL + "?q=" + query,
         dataType: "jsonp",
@@ -88,12 +88,30 @@ function processUserInfo(response) {
         var city = response.users[i].city;
         var userURL = response.users[i].url;
 
-        //get the most popular field of each user - [0] do split
+        //var tamanho = 0;
+
+        //ir buscar foto de perfil de cada utilizador
+        for (var s in response.users[i].images) {
+            image = response.users[i].images[s];
+            break;
+            //para guardar a segunda
+
+            /*if (tamanho == 1) {
+               break; 
+            }*/
+            //tamanho++;
+        }
+
+
+        //guarda todas as imagens dos users num array
+        userImageMarker[i] = image;
+
+        //campo de criação mais popular de cada user - [0] do split
         var popularField = String(response.users[i].fields);
         popularField = popularField.split(",")[0];
         console.log("splited::" + popularField);
 
-        //atribute color according to field
+        //atribui cor de acordo com o field
         for (var k = 0; k < colors.field.length; k++) {
             if (popularField === String(colors.field[k])) {
                 var userColor = colors.color[k];
@@ -102,14 +120,6 @@ function processUserInfo(response) {
         }
 
 
-        //array com foto de perfil de cada pessoa iguais mas tamanhos diferentes - guarda a última
-        for (var s in response.users[i].images) {
-            image = response.users[i].images[s];
-            //break;
-        }
-
-        testesdeimagem[i] = image;
-
         //apenas mostra as pessoas com campos de criação e com foto de perfil
         if ((popularField != "") && (String(image) !== "https://a5.behance.net/8dd1f2dd8a3d018de5e63f073e413867597ca251/img/profile/no-image-138.jpg?cb=264615658")) {
 
@@ -117,27 +127,23 @@ function processUserInfo(response) {
             $("#dados").append("<hr>");
             $("#dados").append("<p>" + userName + "</p>");
             $("#dados").append("<p><a href=" + userURL + ">Link Behance</a></p>");
-
             $("#dados").append('<img class = "userImage" id="user' + i + '" src=' + image + ' height="90" width="90" alt="Profile Image">');
-
             $("#dados").append("<p> City: " + city + "</p>");
             $("#dados").append("<p> Fields: " + fields + "</p>");
             $("#dados").append("<p> FIELD MAIS POPULAR: " + popularField + "</p>");
             $("#dados").append("<p> COR DO FIELD: " + userColor + "</p>");
 
-            var cor = "#0505cc";
-            //$("#user"+i).css("border","4px solid #0505cc");
+            //atribuir borda a foto e respetiva cor
             $("#user" + i).css("border-weight", "4px");
             $("#user" + i).css("border-color", userColor);
 
         }
-
-        console.log("IMAGEMMMM  -- " + image + " --   ME");
-
+        
         initMap();
+
+        $(".spinner").hide();
     }
 }
-
 
 
 function log(message) {
@@ -148,33 +154,17 @@ function logError(actividade) {
     return function (data) {
         $("#status").append("Erro ao " + actividade + ": " + data.statusText + "<br/>");
         $("#status").append("Utilizador não existe <br/>");
-        searchAgain();
     }
 }
 
 function searching() {
-    //$("#procura").hide();
-    $("#status").empty();
-
-    //log("Procurando informação sobre " + query);
+    //$("#status").empty();
+    $(".spinner").show();
 }
-
-function searchAgain() {
-    $("#procura").show();
-    $("#load").hide();
-}
-
-
-
 
 
 
 //GOOGLE MAPS API   ———————————————————
-
-
-
-var mark = ["marker1", "marker2", "marker3", "marker4", "marker5"];
-
 
 var map;
 
@@ -353,8 +343,6 @@ function initMap() {
 
     markers();
 
-
-
     //centrar no resize
     google.maps.event.addDomListener(window, 'load', initMap);
     google.maps.event.addDomListener(window, "resize", function () {
@@ -362,31 +350,36 @@ function initMap() {
         google.maps.event.trigger(map, "resize");
         map.setCenter(center);
     });
-
 }
 
 
 function markers() {
 
+    
+    //cria o numero de marcadores de acordo com o numero de users a mostrar
+    for (var k = 0 ; k < userImageMarker.length ; k++)
+     mark[k] = "marker" + k;
+    
+    
     for (var i = 0; i < mark.length; i++) {
 
+        var randomize = ((Math.random() * 2) - 1) / 10;
+        var randomize2 = ((Math.random() * 2) - 1) / 10;
 
-        var randomize = Math.random() / 10;
-
-        var anda = (40.2033145 + randomize);
-        var andaLa = (-8.4102573 + randomize);
+        var x = (40.2033145 + randomize);
+        var y = (-8.4102573 + randomize2);
 
         var uluru = {
-            lat: anda,
-            lng: andaLa
+            lat: x,
+            lng: y
         };
 
-        console.log("MMMMMMMMMMMMMMMMM:::::  " + testesdeimagem[i]);
+        console.log("userImageMarker:::::  " + userImageMarker[i]);
         mark[i] = new google.maps.Marker({
             position: uluru,
             map: map,
-            name: "nome1",
-            icon: testesdeimagem[i]
+            name: "marker" + i,
+            icon: userImageMarker[i]
         });
     }
 }
