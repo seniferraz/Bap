@@ -401,11 +401,6 @@ function markers() {
                 scaledSize: new google.maps.Size(50, 50)
             }
         });
-
-
-
-
-
     }
 }
 
@@ -421,7 +416,7 @@ $.getJSON({
     url: 'https://maps.googleapis.com/maps/api/geocode/json',
     data: {
         sensor: false,
-        address: 'AVEIRO'
+        address: 'coimb'
     },
 
     success: function (data, textStatus) {
@@ -431,8 +426,13 @@ $.getJSON({
         var userLng = data.results[0].geometry.location.lng;
         console.log(userLat + "userLat");
         console.log(userLng + "userLng");
+    },
+    
+    error: function() { 
+        alert("error");
     }
 });
+
 
 
 
