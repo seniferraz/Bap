@@ -45,15 +45,15 @@ $(function () {
 
 function search() {
     $("#dados").empty();
-    console.log("carregou");
+    //console.log("carregou");
 
     query = $("#name").val();
     locations = $("#city").val();
     fields = $("#fields").val();
 
-    console.log("QUERY == " + query);
-    console.log("location == " + locations);
-    console.log("fields == " + fields);
+    //console.log("QUERY == " + query);
+    //console.log("location == " + locations);
+    //console.log("fields == " + fields);
 
     searching();
 
@@ -61,7 +61,6 @@ function search() {
 }
 
 function getUserInfo() {
-
     $.ajax({
         url: URL + "?q=" + query,
         dataType: "jsonp",
@@ -109,13 +108,13 @@ function processUserInfo(response) {
         //campo de criação mais popular de cada user - [0] do split
         var popularField = String(response.users[i].fields);
         popularField = popularField.split(",")[0];
-        console.log("splited::" + popularField);
+        //console.log("splited::" + popularField);
 
         //atribui cor de acordo com o field
         for (var k = 0; k < colors.field.length; k++) {
             if (popularField === String(colors.field[k])) {
                 var userColor = colors.color[k];
-                console.log("USERCOLOR ==  " + userColor);
+                //console.log("USERCOLOR ==  " + userColor);
             }
         }
 
@@ -138,7 +137,7 @@ function processUserInfo(response) {
             $("#user" + i).css("border-color", userColor);
 
         }
-        
+
         initMap();
 
         $(".spinner").hide();
@@ -350,17 +349,20 @@ function initMap() {
         google.maps.event.trigger(map, "resize");
         map.setCenter(center);
     });
+
+
+
 }
 
 
 function markers() {
 
-    
+
     //cria o numero de marcadores de acordo com o numero de users a mostrar
-    for (var k = 0 ; k < userImageMarker.length ; k++)
-     mark[k] = "marker" + k;
-    
-    
+    for (var k = 0; k < userImageMarker.length; k++)
+        mark[k] = "marker" + k;
+
+
     for (var i = 0; i < mark.length; i++) {
 
         var randomize = ((Math.random() * 2) - 1) / 10;
@@ -374,15 +376,64 @@ function markers() {
             lng: y
         };
 
-        console.log("userImageMarker:::::  " + userImageMarker[i]);
+        //console.log("userImageMarker:::::  " + userImageMarker[i]);
+
+
+        /* google.maps.event.addListener(map, 'zoom_changed', function () {
+                 var zoomLevel = map.getZoom();
+                 tamanho = map.getZoom();
+                 console.log("ZOMMMM é de :   " + zoomLevel);
+                 //this is where you will do your icon height and width change.
+                 // scaledSize: new google.maps.Size(tamanho, tamanho);
+                });*/
+
+
         mark[i] = new google.maps.Marker({
             position: uluru,
+            optimized: true,
+            fillColor: "#0000FF",
             map: map,
             name: "marker" + i,
-            icon: userImageMarker[i]
+            scaledSize: new google.maps.Size(50, 50), // scaled size
+            animation: google.maps.Animation.DROP,
+            icon: {
+                url: userImageMarker[i],
+                scaledSize: new google.maps.Size(50, 50)
+            }
         });
+
+
+
+
+
     }
 }
+
+
+
+
+/*—————— Geocoding ————————— */
+
+
+//https://developers.google.com/maps/documentation/javascript/geocoding
+
+$.getJSON({
+    url: 'https://maps.googleapis.com/maps/api/geocode/json',
+    data: {
+        sensor: false,
+        address: 'AVEIRO'
+    },
+
+    success: function (data, textStatus) {
+        console.log(textStatus, data);
+        console.log(data.results[0].geometry.location);
+        var userLat = data.results[0].geometry.location.lat;
+        var userLng = data.results[0].geometry.location.lng;
+        console.log(userLat + "userLat");
+        console.log(userLng + "userLng");
+    }
+});
+
 
 
 
