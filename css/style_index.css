@@ -2,10 +2,45 @@ html,
 body {
     margin: 0;
     padding: 0;
+    height: 100%;
+    font-family: sans-serif;
+    background: red;
+    /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#0D47A1, #B2EBF2);
+    /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#0D47A1, #B2EBF2);
+    /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#0D47A1, #B2EBF2);
+    /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#0D47A1, #B2EBF2);
+    /* Standard syntax */
 }
 
 #bap {
-    width: 100vw;
-    height: 100vh;
+    padding: 2vw;
     text-align: center;
+    color: #FFFFFF;
+}
+
+#title {
+    font-size: 10vw;
+}
+
+#intro {
+    font-size: 1.5vw;
+}
+
+#start {
+    border-width: 2px;
+    border-color: #FFFFFF;
+    background-color: transparent;
+    padding: 1vh 0.5vw;
+    border-radius: 3px;
+    outline: none;
+}
+
+a {
+    text-decoration: none;
+    color: #FFFFFF;
+    font-size: large;
 }
