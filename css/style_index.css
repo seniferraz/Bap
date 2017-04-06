@@ -3,7 +3,8 @@ body {
     margin: 0;
     padding: 0;
     height: 100%;
-    font-family: sans-serif;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
     background: red;
     /* For browsers that do not support gradients */
     background: -webkit-linear-gradient(#0D47A1, #B2EBF2);
@@ -14,7 +15,6 @@ body {
     /* For Firefox 3.6 to 15 */
     background: linear-gradient(#0D47A1, #B2EBF2);
     /* Standard syntax */
-    
 }
 
 #bap {
@@ -24,11 +24,14 @@ body {
 }
 
 #title {
+    margin-top: 10vh;
     font-size: 10vw;
 }
 
 #intro {
+    font-family: 'Roboto Slab', serif;
     font-size: 1.5vw;
+    font-weight: 300;
 }
 
 #start {
