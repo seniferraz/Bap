@@ -26,6 +26,7 @@
 }
 
 .dot2 {
+    background-color: #ffe200;
     top: auto;
     bottom: 0;
     -webkit-animation-delay: -1.0s;
