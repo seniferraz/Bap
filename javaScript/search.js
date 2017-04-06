@@ -134,7 +134,7 @@ function processUserInfo(response) {
 
 
         }
-        console.log("IMAGEMMMM  -- " + image + " --   MErda");
+        console.log("IMAGEMMMM  -- " + image + " --   ME");
         initMap();
     }
 }
@@ -187,6 +187,7 @@ function initMap() {
         },
         zoom: 12,
         disableDefaultUI: true,
+        //draggableCursor: 'grab',
         //https://developers.google.com/maps/documentation/javascript/controls
 
         styles: [
@@ -381,6 +382,8 @@ function markers() {
 
 
     for (var i = 0; i < mark.length; i++) {
+        
+        console.log("MMMMMMMMMMMMMMMMM:::::  " + testesdeimagem[i]);
         mark[i] = new google.maps.Marker({
             position: uluru,
             map: map,

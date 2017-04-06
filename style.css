@@ -26,6 +26,7 @@ input {
     padding: 0.5vh 1vw;
     margin-bottom: 0.5vh;
     border-radius: 3px;
+    outline: none;
 }
 
 #search {
@@ -34,7 +35,13 @@ input {
     padding: 0.5vh 1vw;
     box-shadow: 1px 1px 2px 0px lightgrey;
     border-radius: 3px;
+    outline: none;
 }
+
+#search:hover {
+    cursor: pointer;
+}
+
 
 .userImage {
     border-radius: 50%;
@@ -43,5 +50,11 @@ input {
 
 #map {
     height: 80vh;
+    cursor: all-scroll;
+}
+
+#map:hover {
+    height: 80vh;
+    cursor: all-scroll;
 }
 
