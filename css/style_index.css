@@ -14,6 +14,7 @@ body {
     /* For Firefox 3.6 to 15 */
     background: linear-gradient(#0D47A1, #B2EBF2);
     /* Standard syntax */
+    
 }
 
 #bap {
@@ -33,6 +34,7 @@ body {
 #start {
     border-width: 2px;
     border-color: #FFFFFF;
+    border-style: solid;
     background-color: transparent;
     padding: 1vh 0.5vw;
     border-radius: 3px;
