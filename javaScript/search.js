@@ -112,7 +112,7 @@ function processUserInfo(response) {
         popularField = popularField.split(",")[0];
         //console.log("splited::" + popularField);
 
-        //atribui cor de acordo com o field
+        //atribui cor de acordo com o field - se não for nenhum field com cor definida, a borda fica da cor do resultado anterior
         for (var k = 0; k < colors.field.length; k++) {
             if (popularField === String(colors.field[k])) {
                 var userColor = colors.color[k];
