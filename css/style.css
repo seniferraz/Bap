@@ -20,13 +20,31 @@ body {
     z-index: 10;
 }
 
-input {
+.leftCol {
+    float: left;
+    margin-bottom: 0.5vh;
+    padding: 1.5vh 1vw 1.5vh 0;
+}
+
+.leftCol>p {
+    margin: 0;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+}
+
+.rightCol {
+    float: right;
+    margin-bottom: 0.5vh;
+    padding: 1.5vh 0vw;
+}
+
+.rightCol>input {
     border: none;
     box-shadow: 1px 1px 2px 0px lightgrey;
-    padding: 0.8vh 0.8vw;
-    margin-bottom: 0.5vh;
     border-radius: 3px;
     outline: none;
+    padding: 0.5vh 1vw;
+    margin: 0.5vh;
 }
 
 #search {
@@ -56,4 +74,3 @@ input {
     height: 80vh;
     cursor: all-scroll;
 }
-
