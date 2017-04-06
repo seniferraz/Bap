@@ -1,0 +1,59 @@
+html,
+body {
+    height: 90%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+#procura {
+    margin: 2vw;
+    position: absolute;
+    z-index: 10;
+}
+
+#dados {
+    margin: 2vw;
+    z-index: 10;
+}
+
+input {
+    border: none;
+    box-shadow: 1px 1px 2px 0px lightgrey;
+    padding: 0.8vh 0.8vw;
+    margin-bottom: 0.5vh;
+    border-radius: 3px;
+    outline: none;
+}
+
+#search {
+    border: none;
+    background-color: lightgrey;
+    padding: 0.5vh 1vw;
+    box-shadow: 1px 1px 2px 0px lightgrey;
+    border-radius: 3px;
+    outline: none;
+}
+
+#search:hover {
+    cursor: pointer;
+}
+
+.userImage {
+    border-radius: 50%;
+    border: 4px solid;
+}
+
+#map {
+    height: 80vh;
+    cursor: all-scroll;
+}
+
+#map:hover {
+    height: 80vh;
+    cursor: all-scroll;
+}
+

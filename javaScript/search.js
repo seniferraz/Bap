@@ -133,7 +133,7 @@ function processUserInfo(response) {
         }
 
         console.log("IMAGEMMMM  -- " + image + " --   ME");
-        
+
         initMap();
     }
 }
@@ -368,18 +368,18 @@ function initMap() {
 
 function markers() {
 
-    var randomize = Math.random() / 10;
-
-    var anda = (40.2033145 + randomize);
-    var andaLa = (-8.4102573 + randomize);
-
-    var uluru = {
-        lat: anda,
-        lng: andaLa
-    };
-
-
     for (var i = 0; i < mark.length; i++) {
+
+
+        var randomize = Math.random() / 10;
+
+        var anda = (40.2033145 + randomize);
+        var andaLa = (-8.4102573 + randomize);
+
+        var uluru = {
+            lat: anda,
+            lng: andaLa
+        };
 
         console.log("MMMMMMMMMMMMMMMMM:::::  " + testesdeimagem[i]);
         mark[i] = new google.maps.Marker({
