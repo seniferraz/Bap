@@ -184,7 +184,7 @@ function initMap() {
             lat: 40.2033145,
             lng: -8.4102573
         },
-        zoom: 12,
+        zoom: 10,
         disableDefaultUI: true,
         //draggableCursor: 'grab',
         //https://developers.google.com/maps/documentation/javascript/controls
