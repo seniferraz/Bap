@@ -35,7 +35,7 @@ body {
 .rightCol {
     float: right;
     margin-bottom: 0.5vh;
-    padding: 1.5vh 0vw;
+    padding: 2vh 0vw;
 }
 
 .rightCol>input {
