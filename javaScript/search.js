@@ -115,8 +115,9 @@ function processUserInfo(response) {
             if (popularField === String(colors.field[k])) {
                 var userColor = colors.color[k];
                 console.log("USERCOLOR ==  " + userColor + ", " + popularField);
+                break;
             }
-            else {
+            else {     //else mais eficiente, p/ não correr sempre que não é igual
                 userColor = '#22ff44';
                 console.log(userColor);
             }
