@@ -116,6 +116,10 @@ function processUserInfo(response) {
                 var userColor = colors.color[k];
                 console.log("USERCOLOR ==  " + userColor + ", " + popularField);
             }
+            else {
+                userColor = '#22ff44';
+                console.log(userColor);
+            }
         }
 
 
