@@ -65,7 +65,7 @@ a {
 /*————————————————————————————————————————————————————*/
 
 #content {
-    z-index: 3;
+    z-index: 1;
     margin-top: 32vh;
 }
 
@@ -184,14 +184,6 @@ a {
         top: 20vh;
         transform: scale(0.8);
     }
-}
-
-#startAnimation {
-    width: 100vw;
-    height: 30vh;
-    position: absolute;
-    z-index: -2;
-    transform-origin: 50% 50%;
 }
 
 
