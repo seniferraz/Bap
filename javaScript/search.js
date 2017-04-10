@@ -19,6 +19,17 @@ var fields;
 var image = "";
 var userImageMarker = [];
 
+
+// Geocoding
+var userLat;
+var userLng;
+
+var userPos = {
+    x: [],
+    y: []
+};
+
+
 var mark = [];
 
 //Campos de criação e respetiva cor 
@@ -114,12 +125,11 @@ function processUserInfo(response) {
         for (var k = 0; k < colors.field.length; k++) {
             if (popularField === String(colors.field[k])) {
                 var userColor = colors.color[k];
-                console.log("USERCOLOR ==  " + userColor + ", " + popularField);
+                //console.log("USERCOLOR ==  " + userColor + ", " + popularField);
                 break;
-            }
-            else {     //else mais eficiente, p/ não correr sempre que não é igual
+            } else { //else mais eficiente, p/ não correr sempre que não é igual
                 userColor = '#22ff44';
-                console.log(userColor);
+                //console.log(userColor);
             }
         }
 
@@ -143,10 +153,45 @@ function processUserInfo(response) {
 
         }
 
-        initMap();
 
+        /*—————— Geocoding ————————— */
+
+
+        //https://developers.google.com/maps/documentation/javascript/geocoding
+
+        $.getJSON({
+            url: 'https://maps.googleapis.com/maps/api/geocode/json',
+            data: {
+                sensor: false,
+                address: city
+            },
+
+            success: function (data, textStatus) {
+                //console.log(textStatus, data);
+                //console.log(data.results[0].geometry.location);
+                userLat = data.results[0].geometry.location.lat;
+                userLng = data.results[0].geometry.location.lng;
+
+                userPos.x[i] = data.results[0].geometry.location.lat;
+                userPos.y[i] = data.results[0].geometry.location.lng;
+
+                console.log(userPos.x[i] + "userLat");
+                console.log(userPos.y[i] + "userLng");
+            },
+
+            error: function () {
+                alert("error");
+            }
+        });
+
+
+        /*—————— FIM Geocoding ————————— */
+
+
+        initMap();
         $(".spinner").hide();
     }
+
 }
 
 
@@ -360,17 +405,33 @@ function initMap() {
 function markers() {
 
     //cria o numero de marcadores de acordo com o numero de users a mostrar
-    for (var k = 0; k < userImageMarker.length; k++)
+    for (var k = 0; k < userImageMarker.length; k++) {
         mark[k] = "marker" + k;
-
+    }
 
     for (var i = 0; i < mark.length; i++) {
 
         var randomize = ((Math.random() * 2) - 1) / 10;
         var randomize2 = ((Math.random() * 2) - 1) / 10;
 
-        var x = (40.2033145 + randomize);
-        var y = (-8.4102573 + randomize2);
+
+        if (userPos.x[i] == undefined)
+            userPos.x[i] = 40.2033145;
+
+        if (userPos.y[i] == undefined)
+            userPos.y[i] = -8.4102573;
+
+
+        var x = (userPos.x[i] + randomize);
+        var y = (userPos.y[i] + randomize2);
+
+
+
+
+
+
+        console.log("XXXXX" + userPos.x[i]);
+        console.log("YYYYY" + userPos.y[i]);
 
         var pos = {
             lat: x,
@@ -406,33 +467,6 @@ function markers() {
 }
 
 
-
-
-/*—————— Geocoding ————————— */
-
-
-//https://developers.google.com/maps/documentation/javascript/geocoding
-
-$.getJSON({
-    url: 'https://maps.googleapis.com/maps/api/geocode/json',
-    data: {
-        sensor: false,
-        address: 'coimbra'
-    },
-
-    success: function (data, textStatus) {
-        console.log(textStatus, data);
-        console.log(data.results[0].geometry.location);
-        var userLat = data.results[0].geometry.location.lat;
-        var userLng = data.results[0].geometry.location.lng;
-        console.log(userLat + "userLat");
-        console.log(userLng + "userLng");
-    },
-
-    error: function () {
-        alert("error");
-    }
-});
 
 
 
