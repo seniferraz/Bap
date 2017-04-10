@@ -116,6 +116,43 @@ function processUserInfo(response) {
         //guarda todas as imagens dos users num array
         userImageMarker[i] = image;
 
+
+
+        /*—————— Geocoding ————————— */
+
+
+        //https://developers.google.com/maps/documentation/javascript/geocoding
+
+        $.getJSON({
+            url: 'https://maps.googleapis.com/maps/api/geocode/json',
+            data: {
+                sensor: false,
+                address: city
+            },
+
+            success: function (data, textStatus) {
+                //console.log(textStatus, data);
+                //console.log(data.results[0].geometry.location);
+                userLat = data.results[0].geometry.location.lat;
+                userLng = data.results[0].geometry.location.lng;
+
+                userPos.x[i] = data.results[0].geometry.location.lat;
+                userPos.y[i] = data.results[0].geometry.location.lng;
+
+                console.log(userPos.x[i] + "userLat");
+                console.log(userPos.y[i] + "userLng");
+            },
+
+            error: function () {
+                alert("error");
+            }
+        });
+
+
+        /*—————— FIM Geocoding ————————— */
+
+
+
         //campo de criação mais popular de cada user - [0] do split
         var popularField = String(response.users[i].fields);
         popularField = popularField.split(",")[0];
@@ -154,38 +191,7 @@ function processUserInfo(response) {
         }
 
 
-        /*—————— Geocoding ————————— */
 
-
-        //https://developers.google.com/maps/documentation/javascript/geocoding
-
-        $.getJSON({
-            url: 'https://maps.googleapis.com/maps/api/geocode/json',
-            data: {
-                sensor: false,
-                address: city
-            },
-
-            success: function (data, textStatus) {
-                //console.log(textStatus, data);
-                //console.log(data.results[0].geometry.location);
-                userLat = data.results[0].geometry.location.lat;
-                userLng = data.results[0].geometry.location.lng;
-
-                userPos.x[i] = data.results[0].geometry.location.lat;
-                userPos.y[i] = data.results[0].geometry.location.lng;
-
-                console.log(userPos.x[i] + "userLat");
-                console.log(userPos.y[i] + "userLng");
-            },
-
-            error: function () {
-                alert("error");
-            }
-        });
-
-
-        /*—————— FIM Geocoding ————————— */
 
 
         initMap();
@@ -426,12 +432,8 @@ function markers() {
         var y = (userPos.y[i] + randomize2);
 
 
-
-
-
-
-        console.log("XXXXX" + userPos.x[i]);
-        console.log("YYYYY" + userPos.y[i]);
+        console.log("XXXXX   " + userPos.x[i]);
+        console.log("YYYYY   " + userPos.y[i]);
 
         var pos = {
             lat: x,
