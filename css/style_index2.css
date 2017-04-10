@@ -17,19 +17,19 @@ body {
     font-size: 100%;
 }
 
-#LetsStart {
-    text-align: center;
-    color: #FFFFFF;
-    float: right;
-    z-index: 10000;
-}
-
 #title {
     padding: 0.2vh 1.5vw;
     font-size: 5vw;
     color: black;
     width: 95vw;
     transition: all 0.8s ease;
+}
+
+#letsStart {
+    text-align: center;
+    color: #FFFFFF;
+    float: right;
+    z-index: 1;
 }
 
 .cenasBrutais {
