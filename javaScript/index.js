@@ -3,7 +3,7 @@ $("#LetsStart").hide();
 $("#shape").hide();
 $("#shape2").hide();
 $("#content").hide();
-$("#descricao").hide();
+$("#descriptions").hide();
 
 
 /*$("#start").hover(function () {
@@ -38,5 +38,5 @@ setInterval(function () {
 
 setInterval(function () {
     $("#content").fadeIn(600);
-    $("#descricao").fadeIn(600);
+    $("#descriptions").fadeIn(600);
 }, 2000);
