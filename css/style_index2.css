@@ -81,14 +81,15 @@ a {
     margin-top: 25vh;
 }
 
+
 /* bolas */
 
 #shape {
     margin-left: 40vw;
     position: absolute;
     margin: 0 auto;
-    width: 30vw;
-    height: 30vh;
+    width: 28vw;
+    height: 28vh;
     z-index: -4;
     /* Safari 4.0 - 8.0 */
     -webkit-animation: animation 8s infinite ease;
@@ -97,11 +98,11 @@ a {
 
 #bigshape {
     margin-top: 15vh;
-    margin-left: 38vw;
+    margin-left: 32vw;
     position: absolute;
-    width: 100vw;
-    height: 100vh;
-    z-index: -5;
+    width: 120vw;
+    height: 120vh;
+    z-index: -10;
     fill: #efefef;
 }
 
