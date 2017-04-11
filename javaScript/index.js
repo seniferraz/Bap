@@ -1,12 +1,11 @@
-$("#startAnimation").hide();
 $("#LetsStart").hide();
 $("#shape").hide();
 $("#shape2").hide();
-$("#content").hide();
 $("#descriptions").hide();
 
 
-/*$("#start").hover(function () {
+/*
+$("#start").hover(function () {
     console.log("foi-lhe para cima");
     $("#startAnimation").show(400);
     $("#shape").hide();
@@ -19,15 +18,17 @@ $("#start").mouseleave(function () {
     $("#startAnimation").hide(400);
     $("#shape").show();
 });
-
 */
 
+/*
 $("#title").mouseleave(function () {
     console.log("Muito cima");
 });
+*/
 
 
-setInterval(function () {
+/* passados 1000ms título vai para o canto e o resto aparece */
+setTimeout(function () {
     $("#title").removeClass("cenasBrutais");
     $("#LetsStart").fadeIn(2000);
     $("#shape").fadeIn(1000);
@@ -35,8 +36,7 @@ setInterval(function () {
 }, 1000);
 
 
-
-setInterval(function () {
-    $("#content").fadeIn(600);
+/* descrição aparece passados 2000ms */
+setTimeout(function () {
     $("#descriptions").fadeIn(600);
 }, 2000);
