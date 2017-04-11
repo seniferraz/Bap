@@ -3,8 +3,8 @@
 //Google Maps api key
 var googleMapsApiKey = 'AIzaSyA2VPJOkLkP7xVjMsgQY6n7BA4yRqu3tQg';
 
-//var api_key = 'pGGIf6rZKW1YcIXnIrDHk7fTbvjwXsht';
-var api_key = 'Hr4r14bPbRdZq220clN8zGAvKvrO0TAz';
+var api_key = 'pGGIf6rZKW1YcIXnIrDHk7fTbvjwXsht';
+//var api_key = 'Hr4r14bPbRdZq220clN8zGAvKvrO0TAz';
 
 //URL pedido behance
 var URL = 'https://api.behance.net/v2/users';
@@ -197,26 +197,25 @@ function processUserInfo(response) {
         initMap();
         $(".spinner").hide();
     }
-    ShowCaption();
+    ShowLegend();
 }
 
 
 
 
 //preenche o footer legenda com as cores do array colors
-function ShowCaption() {
+function ShowLegend() {
 
+    $("#footer").empty();
+    
     //preenche o footer legenda com as cores do array colors
     for (var k = 0; k < colors.field.length; k++) {
-
-
         if (colors.used[k] == 'true') {
             /*$("#footer").append('<span class="shapes" id="shape' + k + '"></span>');*/
-            $("#footer").append('<div class="testee" id="shape' + k + '"></div>');
-            $("#footer").append('<div class="topicos">' + colors.field[k] + '</div>');
+            $("#footer").append('<div class="legend" id="shape' + k + '"></div>');
+            $("#footer").append('<div class="fieldsLegend">' + colors.field[k] + '</div>');
             // $("#footer").append("<p>" + colors.field[k] + "</p>");
             $("#shape" + k + "").css("border-color", colors.color[k]);
-
         }
         /*$("#shape" + k + "").css("border-color", colors.color[k]);*/
 
@@ -226,7 +225,6 @@ function ShowCaption() {
                 $(this).css("border-color", colors.color[k]);
             });*/
     }
-
 }
 
 

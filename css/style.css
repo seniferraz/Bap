@@ -79,41 +79,35 @@ body {
 }
 
 #footer {
-    height: 3vh;
+    height: 25px;
+    width: 100vw;
     background: white;
     border: 1px solid black;
+    bottom: 0;
+    position: absolute;
+    z-index: 10;
 }
 
-.shapes {
-    border-radius: 50%;
-    background-color: red;
-    border: 2px solid red;
-    /*width: 10vw;
-    height: 10vw;
-    margin: 1vw;*/
-    width: 10px;
-    height: 10px;
-    margin: 1vw;
-}
-
-#footer>span:hover {
+#footer>div:hover {
     border-color: black;
 }
 
-.testee {
+.legend {
+    margin-top: 3px;
+    margin-left: 8px;
     border-radius: 50%;
-    border: 2px solid;
+    border: 2.8px solid;
     width: 15px;
     height: 15px;
     float: left;
-    margin-right: 10px;
+    margin-right: 5px;
     position: relative;
 }
 
-
-
-.topicos {
+.fieldsLegend {
     width: auto;
     float: left;
+    vertical-align: middle;
+    margin-top: 4px;
     margin-right: 10px;
 }
