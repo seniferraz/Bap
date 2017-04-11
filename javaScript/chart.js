@@ -40,6 +40,8 @@ function drawChart() {
     data.addColumn('number', 'Users');
 
     for (var k = 0; k < colors.field.length; k++) {
+        fieldUsers[k] = 10;
+        console.log("fieldUsers " + fieldUsers);
 
         data.addRows([
             [colors.field[k], fieldUsers[k]],
