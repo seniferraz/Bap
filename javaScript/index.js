@@ -6,7 +6,7 @@ $("#descriptions").hide();
 
 /*
 $("#start").hover(function () {
-    console.log("foi-lhe para cima");
+    console.log("foi para cima");
     $("#startAnimation").show(400);
     $("#shape").hide();
 
@@ -14,7 +14,7 @@ $("#start").hover(function () {
 
 
 $("#start").mouseleave(function () {
-    console.log("saiu-lhe de cima");
+    console.log("saiu de cima");
     $("#startAnimation").hide(400);
     $("#shape").show();
 });

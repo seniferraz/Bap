@@ -79,18 +79,35 @@ body {
 }
 
 #footer {
-    height: 3vh;
-    background: blue;
+    height: 25px;
+    width: 100vw;
+    background: white;
+    border: 1px solid black;
+    bottom: 0;
+    position: absolute;
+    z-index: 10;
 }
 
-.shapes {
-    border-radius: 50%;
-    border: 1px solid;
-    width: 10vw;
-    height: 10vw;
-    margin: 1vw;
-}
-
-#footer>span:hover {
+#footer>div:hover {
     border-color: black;
+}
+
+.legend {
+    margin-top: 3px;
+    margin-left: 8px;
+    border-radius: 50%;
+    border: 2.8px solid;
+    width: 15px;
+    height: 15px;
+    float: left;
+    margin-right: 5px;
+    position: relative;
+}
+
+.fieldsLegend {
+    width: auto;
+    float: left;
+    vertical-align: middle;
+    margin-top: 4px;
+    margin-right: 10px;
 }
