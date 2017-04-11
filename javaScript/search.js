@@ -51,18 +51,18 @@ $(function () {
             search(); //ou quando se faz enter num input
         }
     });
-    
+
     //preenche o footer legenda com as cores do array colors
     for (var k = 0; k < colors.field.length; k++) {
 
         $("#footer").append('<span class="shapes" id="shape' + k + '"></span>');
         $("#shape" + k + "").css("border-color", colors.color[k]);
 
-/*        $("#shape" + k + "").hover(function(){
-        $(this).css("border-color", "black");
-        }, function(){
-        $(this).css("border-color", colors.color[k]);
-    });*/
+        /*        $("#shape" + k + "").hover(function(){
+                $(this).css("border-color", "black");
+                }, function(){
+                $(this).css("border-color", colors.color[k]);
+            });*/
     }
 
 });

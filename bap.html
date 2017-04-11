@@ -17,8 +17,14 @@
     <!-- Ficheiro JavaScript -->
     <script src="javaScript/search.js"></script>
 
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script src="javaScript/chart.js"></script>
+
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/loader.css">
+    <link rel="stylesheet" href="css/chart.css">
 
 </head>
 
@@ -29,7 +35,7 @@
             <p>Name</p>
             <p>Fields</p>
             <p>City</p>
-        <button type="button" id="search">Search</button>
+            <button type="button" id="search">Search</button>
         </div>
         <div class="rightCol">
             <input type="text" id="name" value=""> <br>
@@ -46,12 +52,20 @@
     </div>
 
 
-    <div id="map"></div>
+    <div id="chart">
+        <button type="button" id="moreinfo">More informations</button>
+
+        <!--Div that will hold the chart-->
+        <div id="chart_div"></div>
+    </div>
     
+    
+    <div id="map"></div>
+
     <div id="footer"></div>
 
     <div id="dados"></div>
-    
+
 
 </body>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2VPJOkLkP7xVjMsgQY6n7BA4yRqu3tQg&libraries=places&callback=initMap" async defer></script>
