@@ -35,7 +35,8 @@ var mark = [];
 //Campos de criação e respetiva cor 
 var colors = {
     field: ['Animation', 'Graphic Design', 'Branding', 'Photography', 'Architecture', "Interaction Design", 'Drawing', 'Illustration', 'Typography', 'Packaging', 'Digital Art', 'Film', 'Design', 'UI/UX', 'Advertising', 'Calligraphy', 'Art Direction', 'Interaction Design', 'Web Design', 'Fashion', 'Industrial Design'],
-    color: ['#F44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722', '#795548', '#9E9E9E', '#607D8B', '#000000', '#FFFFFF']
+    color: ['#F44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722', '#795548', '#9E9E9E', '#607D8B', '#000000', '#f500ff'],
+    used: ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false']
 };
 
 
@@ -51,19 +52,6 @@ $(function () {
             search(); //ou quando se faz enter num input
         }
     });
-
-    //preenche o footer legenda com as cores do array colors
-    for (var k = 0; k < colors.field.length; k++) {
-
-        $("#footer").append('<span class="shapes" id="shape' + k + '"></span>');
-        $("#shape" + k + "").css("border-color", colors.color[k]);
-
-        /*        $("#shape" + k + "").hover(function(){
-                $(this).css("border-color", "black");
-                }, function(){
-                $(this).css("border-color", colors.color[k]);
-            });*/
-    }
 
 });
 
@@ -175,6 +163,9 @@ function processUserInfo(response) {
         for (var k = 0; k < colors.field.length; k++) {
             if (popularField === String(colors.field[k])) {
                 var userColor = colors.color[k];
+                //para adicionar à barra de legenda
+                colors.used[k] = 'true';
+
                 //console.log("USERCOLOR ==  " + userColor + ", " + popularField);
                 break;
             } else { //else mais eficiente, p/ não correr sempre que não é igual
@@ -203,15 +194,42 @@ function processUserInfo(response) {
 
         }
 
-
-
-
-
         initMap();
         $(".spinner").hide();
     }
+    ShowCaption();
+}
+
+
+
+
+//preenche o footer legenda com as cores do array colors
+function ShowCaption() {
+
+    //preenche o footer legenda com as cores do array colors
+    for (var k = 0; k < colors.field.length; k++) {
+
+
+        if (colors.used[k] == 'true') {
+            /*$("#footer").append('<span class="shapes" id="shape' + k + '"></span>');*/
+            $("#footer").append('<div class="testee" id="shape' + k + '"></div>');
+            $("#footer").append('<div class="topicos">' + colors.field[k] + '</div>');
+            // $("#footer").append("<p>" + colors.field[k] + "</p>");
+            $("#shape" + k + "").css("border-color", colors.color[k]);
+
+        }
+        /*$("#shape" + k + "").css("border-color", colors.color[k]);*/
+
+        /*        $("#shape" + k + "").hover(function(){
+                $(this).css("border-color", "black");
+                }, function(){
+                $(this).css("border-color", colors.color[k]);
+            });*/
+    }
 
 }
+
+
 
 
 function log(message) {

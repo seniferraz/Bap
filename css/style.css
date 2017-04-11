@@ -80,17 +80,40 @@ body {
 
 #footer {
     height: 3vh;
-    background: blue;
+    background: white;
+    border: 1px solid black;
 }
 
 .shapes {
     border-radius: 50%;
-    border: 1px solid;
-    width: 10vw;
+    background-color: red;
+    border: 2px solid red;
+    /*width: 10vw;
     height: 10vw;
+    margin: 1vw;*/
+    width: 10px;
+    height: 10px;
     margin: 1vw;
 }
 
 #footer>span:hover {
     border-color: black;
+}
+
+.testee {
+    border-radius: 50%;
+    border: 2px solid;
+    width: 15px;
+    height: 15px;
+    float: left;
+    margin-right: 10px;
+    position: relative;
+}
+
+
+
+.topicos {
+    width: auto;
+    float: left;
+    margin-right: 10px;
 }
