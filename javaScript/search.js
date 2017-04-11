@@ -140,8 +140,8 @@ function processUserInfo(response) {
                 userPos.x[i] = data.results[0].geometry.location.lat;
                 userPos.y[i] = data.results[0].geometry.location.lng;
 
-                console.log(userPos.x[i] + "userLat");
-                console.log(userPos.y[i] + "userLng");
+                //console.log(userPos.x[i] + "userLat");
+                //console.log(userPos.y[i] + "userLng");
             },
 
             error: function () {
@@ -164,6 +164,7 @@ function processUserInfo(response) {
             if (popularField === String(colors.field[k])) {
                 var userColor = colors.color[k];
                 //para adicionar à barra de legenda
+                // ——— Não pode ser aqui, só pode ser considerado true, aqueles que são mostrados
                 colors.used[k] = 'true';
 
                 //console.log("USERCOLOR ==  " + userColor + ", " + popularField);
@@ -175,9 +176,20 @@ function processUserInfo(response) {
         }
 
 
-        //apenas mostra as pessoas com campos de criação e com foto de perfil
-        if ((popularField != "") && (String(image) !== "https://a5.behance.net/8dd1f2dd8a3d018de5e63f073e413867597ca251/img/profile/no-image-138.jpg?cb=264615658")) {
+        
+        
+        
+        //detetar se o utilizador tem foto de perfil
 
+        var string = String(image);
+        var substring = "/img/profile/no-image";
+
+        if (string.includes(substring))
+            break;
+            console.log("UIII mas que bonito");
+
+        //apenas mostra as pessoas com campos de criação
+        if ((popularField != "")) {
 
             $("#dados").append("<hr>");
             $("#dados").append("<p>" + userName + "</p>");
@@ -207,7 +219,7 @@ function processUserInfo(response) {
 function ShowLegend() {
 
     $("#footer").empty();
-    
+
     //preenche o footer legenda com as cores do array colors
     for (var k = 0; k < colors.field.length; k++) {
         if (colors.used[k] == 'true') {
@@ -461,8 +473,8 @@ function markers() {
         var y = (userPos.y[i] + randomize2);
 
 
-        console.log("XXXXX   " + userPos.x[i]);
-        console.log("YYYYY   " + userPos.y[i]);
+        //console.log("XXXXX   " + userPos.x[i]);
+        //console.log("YYYYY   " + userPos.y[i]);
 
         var pos = {
             lat: x,
