@@ -14,26 +14,47 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
-    <!-- Ficheiro JavaScript -->
-    <script src="javaScript/search.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Space+Mono:400,400i,700,700i" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Roboto+Slab:100,300,400,700" rel="stylesheet">
-    <link rel="stylesheet" href="css/style_index.css">
 
+    <link rel="stylesheet" href="css/style_index.css">
 </head>
 
 <body>
-    <div id="bap">
-        <div id="title">Bap.</div>
-        <br><br><br>
-        <div id="intro">
-            Procura alguém para trabalhar na sua empresa, de um local específico e ainda podendo ver os seus trabalhos?
-            <br>Encontre-o aqui.
-            <br><br><br>
-            <button type="button" id="start"> <a href="bap.html">Let's start</a></button>
 
+    <div id="title" class="cenasBrutais">Bap.
+        <div id="letsStart">
+            <button type="button" id="start"> <a href="bap.html">Let's start &rarr; </a> </button>
         </div>
     </div>
+
+
+    <!-- círculos com stroke -->
+    <div id="shape">
+        <svg id="circle" data-name="Layer 1" viewBox="0 0 488 488"><path d="M244,36A208,208,0,0,1,391.08,391.08,208,208,0,0,1,96.92,96.92,206.64,206.64,0,0,1,244,36m0-36C109.24,0,0,109.24,0,244S109.24,488,244,488,488,378.76,488,244,378.76,0,244,0Z"/></svg>
+    </div>
+    
+    <div id="shape2">
+        <svg id="circle" data-name="Layer 1" viewBox="0 0 488 488"><path d="M244,36A208,208,0,0,1,391.08,391.08,208,208,0,0,1,96.92,96.92,206.64,206.64,0,0,1,244,36m0-36C109.24,0,0,109.24,0,244S109.24,488,244,488,488,378.76,488,244,378.76,0,244,0Z"/></svg>
+    </div>
+
+    
+    <!-- círculo de trás cinzento -->
+    <div id="bigshape">
+        <svg id="circle" data-name="Layer" viewBox="0 0 488 488"><path d="M244.28,487.5A243.5,243.5,0,0,1,72.1,71.82,243.5,243.5,0,0,1,416.46,416.18,241.91,241.91,0,0,1,244.28,487.5Z"/><path/></svg>
+    </div>
+
+
+    <div id="descriptions">
+        <div class="option">— Wanna hire someone for your company?</div>
+        <div class="option">— Need someone to help you with a specific project, from any Behance field?</div>
+        <div class="option">— Or you're just curious to know in which cities a certain Behance field is more produced?</div>
+    </div>
+
+    <!-- Ficheiro JavaScript -->
+    <script src="javaScript/index.js"></script>
 </body>
 
 </html>

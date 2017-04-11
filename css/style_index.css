@@ -2,52 +2,188 @@ html,
 body {
     margin: 0;
     padding: 0;
-    height: 100%;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    background: red;
-    /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(#0D47A1, #B2EBF2);
-    /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(#0D47A1, #B2EBF2);
-    /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(#0D47A1, #B2EBF2);
-    /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#0D47A1, #B2EBF2);
-    /* Standard syntax */
-    text-rendering: optimizeLegibility !important;
+    overflow: hidden;
 }
 
-#bap {
-    padding: 2vw;
-    text-align: center;
-    color: #FFFFFF;
+html {
+    top: 0;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
 }
 
 #title {
-    margin-top: 10vh;
-    font-size: 10vw;
+    padding: 0.2vh 1.5vw;
+    font-size: 5vw;
+    color: black;
+    width: 95vw;
+    transition: all 0.8s ease;
+}
+
+#letsStart {
+    text-align: center;
+    color: #FFFFFF;
+    float: right;
+    z-index: 1;
+}
+
+.cenasBrutais {
+    margin-left: 40vw;
+    margin-top: 22vw;
 }
 
 #intro {
-    font-family: 'Roboto Slab', serif;
+    font-family: 'Space Mono', monospace;
     font-size: 1.5vw;
     font-weight: 300;
 }
 
 #start {
     border-width: 2px;
-    border-color: #FFFFFF;
+    border-color: #000000;
     border-style: solid;
     box-shadow: 1px 1px 2px 0px lightgrey;
     background-color: transparent;
-    padding: 1vh 0.5vw;
+    padding: 1.3vh 1vw;
     border-radius: 3px;
     outline: none;
+    vertical-align: middle;
 }
 
 a {
     text-decoration: none;
-    color: #FFFFFF;
+    color: #000000;
     font-size: large;
+}
+
+.option {
+    margin-left: 3.3vw;
+    width: 30vw;
+    float: left;
+}
+
+@media only screen and (max-width: 500px) {
+    .option {
+        width: 80vw;
+        margin-bottom: 3vh;
+        margin-left: 10vw;
+        font-size: 5vw;
+    }
+}
+
+#descriptions {
+    font-size: 2.5vw;
+    z-index: 1;
+    margin-top: 25vh;
+}
+
+
+/* círculo de trás cinzento */
+
+#bigshape {
+    margin-top: 15vh;
+    margin-left: 32vw;
+    position: absolute;
+    width: 120vw;
+    height: 120vh;
+    z-index: -10;
+    fill: #efefef;
+}
+
+
+/* círculos com stroke && respetivas animações */
+
+#shape {
+    margin-left: 40vw;
+    position: absolute;
+    margin: 0 auto;
+    width: 28vw;
+    height: 28vh;
+    z-index: -4;
+    /* Safari 4.0 - 8.0 */
+    -webkit-animation: animation 8s infinite ease;
+    animation: animation 8s infinite ease;
+}
+
+#shape2 {
+    margin-top: 0vw;
+    margin-left: 0vw;
+    position: absolute;
+    width: 18vw;
+    height: 18vh;
+    z-index: -5;
+    fill: #efefef;
+    /* Safari 4.0 - 8.0 */
+    -webkit-animation: animationLit 8s infinite ease;
+    animation: animationLit 7s infinite ease;
+}
+
+@keyframes animation {
+    0% {
+        fill: #f5ff00;
+        left: 60vw;
+        top: 40vh;
+        transform: scale(0.8);
+    }
+    25% {
+        fill: blue;
+        left: 25vw;
+        top: 5vh;
+        transform: scale(0.9);
+    }
+    50% {
+        fill: #ff7601;
+        left: 10vw;
+        top: 15vh;
+        transform: scale(1);
+    }
+    75% {
+        fill: #00ff00;
+        left: 15vw;
+        top: 35vh;
+        transform: scale(0.9);
+    }
+    100% {
+        fill: #f5ff00;
+        left: 60vw;
+        top: 40vh;
+        transform: scale(0.8);
+    }
+}
+
+@keyframes animationLit {
+    0% {
+        fill: #00d8ff;
+        left: 5vw;
+        top: 20vh;
+        transform: scale(0.8);
+    }
+    25% {
+        fill: #ffa700;
+        left: 20vw;
+        top: 5vh;
+        transform: scale(0.9);
+    }
+    50% {
+        fill: #f5ff00;
+        left: 80vw;
+        top: 0vh;
+        transform: scale(1);
+    }
+    75% {
+        fill: blue;
+        left: 20vw;
+        top: 65vh;
+        transform: scale(0.9);
+    }
+    100% {
+        fill: #f5ff00;
+        left: 5vw;
+        top: 20vh;
+        transform: scale(0.8);
+    }
 }
