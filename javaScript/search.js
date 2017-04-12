@@ -76,6 +76,7 @@ function search() {
 }
 
 function getUserInfo() {
+
     $.ajax({
         url: URL + "?q=" + query,
         dataType: "jsonp",
@@ -83,13 +84,15 @@ function getUserInfo() {
             api_key: api_key,
             sort: 'followed',
             city: locations,
-            field: fields
+            field: fields,
+            page: 1 //iterar para ver mais users (com for não deu)
         },
         timeout: 1500,
         success: processUserInfo,
         error: logError("a procurar utilizador")
     });
 }
+
 
 
 function processUserInfo(response) {
@@ -122,6 +125,46 @@ function processUserInfo(response) {
 
 
 
+        /*—————— Geocoding ————————— */
+
+
+        
+        //https://developers.google.com/maps/documentation/javascript/geocoding
+
+        $.getJSON({
+            url: 'https://maps.googleapis.com/maps/api/geocode/json',
+            data: {
+                sensor: false,
+                address: city
+            },
+
+            success: function (data, textStatus) {
+                //console.log(textStatus, data);
+                //console.log(data.results[0].geometry.location);
+                userLat = data.results[0].geometry.location.lat;
+                userLng = data.results[0].geometry.location.lng;
+
+                userPos.x[i] = data.results[0].geometry.location.lat;
+                userPos.y[i] = data.results[0].geometry.location.lng;
+
+                //console.log(userPos.x[i] + "userLat");
+                //console.log(userPos.y[i] + "userLng");
+            },
+
+            error: function () {
+                alert("error");
+            }
+        });
+
+
+        
+        
+        /*—————— FIM Geocoding ————————— */
+
+
+
+
+
         //campo de criação mais popular de cada user - [0] do split
         var popularField = String(response.users[i].fields);
         popularField = popularField.split(",")[0];
@@ -132,18 +175,18 @@ function processUserInfo(response) {
             if (popularField === String(colors.field[k])) {
                 var userColor = colors.color[k];
                 //para adicionar à barra de legenda
-                
+
                 // ——— Não pode ser aqui, só pode ser considerado true, aqueles que são mostrados
-                
+
                 colors.used[k] = 'true';
-                
+
                 colors.users[k]++;
 
                 console.log("USERS de " + colors.field[k] + ": " + colors.users[k]);
-                
+
                 //console.log("USERCOLOR ==  " + userColor + ", " + popularField);
                 break;
-                
+
             } else { //se field do user não for nenhum com cor definida, a borda fica da cor definida abaixo
                 userColor = '#22ff44';
                 //console.log(userColor);
@@ -175,44 +218,6 @@ function processUserInfo(response) {
             //atribuir borda a foto e respetiva cor
             $("#user" + i).css("border-weight", "4px");
             $("#user" + i).css("border-color", userColor);
-
-
-
-            /*—————— Geocoding ————————— */
-
-
-            //https://developers.google.com/maps/documentation/javascript/geocoding
-
-            $.getJSON({
-                url: 'https://maps.googleapis.com/maps/api/geocode/json',
-                data: {
-                    sensor: false,
-                    address: city
-                },
-
-                success: function (data, textStatus) {
-                    //console.log(textStatus, data);
-                    //console.log(data.results[0].geometry.location);
-                    userLat = data.results[0].geometry.location.lat;
-                    userLng = data.results[0].geometry.location.lng;
-
-                    userPos.x[i] = data.results[0].geometry.location.lat;
-                    userPos.y[i] = data.results[0].geometry.location.lng;
-
-                    //console.log(userPos.x[i] + "userLat");
-                    //console.log(userPos.y[i] + "userLng");
-                },
-
-                error: function () {
-                    alert("error");
-                }
-            });
-
-
-            /*—————— FIM Geocoding ————————— */
-
-
-
 
         }
 
@@ -467,6 +472,9 @@ function initMap() {
         google.maps.event.trigger(map, "resize");
         map.setCenter(center);
     });
+    
+    //zoom máximo e minimo do mapa
+    map.setOptions({ minZoom: 3, maxZoom: 12 });
 }
 
 
