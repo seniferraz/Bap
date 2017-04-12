@@ -6,7 +6,7 @@ $(function () {
         console.log("click");
         if ($("#chart").css('display') == 'none') {
             $("#chart").show();
-            $("#moreinfo").html("X");
+            $("#moreinfo").html("&#x2715;");
         } else {
             $("#chart").hide();
             $("#moreinfo").html("More informations");
