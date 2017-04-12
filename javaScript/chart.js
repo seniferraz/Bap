@@ -1,21 +1,21 @@
 $(function () {
-    $("#chart_div").hide();
+    $("#moreinfo").hide();
+    $("#chart").hide();
 
     $("#moreinfo").click(function () {
         console.log("click");
-        if ($("#chart_div").css('display') == 'none') {
-            $("#chart_div").show();
+        if ($("#chart").css('display') == 'none') {
+            $("#chart").show();
             $("#moreinfo").html("X");
         } else {
-            $("#chart_div").hide();
+            $("#chart").hide();
             $("#moreinfo").html("More informations");
         }
     });
 });
 
 
-
-//———— Adaptação do código base para gráficos fornecido pelo Google Developers em "https://developers.google.com/chart/"
+/*—————— Adaptação do código base para gráficos fornecido pelo Google Developers em "https://developers.google.com/chart/"  ————— */
 
 
 // Load the Visualization API and the corechart package.
@@ -24,14 +24,13 @@ google.charts.load('current', {
 });
 
 // Set a callback to run when the Google Visualization API is loaded.
-google.charts.setOnLoadCallback(drawChart);
+//google.charts.setOnLoadCallback(drawChart);   ———   neste caso feito no search.js para usar dados dos resultados da pesquisa
 
-// Callback that creates and populates a data table,
-// instantiates the pie chart, passes in the data and
-// draws it.
 
 var fieldUsers = [];
 
+
+// Callback that creates and populates a data table, instantiates the bar chart, passes in the data and draws it.
 function drawChart() {
 
     // Create the data table.
@@ -40,13 +39,16 @@ function drawChart() {
     data.addColumn('number', 'Users');
 
     for (var k = 0; k < colors.field.length; k++) {
-        fieldUsers[k] = 10;
-        console.log("fieldUsers " + fieldUsers);
+        if (colors.used[k] == 'true') {
 
-        data.addRows([
-            [colors.field[k], fieldUsers[k]],
+            //fieldUsers[k] = 10;
+            //console.log("fieldUsers " + fieldUsers);
+
+            data.addRows([
+            [colors.field[k], colors.users[k]],
 
         ]);
+        }
     }
 
     // Set chart options
@@ -57,6 +59,6 @@ function drawChart() {
     };
 
     // Instantiate and draw our chart, passing in some options.
-    var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+    var chart = new google.visualization.BarChart(document.getElementById('chart'));
     chart.draw(data, options);
 }

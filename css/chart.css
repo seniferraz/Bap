@@ -1,4 +1,4 @@
-#chart {
+#chart_div {
     position: absolute;
     margin-top: 4vh;
     right: 1vw;
@@ -23,7 +23,7 @@
 }
 
 
-#chart_div {
+#chart {
     float: right;
     position: absolute;
     z-index: 1;

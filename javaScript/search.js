@@ -36,7 +36,8 @@ var mark = [];
 var colors = {
     field: ['Animation', 'Graphic Design', 'Branding', 'Photography', 'Architecture', "Interaction Design", 'Drawing', 'Illustration', 'Typography', 'Packaging', 'Digital Art', 'Film', 'Design', 'UI/UX', 'Advertising', 'Calligraphy', 'Art Direction', 'Interaction Design', 'Web Design', 'Fashion', 'Industrial Design'],
     color: ['#F44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722', '#795548', '#9E9E9E', '#607D8B', '#000000', '#f500ff'],
-    used: ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false']
+    used: ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'],
+    users: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 };
 
 
@@ -70,6 +71,8 @@ function search() {
     searching();
 
     getUserInfo();
+
+
 }
 
 function getUserInfo() {
@@ -119,66 +122,36 @@ function processUserInfo(response) {
 
 
 
-        /*—————— Geocoding ————————— */
-
-
-        //https://developers.google.com/maps/documentation/javascript/geocoding
-
-        $.getJSON({
-            url: 'https://maps.googleapis.com/maps/api/geocode/json',
-            data: {
-                sensor: false,
-                address: city
-            },
-
-            success: function (data, textStatus) {
-                //console.log(textStatus, data);
-                //console.log(data.results[0].geometry.location);
-                userLat = data.results[0].geometry.location.lat;
-                userLng = data.results[0].geometry.location.lng;
-
-                userPos.x[i] = data.results[0].geometry.location.lat;
-                userPos.y[i] = data.results[0].geometry.location.lng;
-
-                //console.log(userPos.x[i] + "userLat");
-                //console.log(userPos.y[i] + "userLng");
-            },
-
-            error: function () {
-                alert("error");
-            }
-        });
-
-
-        /*—————— FIM Geocoding ————————— */
-
-
-
         //campo de criação mais popular de cada user - [0] do split
         var popularField = String(response.users[i].fields);
         popularField = popularField.split(",")[0];
         //console.log("splited::" + popularField);
 
-        //atribui cor de acordo com o field - se não for nenhum field com cor definida, a borda fica da cor do resultado anterior
+        //atribui cor do círculo de acordo com o field mais popular do user
         for (var k = 0; k < colors.field.length; k++) {
             if (popularField === String(colors.field[k])) {
                 var userColor = colors.color[k];
                 //para adicionar à barra de legenda
+                
                 // ——— Não pode ser aqui, só pode ser considerado true, aqueles que são mostrados
+                
                 colors.used[k] = 'true';
+                
+                colors.users[k]++;
 
+                console.log("USERS de " + colors.field[k] + ": " + colors.users[k]);
+                
                 //console.log("USERCOLOR ==  " + userColor + ", " + popularField);
                 break;
-            } else { //else mais eficiente, p/ não correr sempre que não é igual
+                
+            } else { //se field do user não for nenhum com cor definida, a borda fica da cor definida abaixo
                 userColor = '#22ff44';
                 //console.log(userColor);
             }
         }
 
 
-        
-        
-        
+
         //detetar se o utilizador tem foto de perfil
 
         var string = String(image);
@@ -186,7 +159,6 @@ function processUserInfo(response) {
 
         if (string.includes(substring))
             break;
-            console.log("UIII mas que bonito");
 
         //apenas mostra as pessoas com campos de criação
         if ((popularField != "")) {
@@ -204,12 +176,61 @@ function processUserInfo(response) {
             $("#user" + i).css("border-weight", "4px");
             $("#user" + i).css("border-color", userColor);
 
+
+
+            /*—————— Geocoding ————————— */
+
+
+            //https://developers.google.com/maps/documentation/javascript/geocoding
+
+            $.getJSON({
+                url: 'https://maps.googleapis.com/maps/api/geocode/json',
+                data: {
+                    sensor: false,
+                    address: city
+                },
+
+                success: function (data, textStatus) {
+                    //console.log(textStatus, data);
+                    //console.log(data.results[0].geometry.location);
+                    userLat = data.results[0].geometry.location.lat;
+                    userLng = data.results[0].geometry.location.lng;
+
+                    userPos.x[i] = data.results[0].geometry.location.lat;
+                    userPos.y[i] = data.results[0].geometry.location.lng;
+
+                    //console.log(userPos.x[i] + "userLat");
+                    //console.log(userPos.y[i] + "userLng");
+                },
+
+                error: function () {
+                    alert("error");
+                }
+            });
+
+
+            /*—————— FIM Geocoding ————————— */
+
+
+
+
         }
 
         initMap();
         $(".spinner").hide();
     }
+
+
     ShowLegend();
+
+
+
+    /*—————— Chart ————————— */
+    // Só corre o drawChart depois dos resultados da pesquisa serem processados, para estes poderem ser usados no gráfico
+    drawChart();
+
+    $("#moreinfo").show();
+
 }
 
 
