@@ -27,12 +27,12 @@ google.charts.load('current', {
 //google.charts.setOnLoadCallback(drawChart);   ———   neste caso feito no search.js para usar dados dos resultados da pesquisa
 
 
-var fieldUsers = [];
 
 
 // Callback that creates and populates a data table, instantiates the bar chart, passes in the data and draws it.
 function drawChart() {
-
+    
+    
     // Create the data table.
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Field');
@@ -40,9 +40,6 @@ function drawChart() {
 
     for (var k = 0; k < colors.field.length; k++) {
         if (colors.used[k] == 'true') {
-
-            //fieldUsers[k] = 10;
-            //console.log("fieldUsers " + fieldUsers);
 
             data.addRows([
             [colors.field[k], colors.users[k]],
