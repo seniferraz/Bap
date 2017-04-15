@@ -1,5 +1,13 @@
 //  —— inicializações   —————————————————————————————
 
+
+$("#start").hover(function () {
+    console.log("foi para cima");
+    $("#startAnimation").show(400);
+    $("body").hide();
+});
+
+
 //Google Maps api key
 var googleMapsApiKey = 'AIzaSyA2VPJOkLkP7xVjMsgQY6n7BA4yRqu3tQg';
 
@@ -14,6 +22,13 @@ var URL = 'https://api.behance.net/v2/users';
 var query;
 var locations;
 var fields;
+
+
+var userName;
+var fields;
+var city;
+var userURL;
+
 
 //foto perfil user
 var image = "";
@@ -96,6 +111,7 @@ function getUserInfo() {
 
 
 function processUserInfo(response) {
+
     for (var k = 0; k < colors.field.length; k++) {
 
         //reposição dos valores "used" e "users" de cada field para mostragem na legenda e no gráfico
@@ -109,10 +125,56 @@ function processUserInfo(response) {
     //processa dados do utilizador (response) e mostra-os
     for (var i = 0; i < response.users.length; i++) {
 
-        var userName = response.users[i].display_name;
-        var fields = response.users[i].fields;
-        var city = response.users[i].city;
-        var userURL = response.users[i].url;
+        userName = response.users[i].display_name;
+        fields = response.users[i].fields;
+        city = response.users[i].city;
+        userURL = response.users[i].url;
+
+
+
+
+        /*—————— Geocoding ————————— */
+
+
+
+        //https://developers.google.com/maps/documentation/javascript/geocoding
+
+        $.getJSON({
+            url: 'https://maps.googleapis.com/maps/api/geocode/json',
+            data: {
+                sensor: false,
+                address: city
+            },
+
+            success: function (data, textStatus) {
+                //console.log(textStatus, data);
+                //console.log(data.results[0].geometry.location);
+                userLat = data.results[0].geometry.location.lat;
+                userLng = data.results[0].geometry.location.lng;
+
+                userPos.x[i] = data.results[0].geometry.location.lat;
+                userPos.y[i] = data.results[0].geometry.location.lng;
+
+
+                console.log(userPos.x[i] + "userLat");
+                console.log(userPos.y[i] + "userLng");
+            },
+
+            error: function () {
+                alert("error");
+            }
+        });
+
+
+
+
+        /*—————— FIM Geocoding ————————— */
+
+
+
+
+
+
 
         //var tamanho = 0;
 
@@ -134,41 +196,7 @@ function processUserInfo(response) {
 
 
 
-        /*—————— Geocoding ————————— */
 
-
-        
-        //https://developers.google.com/maps/documentation/javascript/geocoding
-
-        $.getJSON({
-            url: 'https://maps.googleapis.com/maps/api/geocode/json',
-            data: {
-                sensor: false,
-                address: city
-            },
-
-            success: function (data, textStatus) {
-                //console.log(textStatus, data);
-                //console.log(data.results[0].geometry.location);
-                userLat = data.results[0].geometry.location.lat;
-                userLng = data.results[0].geometry.location.lng;
-
-                userPos.x[i] = data.results[0].geometry.location.lat;
-                userPos.y[i] = data.results[0].geometry.location.lng;
-
-                //console.log(userPos.x[i] + "userLat");
-                //console.log(userPos.y[i] + "userLng");
-            },
-
-            error: function () {
-                alert("error");
-            }
-        });
-
-
-        
-        
-        /*—————— FIM Geocoding ————————— */
 
 
 
@@ -191,7 +219,7 @@ function processUserInfo(response) {
 
                 colors.users[k]++;
 
-                console.log("USERS de " + colors.field[k] + ": " + colors.users[k]);
+                //console.log("USERS de " + colors.field[k] + ": " + colors.users[k]);
 
                 //console.log("USERCOLOR ==  " + userColor + ", " + popularField);
                 break;
@@ -230,11 +258,11 @@ function processUserInfo(response) {
 
         }
 
-        initMap();
+
         $(".spinner").hide();
     }
 
-
+    initMap();
     ShowLegend();
 
 
@@ -264,6 +292,7 @@ function ShowLegend() {
             // $("#footer").append("<p>" + colors.field[k] + "</p>");
             $("#shape" + k + "").css("border-color", colors.color[k]);
         }
+
         /*$("#shape" + k + "").css("border-color", colors.color[k]);*/
 
         /*        $("#shape" + k + "").hover(function(){
@@ -297,7 +326,9 @@ function searching() {
 
 //GOOGLE MAPS API   ———————————————————
 
+
 var map;
+
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -481,9 +512,12 @@ function initMap() {
         google.maps.event.trigger(map, "resize");
         map.setCenter(center);
     });
-    
+
     //zoom máximo e minimo do mapa
-    map.setOptions({ minZoom: 3, maxZoom: 12 });
+    map.setOptions({
+        minZoom: 3,
+        maxZoom: 12
+    });
 }
 
 
@@ -507,12 +541,13 @@ function markers() {
             userPos.y[i] = -8.4102573;
 
 
+        console.log("XXXXX   " + userPos.x[i]);
+        console.log("YYYYY   " + userPos.y[i]);
+
+
         var x = (userPos.x[i] + randomize);
         var y = (userPos.y[i] + randomize2);
 
-
-        //console.log("XXXXX   " + userPos.x[i]);
-        //console.log("YYYYY   " + userPos.y[i]);
 
         var pos = {
             lat: x,
@@ -531,9 +566,17 @@ function markers() {
                 });*/
 
 
+
+        var contentString = 'Username: ' + userName + '<br> Fields: ' + fields + '<br> City: ' + city + '<br> Behance: ' + userURL;
+
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+
+
         mark[i] = new google.maps.Marker({
             position: pos,
-            optimized: true,
+            optimized: false,
             fillColor: "#0000FF",
             map: map,
             name: "marker" + i,
@@ -544,12 +587,217 @@ function markers() {
                 scaledSize: new google.maps.Size(50, 50)
             }
         });
+
+
+        mark[i].addListener('mouseover', function () {
+            infowindow.open(map, mark[i]);
+        });
+
+        mark[i].addListener('mouseout', function () {
+            infowindow.close(map, mark[i]);
+        });
+
     }
 }
 
 
 
 
+
+
+
+
+
+/*
+
+——————————————————————————————————————————————————————————————————————
+——————————————————————————————————————————————————————————————————————
+——————————————————————————————————————————————————————————————————————
+——————————————————————————————————————————————————————————————————————
+——————————————————————————————————————————————————————————————————————
+——————————————————————————————————————————————————————————————————————
+——————————————————————————————————————————————————————————————————————
+——————————————————————————————————————————————————————————————————————
+
+
+*/
+
+
+
+
+
+
+
+
+
+/*
+
+
+
+
+
+
+var overlay;
+var USGSOverlay;
+
+
+// Initialize the map and the custom overlay.
+
+function initMap() {
+    USGSOverlay.prototype = new google.maps.OverlayView();
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 8,
+        center: {
+            lat: 62.323907,
+            lng: -150.109291
+        },
+        mapTypeId: 'satellite'
+    });
+
+    var bounds = new google.maps.LatLngBounds(
+        new google.maps.LatLng(62.281819, -150.287132),
+        new google.maps.LatLng(62.400471, -150.005608));
+
+    // The photograph is courtesy of the U.S. Geological Survey.
+
+    var srcImage = userImageMarker[1];
+
+    // The custom USGSOverlay object contains the USGS image,
+    // the bounds of the image, and a reference to the map.
+    overlay = new USGSOverlay(bounds, srcImage, map);
+
+
+
+
+
+
+    // @constructor
+    function USGSOverlay(bounds, image, map) {
+
+        // Initialize all properties.
+        this.bounds_ = bounds;
+        this.image_ = image;
+        this.map_ = map;
+
+        // Define a property to hold the image's div. We'll
+        // actually create this div upon receipt of the onAdd()
+        // method so we'll leave it null for now.
+        this.div_ = null;
+
+        // Explicitly call setMap on this overlay.
+        this.setMap(map);
+    }
+
+
+    
+     // onAdd is called when the map's panes are ready and the overlay has been
+     // added to the map.
+     
+    USGSOverlay.prototype.onAdd = function () {
+
+        var div = document.createElement('div');
+        $(div).addClass('map_icon');
+
+
+        div.style.position = 'absolute';
+
+        // Create the img element and attach it to the div.
+        var img = document.createElement('img');
+        img.src = this.image_;
+        img.style.width = '30px';
+        img.style.height = '30px';
+        img.style.position = 'relative';
+        img.style.borderStyle = 'solid';
+        img.style.borderRadius = '50%';
+        img.style.borderWidth = '4px';
+        img.style.borderColor = 'red';
+        img.style.zIndex = '1000';
+        div.appendChild(img);
+
+        this.div_ = div;
+
+        // Add the element to the "overlayLayer" pane.
+        var panes = this.getPanes();
+        panes.overlayLayer.appendChild(div);
+
+
+    };
+
+
+    USGSOverlay.prototype.draw = function () {
+
+        // We use the south-west and north-east
+        // coordinates of the overlay to peg it to the correct position and size.
+        // To do this, we need to retrieve the projection from the overlay.
+        var overlayProjection = this.getProjection();
+
+        // Retrieve the south-west and north-east coordinates of this overlay
+        // in LatLngs and convert them to pixel coordinates.
+        // We'll use these coordinates to resize the div.
+        var sw = overlayProjection.fromLatLngToDivPixel(this.bounds_.getSouthWest());
+        var ne = overlayProjection.fromLatLngToDivPixel(this.bounds_.getNorthEast());
+
+        // Resize the image's div to fit the indicated dimensions.
+        var div = this.div_;
+        div.style.left = sw.x + 'px';
+        div.style.top = ne.y + 'px';
+        div.style.width = (ne.x - sw.x) + 'px';
+        div.style.height = (sw.y - ne.y) + 'px';
+
+        div.style.width = '30px';
+        div.style.height = '30px';
+
+    };
+
+    // The onRemove() method will be called automatically from the API if
+    // we ever set the overlay's map property to 'null'.
+    USGSOverlay.prototype.onRemove = function () {
+        this.div_.parentNode.removeChild(this.div_);
+        this.div_ = null;
+    };
+
+
+    // Set the visibility to 'hidden' or 'visible'.
+    USGSOverlay.prototype.hide = function () {
+        if (this.div_) {
+            // The visibility property must be a string enclosed in quotes.
+            this.div_.style.visibility = 'hidden';
+        }
+    };
+
+    USGSOverlay.prototype.show = function () {
+        if (this.div_) {
+            this.div_.style.visibility = 'visible';
+        }
+    };
+
+    USGSOverlay.prototype.toggle = function () {
+        if (this.div_) {
+            if (this.div_.style.visibility === 'hidden') {
+                this.show();
+            } else {
+                this.hide();
+            }
+        }
+    };
+
+    // Detach the map from the DOM via toggleDOM().
+    // Note that if we later reattach the map, it will be visible again,
+    // because the containing <div> is recreated in the overlay's onAdd() method.
+    USGSOverlay.prototype.toggleDOM = function () {
+        if (this.getMap()) {
+            // Note: setMap(null) calls OverlayView.onRemove()
+            this.setMap(null);
+        } else {
+            this.setMap(this.map_);
+        }
+    };
+
+}
+
+
+
+*/
 
 
 
