@@ -14,9 +14,7 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
-    <!-- Ficheiro JavaScript -->
-    <script src="javaScript/search.js"></script>
-
+    
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
@@ -28,7 +26,8 @@
 
 </head>
 
-<body>
+    
+<body onload="initialize()">
 
     <div id="procura">
         <div class="leftCol">
@@ -63,14 +62,16 @@
 
     <div id="map"></div>
 
-
-
     <div id="dados"></div>
 
 
 </body>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2VPJOkLkP7xVjMsgQY6n7BA4yRqu3tQg&libraries=places&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2VPJOkLkP7xVjMsgQY6n7BA4yRqu3tQg&libraries=places&callback=initialize" async defer></script>
 
+    <!-- Ficheiro JavaScript -->
+    <script src="javaScript/search.js"></script>
+
+    
 <!-- &callback=initMap-->
 
 </html>

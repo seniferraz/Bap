@@ -19,18 +19,28 @@
     display: inline-block;
     position: absolute;
     top: 0;
-    background-color: #ff4500;
+    background-color: transparent;
     border-radius: 100%;
     -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
     animation: sk-bounce 2.0s infinite ease-in-out;
+    
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 2px solid #ff5800;
 }
 
 .dot2 {
-    background-color: #ffe200;
+    background-color: transparent;
     top: auto;
     bottom: 0;
     -webkit-animation-delay: -1.0s;
     animation-delay: -1.0s;
+    
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 2px solid #00c4ff;
 }
 
 @-webkit-keyframes sk-rotate {

@@ -52,7 +52,7 @@ function drawChart() {
     var options = {
         'title': 'Users by field',
         'width': 500,
-        'height': 300
+        'height': 300,
     };
 
     // Instantiate and draw our chart, passing in some options.

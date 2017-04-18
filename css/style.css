@@ -111,3 +111,50 @@ body {
     margin-top: 4px;
     margin-right: 10px;
 }
+
+.map_icon {
+    background-color: aqua;
+    z-index: 30000;
+}
+
+.map_icon:hover {
+    background-color: mediumvioletred;
+    z-index: 30000;
+}
+
+
+
+
+
+
+
+
+
+/*——————————————————————————————————————————————————————
+——————————————————————————————————————————————————————
+*/
+
+.roundCorners img {
+    width: 30px;
+    height: 30px;
+    border: 2px solid blue;
+    border-radius: 50% !important;
+}
+
+
+.Illustration img {
+    border-color: orange;
+}
+
+
+.htmlMarker img {
+    width: 30px;
+    height: 30px;
+    border: 2px solid red;
+    border-radius: 50% !important;
+}
+
+/*img.userImage:hover {
+    border: 2px solid blue !important;
+}
+*/
