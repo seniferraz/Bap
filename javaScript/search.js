@@ -58,6 +58,21 @@ var colors = {
 };
 
 
+
+var cor = [];
+cor["Animation"] = "#F44336";
+cor["GraphicDesign"] = "#E91E63";
+cor["Branding"] = "#9C27B0";
+
+console.log(cor.Animation + "rrrr");
+
+
+
+
+
+
+
+
 //  —— Behance api   —————————————————————————————
 
 $(function () {
@@ -162,18 +177,18 @@ function processUserInfo(response) {
 
 
     }
-    
-    
-    
-    console.log(userName.length + " userName.length");
-    console.log(" — — — — — — ");
-    console.log(userField.length + " fields.length");
-    console.log(" — — — — — — ");
-    console.log(city.length + " city.length");
-    console.log(" — — — — — — ");
-    console.log(userURL.length + " userURL.length");
-    console.log(" — — — — — — ");
-    console.log(userImageMarker.length + " userImageMarker.length");
+
+
+
+    /* console.log(userName.length + " userName.length");
+     console.log(" — — — — — — ");
+     console.log(userField.length + " fields.length");
+     console.log(" — — — — — — ");
+     console.log(city.length + " city.length");
+     console.log(" — — — — — — ");
+     console.log(userURL.length + " userURL.length");
+     console.log(" — — — — — — ");
+     console.log(userImageMarker.length + " userImageMarker.length");*/
 
 
     for (var i = 0; i < userName.length; i++) {
@@ -221,7 +236,7 @@ function processUserInfo(response) {
 
         //atribui cor do círculo de acordo com o field mais popular do user
         for (var k = 0; k < colors.field.length; k++) {
-            console.log(userField[i] + "");
+            // console.log(userField[i] + "");
             if (userField[i] === String(colors.field[k])) {
                 userColor[i] = colors.color[k];
 
@@ -241,7 +256,7 @@ function processUserInfo(response) {
 
         }
 
-        console.log("USER COLOR " + userColor[i]);
+        // console.log("USER COLOR " + userColor[i]);
 
         //detetar se o utilizador tem foto de perfil
 
@@ -270,8 +285,8 @@ function processUserInfo(response) {
         }
 
         $(".spinner").hide();
-        
-        
+
+
     }
 
 
@@ -286,9 +301,9 @@ function processUserInfo(response) {
 
 
 
-//    setTimeout(function () {
-        initialize();
-//    }, 3000);
+    //    setTimeout(function () {
+    initialize();
+    //    }, 3000);
 
 }
 
@@ -338,12 +353,33 @@ function searching() {
     $(".spinner").show();
 }
 
+(function () {
+    for (var i = 0; i < userName.length; i++) {
+
+        console.log(" COMEÇAAAAAAAAA — — — — — — —  — — ");
+        console.log(userName[i] + " userName.length[i]");
+        console.log(" — — — — — — ");
+        console.log(userField[i] + " fields.length[i]");
+        console.log(" — — — — — — ");
+        console.log(city[i] + " city.length[i]");
+        console.log(" — — — — — — ");
+        console.log(userURL[i] + " userURL.length[i]");
+        console.log(" — — — — — — ");
+        console.log(userImageMarker[i] + " userImageMarker.length[i]");
+
+    }
+});
+
+
 
 
 
 var overlay;
 
 function initialize() {
+
+
+
 
 
     var myLatLng = new google.maps.LatLng(52.323907, -150.109291);
@@ -369,27 +405,45 @@ function initialize() {
 
 
     console.log("passou");
-    console.log(image + "   image url");
+    //  console.log(image + "   image url");
 
 
     for (var i = 0; i < userColor.length; i++) {
+
+
+
+
+
 
         HTMLMarker.prototype.onAdd = function () {
             div = document.createElement('DIV');
             div.style.position = 'absolute';
             div.className = userField[2] + " roundCorners";
-            console.log("");
+            //       console.log("");
             /*div.innerHTML = '<img class = "userImage" src="' + userImageMarker[i] + '" alt="Profile Image" style="width:30px;height:30px; border-radius: 50%; border: 2px solid' + userColor[i] + '">';*/
             div.innerHTML = '<img class = "userImage" src="' + userImageMarker[i] + '" alt="Profile Image"">';
 
-            console.log(userColor[i] + " — — — userColor[i]");
-            console.log(userImageMarker[i] + " — — — userImage[i]");
+            // console.log(userColor[i] + " — — — userColor[i]");
+            //console.log(userImageMarker[i] + " — — — userImage[i]");
 
             /*div.innerHTML = '<img src=' + userImageMarker[1] + ' alt="Mountain View" style="width:30px;height:30px; border-radius: 50%; border: 2px solid red">';*/
 
             var panes = this.getPanes();
             panes.overlayImage.appendChild(div);
             this.div = div;
+
+
+            console.log(" COMEÇAAAAAAAAA — — — — — — —  — — ");
+            console.log(userName[i] + " == userName.length[i]");
+            console.log(" — — — — — — ");
+            console.log(userField[i] + " == fields.length[i]");
+            console.log(" — — — — — — ");
+            console.log(city[i] + " == city.length[i]");
+            console.log(" — — — — — — ");
+            console.log(userURL[i] + " == userURL.length[i]");
+            console.log(" — — — — — — ");
+            console.log(userImageMarker[i] + " == userImageMarker.length[i]");
+
         }
 
 
