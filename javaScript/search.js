@@ -24,7 +24,6 @@ var locations;
 var fields;
 
 //foto perfil user
-var image = "";
 var userImageMarker = [];
 
 
@@ -135,13 +134,11 @@ function getUserInfo() {
 
 function processUserInfo(response) {
 
-    for (var k = 0; k < colors.field.length; k++) {
 
         //reposição dos valores "used" e "users" de cada field para mostragem na legenda e no gráfico
         colors.used = ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'];
         colors.users = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-    }
 
 
 
@@ -160,7 +157,7 @@ function processUserInfo(response) {
 
         //ir buscar foto de perfil de cada utilizador
         for (var s in response.users[i].images) {
-            image = response.users[i].images[s];
+            userImageMarker[i] = response.users[i].images[s];
             break;
             //para guardar a segunda
 
@@ -170,9 +167,6 @@ function processUserInfo(response) {
             //tamanho++;
         }
 
-
-        //guarda todas as imagens dos users num array
-        userImageMarker[i] = image;
 
 
 
@@ -200,7 +194,7 @@ function processUserInfo(response) {
 
         //https://developers.google.com/maps/documentation/javascript/geocoding
 
-        $.getJSON({
+/*        $.getJSON({
             url: 'https://maps.googleapis.com/maps/api/geocode/json',
             data: {
                 sensor: false,
@@ -224,7 +218,7 @@ function processUserInfo(response) {
             error: function () {
                 alert("error");
             }
-        });
+        });*/
 
 
 
@@ -237,10 +231,10 @@ function processUserInfo(response) {
         //atribui cor do círculo de acordo com o field mais popular do user
         for (var k = 0; k < colors.field.length; k++) {
             // console.log(userField[i] + "");
-            if (userField[i] === String(colors.field[k])) {
+            if (userField[i] === colors.field[k]) {
                 userColor[i] = colors.color[k];
 
-                //para adicionar à barra de legenda
+                //para adicionar à barra de legenda e aos gráficos
 
                 // ——— Não pode ser aqui, só pode ser considerado true, aqueles que são mostrados
 
@@ -260,7 +254,7 @@ function processUserInfo(response) {
 
         //detetar se o utilizador tem foto de perfil
 
-        var string = String(image);
+        var string = userImageMarker[i];
         var substring = "/img/profile/no-image";
 
         if (string.includes(substring))
@@ -353,7 +347,7 @@ function searching() {
     $(".spinner").show();
 }
 
-(function () {
+/*(function () {
     for (var i = 0; i < userName.length; i++) {
 
         console.log(" COMEÇAAAAAAAAA — — — — — — —  — — ");
@@ -369,7 +363,7 @@ function searching() {
 
     }
 });
-
+*/
 
 
 
@@ -408,43 +402,10 @@ function initialize() {
     //  console.log(image + "   image url");
 
 
+    console.log(userColor.length+" vs "+userImageMarker.length);
+    console.dir(userColor);
+    console.dir(userImageMarker);
     for (var i = 0; i < userColor.length; i++) {
-
-
-
-
-
-
-        HTMLMarker.prototype.onAdd = function () {
-            div = document.createElement('DIV');
-            div.style.position = 'absolute';
-            div.className = userField[2] + " roundCorners";
-            //       console.log("");
-            /*div.innerHTML = '<img class = "userImage" src="' + userImageMarker[i] + '" alt="Profile Image" style="width:30px;height:30px; border-radius: 50%; border: 2px solid' + userColor[i] + '">';*/
-            div.innerHTML = '<img class = "userImage" src="' + userImageMarker[i] + '" alt="Profile Image"">';
-
-            // console.log(userColor[i] + " — — — userColor[i]");
-            //console.log(userImageMarker[i] + " — — — userImage[i]");
-
-            /*div.innerHTML = '<img src=' + userImageMarker[1] + ' alt="Mountain View" style="width:30px;height:30px; border-radius: 50%; border: 2px solid red">';*/
-
-            var panes = this.getPanes();
-            panes.overlayImage.appendChild(div);
-            this.div = div;
-
-
-            console.log(" COMEÇAAAAAAAAA — — — — — — —  — — ");
-            console.log(userName[i] + " == userName.length[i]");
-            console.log(" — — — — — — ");
-            console.log(userField[i] + " == fields.length[i]");
-            console.log(" — — — — — — ");
-            console.log(city[i] + " == city.length[i]");
-            console.log(" — — — — — — ");
-            console.log(userURL[i] + " == userURL.length[i]");
-            console.log(" — — — — — — ");
-            console.log(userImageMarker[i] + " == userImageMarker.length[i]");
-
-        }
 
 
         HTMLMarker.prototype.draw = function () {
@@ -460,10 +421,48 @@ function initialize() {
 
         //to use it
         var htmlMarker = new HTMLMarker(52.323907 + randomize, -150.109291 + randomize2);
+                htmlMarker.onAdd = overlay(userImageMarker[i], htmlMarker);
         htmlMarker.setMap(gmap);
 
     }
 
+}
+
+
+function overlay(img, marker) {
+    
+    return function(){
+
+            div = document.createElement('DIV');
+            div.style.position = 'absolute';
+            div.className = userField[2] + " roundCorners";
+            //       console.log("");
+            /*div.innerHTML = '<img class = "userImage" src="' + userImageMarker[i] + '" alt="Profile Image" style="width:30px;height:30px; border-radius: 50%; border: 2px solid' + userColor[i] + '">';*/
+            div.innerHTML = '<img class = "userImage" src="' + img + '" alt="Profile Image"">';
+
+            // console.log(userColor[i] + " — — — userColor[i]");
+            //console.log(userImageMarker[i] + " — — — userImage[i]");
+
+            /*div.innerHTML = '<img src=' + userImageMarker[1] + ' alt="Mountain View" style="width:30px;height:30px; border-radius: 50%; border: 2px solid red">';*/
+
+            var panes = marker.getPanes();
+            panes.overlayImage.appendChild(div);
+            marker.div = div;
+
+    console.log(img);
+
+/*            console.log(" COMEÇAAAAAAAAA — — — — — — —  — — ");
+            console.log(userName[i] + " == userName.length[i]");
+            console.log(" — — — — — — ");
+            console.log(userField[i] + " == fields.length[i]");
+            console.log(" — — — — — — ");
+            console.log(city[i] + " == city.length[i]");
+            console.log(" — — — — — — ");
+            console.log(userURL[i] + " == userURL.length[i]");
+            console.log(" — — — — — — ");
+            console.log(userImageMarker[i] + " == userImageMarker.length[i]");*/
+
+        }
 }
 
 

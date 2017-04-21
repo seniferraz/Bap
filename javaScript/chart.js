@@ -31,8 +31,8 @@ google.charts.load('current', {
 
 // Callback that creates and populates a data table, instantiates the bar chart, passes in the data and draws it.
 function drawChart() {
-    
-    
+
+
     // Create the data table.
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Field');
@@ -53,6 +53,7 @@ function drawChart() {
         'title': 'Users by field',
         'width': 500,
         'height': 300,
+        colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6']
     };
 
     // Instantiate and draw our chart, passing in some options.
