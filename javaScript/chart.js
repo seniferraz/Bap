@@ -6,7 +6,7 @@ $(function () {
         console.log("click");
         if ($("#chart").css('display') == 'none') {
             $("#chart").show();
-            $("#moreinfo").html("&#x2715;");
+            $("#moreinfo").html("&#x2715;"); //cruz para fechar janela
         } else {
             $("#chart").hide();
             $("#moreinfo").html("More informations");
@@ -27,8 +27,6 @@ google.charts.load('current', {
 //google.charts.setOnLoadCallback(drawChart);   ———   neste caso feito no search.js para usar dados dos resultados da pesquisa
 
 
-
-
 // Callback that creates and populates a data table, instantiates the bar chart, passes in the data and draws it.
 function drawChart() {
 
@@ -37,14 +35,22 @@ function drawChart() {
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Field');
     data.addColumn('number', 'Users');
-
+    
+    //data.addColumn({ type: 'string', role: 'style' });
+    
     for (var k = 0; k < colors.field.length; k++) {
         if (colors.used[k] == 'true') {
 
-            data.addRows([
-            [colors.field[k], colors.users[k]],
+            data.addRows([[colors.field[k], colors.users[k]]]);
 
-        ]);
+            /*
+            data.addRows(2);
+
+            data.setValue(k, 0, colors.field[k]);
+            data.setValue(k, 1, colors.users[k]);
+            data.setValue(k, 2, colors.color[k]);
+            
+            */
         }
     }
 
@@ -53,7 +59,8 @@ function drawChart() {
         'title': 'Users by field',
         'width': 500,
         'height': 300,
-        colors: ["#00BCD4"]
+        legend: 'none'
+        //colors: ["#00BCD4", "#f500ff"]
     };
 
     // Instantiate and draw our chart, passing in some options.
