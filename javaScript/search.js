@@ -1,6 +1,5 @@
 //  —— inicializações   —————————————————————————————
 
-
 $("#start").hover(function () {
     console.log("foi para cima");
     $("#startAnimation").show(400);
@@ -8,20 +7,20 @@ $("#start").hover(function () {
 });
 
 
-//Google Maps api key
+//Google Maps API key
 var googleMapsApiKey = 'AIzaSyA2VPJOkLkP7xVjMsgQY6n7BA4yRqu3tQg';
 
 var api_key = 'pGGIf6rZKW1YcIXnIrDHk7fTbvjwXsht';
 //var api_key = 'Hr4r14bPbRdZq220clN8zGAvKvrO0TAz';
 
-//URL pedido behance
+//URL pedido Behance
 var URL = 'https://api.behance.net/v2/users';
 
 
 // Nome do utilizador (username, nome ou apelido), localização e campos de criação a analisar
 var query;
-var locations;
-var fields;
+var locationsInput;
+var fieldsInput;
 
 //foto perfil user
 var userImageMarker = [];
@@ -33,10 +32,10 @@ var userLng;
 
 
 var userName = [];
-var fields = [];
+var fields = []; //top 3
 var city = [];
 var userURL = [];
-var userField = [];
+var userField = []; //1º
 var userColor = [];
 
 
@@ -45,8 +44,6 @@ var userPos = {
     y: []
 };
 
-
-var mark = [];
 
 //Campos de criação, respetiva cor, se é usado (existe nos resultados da pesquisa) e nº de users (dos resultados)
 var colors = {
@@ -57,6 +54,7 @@ var colors = {
 };
 
 
+/*
 
 var cor = [];
 cor["Animation"] = "#F44336";
@@ -65,19 +63,13 @@ cor["Branding"] = "#9C27B0";
 
 console.log(cor.Animation + "rrrr");
 
+*/
 
 
-
-
-
-
-
-//  —— Behance api   —————————————————————————————
-
-$(function () {
+$(function () { //quando a página carregou
     $(".spinner").hide();
 
-    $("#search").click(search); //search quando se carrega no botão
+    $("#search").click(search); //pesquisa quando se carrega no botão
 
     $('input').keypress(function (ev) {
         if (ev.keyCode === 13) {
@@ -86,31 +78,29 @@ $(function () {
     });
 
 
-
     $(".userImage").mouseover(function () {
         console.log("ANDAAAAA");
     });
 
 });
 
-function search() {
+
+function search() { //quando se carrega em Search ou se faz enter num dos inputs
     $("#dados").empty();
-    //console.log("carregou");
 
     query = $("#name").val();
-    locations = $("#city").val();
-    fields = $("#fields").val();
+    locationsInput = $("#city").val();
+    fieldsInput = $("#fields").val();
 
-    //console.log("QUERY == " + query);
-    //console.log("location == " + locations);
-    //console.log("fields == " + fields);
-
-    searching();
+    $(".spinner").show();
 
     getUserInfo();
 
-
 }
+
+
+//  —— BEHANCE API   —————————————————————————————
+
 
 function getUserInfo() {
 
@@ -120,7 +110,7 @@ function getUserInfo() {
         data: {
             api_key: api_key,
             sort: 'followed',
-            city: locations,
+            city: locationsInput,
             field: fields,
             page: 1 //iterar para ver mais users (com for não deu)
         },
@@ -131,58 +121,34 @@ function getUserInfo() {
 }
 
 
-
 function processUserInfo(response) {
 
+    //a cada nova pesquisa
 
-        //reposição dos valores "used" e "users" de cada field para mostragem na legenda e no gráfico
-        colors.used = ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'];
-        colors.users = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-
+    //reposição dos valores "used" e "users" de cada field para mostragem na legenda e no gráfico
+    colors.used = ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'];
+    colors.users = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 
     //processa dados do utilizador (response) e mostra-os
     for (var i = 0; i < response.users.length; i++) {
 
         userName[i] = response.users[i].display_name;
-        fields[i] = response.users[i].fields;
+        fields[i] = response.users[i].fields; //top 3
         city[i] = response.users[i].city;
         userURL[i] = response.users[i].url;
 
-        //campo de criação mais popular de cada user - [0] do split
+        //campo de criação mais popular de cada user - 1º do top 3
         userField[i] = response.users[i].fields[0];
 
-        //var tamanho = 0;
 
         //ir buscar foto de perfil de cada utilizador
         for (var s in response.users[i].images) {
             userImageMarker[i] = response.users[i].images[s];
             break;
-            //para guardar a segunda
-
-            /*if (tamanho == 1) {
-               break; 
-            }*/
-            //tamanho++;
+            //para guardar a segunda imagem de cada user (tamanhos ≠s)
         }
-
-
-
-
     }
-
-
-
-    /* console.log(userName.length + " userName.length");
-     console.log(" — — — — — — ");
-     console.log(userField.length + " fields.length");
-     console.log(" — — — — — — ");
-     console.log(city.length + " city.length");
-     console.log(" — — — — — — ");
-     console.log(userURL.length + " userURL.length");
-     console.log(" — — — — — — ");
-     console.log(userImageMarker.length + " userImageMarker.length");*/
 
 
     for (var i = 0; i < userName.length; i++) {
@@ -190,47 +156,43 @@ function processUserInfo(response) {
 
         /*—————— Geocoding ————————— */
 
-
-
         //https://developers.google.com/maps/documentation/javascript/geocoding
 
-/*        $.getJSON({
-            url: 'https://maps.googleapis.com/maps/api/geocode/json',
-            data: {
-                sensor: false,
-                address: city[i]
-            },
+        /*        $.getJSON({
+                    url: 'https://maps.googleapis.com/maps/api/geocode/json',
+                    data: {
+                        sensor: false,
+                        address: city[i]
+                    },
 
-            success: function (data, textStatus) {
-                //console.log(textStatus, data);
-                //console.log(data.results[0].geometry.location);
-                userLat = data.results[0].geometry.location.lat;
-                userLng = data.results[0].geometry.location.lng;
+                    success: function (data, textStatus) {
+                        //console.log(textStatus, data);
+                        //console.log(data.results[0].geometry.location);
+                        userLat = data.results[0].geometry.location.lat;
+                        userLng = data.results[0].geometry.location.lng;
 
-                userPos.x[i] = data.results[0].geometry.location.lat;
-                userPos.y[i] = data.results[0].geometry.location.lng;
-
-
-                //console.log(userPos.x[i] + "userLat");
-                //console.log(userPos.y[i] + "userLng");
-            },
-
-            error: function () {
-                alert("error");
-            }
-        });*/
+                        userPos.x[i] = data.results[0].geometry.location.lat;
+                        userPos.y[i] = data.results[0].geometry.location.lng;
 
 
+                        //console.log(userPos.x[i] + "userLat");
+                        //console.log(userPos.y[i] + "userLng");
+                    },
+
+                    error: function () {
+                        alert("error");
+                    }
+                });
+        */
 
 
         /*—————— FIM Geocoding ————————— */
 
 
 
-
-        //atribui cor do círculo de acordo com o field mais popular do user
+        //atribui cor da borda de acordo com o field mais popular do user
         for (var k = 0; k < colors.field.length; k++) {
-            // console.log(userField[i] + "");
+
             if (userField[i] === colors.field[k]) {
                 userColor[i] = colors.color[k];
 
@@ -250,65 +212,56 @@ function processUserInfo(response) {
 
         }
 
-        // console.log("USER COLOR " + userColor[i]);
 
         //detetar se o utilizador tem foto de perfil
-
         var string = userImageMarker[i];
         var substring = "/img/profile/no-image";
 
+        
+        
+        //------------------REVER - NÃO FUNCIONA PARA NÃO MOSTRAR NO MAPA -----------------------------------!!!!    
         if (string.includes(substring))
             break;
 
-        //apenas mostra as pessoas com campos de criação
-        if ((userField[i] != "")) {
+        
+        if ((userField[i] != "")) { //apenas mostra as pessoas com campos de criação definido
 
             $("#dados").append("<hr>");
             $("#dados").append("<p>" + userName[i] + "</p>");
             $("#dados").append("<p><a href=" + userURL[i] + ">Link Behance</a></p>");
-            $("#dados").append('<img class = "userImage" id="user' + i + '" src=' + userImageMarker[i] + ' height="90" width="90" alt="Profile Image">');
+
+            $("#dados").append('<img class = "userImage" id="users' + i + '" src=' + userImageMarker[i] + ' height="90" width="90" alt="Profile Image">');
+            $("#users" + i).css("border-color", userColor[i]); //atribuir borda da respetiva cor à foto do user
+
             $("#dados").append("<p> City: " + city[i] + "</p>");
             $("#dados").append("<p> Fields: " + fields[i] + "</p>");
             $("#dados").append("<p> FIELD MAIS POPULAR: " + userField[i] + "</p>");
             $("#dados").append("<p> COR DO FIELD: " + userColor[i] + "</p>");
 
-            //atribuir borda a foto e respetiva cor
-            $("#user" + i).css("border-weight", "4px");
-            $("#user" + i).css("border-color", userColor[i]);
-
         }
 
         $(".spinner").hide();
 
-
     }
 
 
-    //initMap();
     ShowLegend();
-    //initialize();
+
     /*—————— Chart ————————— */
-    // Só corre o drawChart depois dos resultados da pesquisa serem processados, para estes poderem ser usados no gráfico
+    //só corre o drawChart depois dos resultados da pesquisa serem processados, para estes poderem ser usados no gráfico
     drawChart();
 
     $("#moreinfo").show();
 
-
-
-    //    setTimeout(function () {
     initialize();
-    //    }, 3000);
 
 }
 
 
-
-//preenche o footer legenda com as cores do array colors
-function ShowLegend() {
+function ShowLegend() { //preenche o footer com a legenda das cores dos fields
 
     $("#footer").empty();
 
-    //preenche o footer legenda com as cores do array colors
     for (var k = 0; k < colors.field.length; k++) {
         if (colors.used[k] == 'true') {
             /*$("#footer").append('<span class="shapes" id="shape' + k + '"></span>');*/
@@ -329,11 +282,10 @@ function ShowLegend() {
 }
 
 
-
-
 function log(message) {
     $("#status").append(message + "<br>");
 }
+
 
 function logError(actividade) {
     return function (data) {
@@ -342,145 +294,24 @@ function logError(actividade) {
     }
 }
 
-function searching() {
-    //$("#status").empty();
-    $(".spinner").show();
-}
 
-/*(function () {
-    for (var i = 0; i < userName.length; i++) {
-
-        console.log(" COMEÇAAAAAAAAA — — — — — — —  — — ");
-        console.log(userName[i] + " userName.length[i]");
-        console.log(" — — — — — — ");
-        console.log(userField[i] + " fields.length[i]");
-        console.log(" — — — — — — ");
-        console.log(city[i] + " city.length[i]");
-        console.log(" — — — — — — ");
-        console.log(userURL[i] + " userURL.length[i]");
-        console.log(" — — — — — — ");
-        console.log(userImageMarker[i] + " userImageMarker.length[i]");
-
-    }
-});
-*/
-
-
+//  —— GOOGLE MAPS API   ———————————————————
 
 
 var overlay;
+var gmap; //mapa tem que estar definido fora do initialize para o resize funcionar
+
+//ponto central (latitude e lonigtude) de Coimbra - ponto inicial
+var coimbralat = 40.2033145;
+var coimbralng = -8.4102573;
+
 
 function initialize() {
 
-
-
-
-
-    var myLatLng = new google.maps.LatLng(52.323907, -150.109291);
-    var mapOptions = {
-        zoom: 8,
-        center: myLatLng,
-        mapTypeId: google.maps.MapTypeId.SATELLITE
-    };
-
-    var gmap = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-    function HTMLMarker(lat, lng) {
-        this.lat = lat;
-        this.lng = lng;
-        this.pos = new google.maps.LatLng(lat, lng);
-    }
-
-    HTMLMarker.prototype = new google.maps.OverlayView();
-    HTMLMarker.prototype.onRemove = function () {}
-
-    //init your html element here
-
-
-
-    console.log("passou");
-    //  console.log(image + "   image url");
-
-
-    console.log(userColor.length+" vs "+userImageMarker.length);
-    console.dir(userColor);
-    console.dir(userImageMarker);
-    for (var i = 0; i < userColor.length; i++) {
-
-
-        HTMLMarker.prototype.draw = function () {
-            var overlayProjection = this.getProjection();
-            var position = overlayProjection.fromLatLngToDivPixel(this.pos);
-            var panes = this.getPanes();
-            this.div.style.left = position.x + 'px';
-            this.div.style.top = position.y - 30 + 'px';
-        }
-
-        var randomize = ((Math.random() * 2) - 1) / 10;
-        var randomize2 = ((Math.random() * 2) - 1) / 10;
-
-        //to use it
-        var htmlMarker = new HTMLMarker(52.323907 + randomize, -150.109291 + randomize2);
-                htmlMarker.onAdd = overlay(userImageMarker[i], htmlMarker);
-        htmlMarker.setMap(gmap);
-
-    }
-
-}
-
-
-function overlay(img, marker) {
-    
-    return function(){
-
-            div = document.createElement('DIV');
-            div.style.position = 'absolute';
-            div.className = userField[2] + " roundCorners";
-            //       console.log("");
-            /*div.innerHTML = '<img class = "userImage" src="' + userImageMarker[i] + '" alt="Profile Image" style="width:30px;height:30px; border-radius: 50%; border: 2px solid' + userColor[i] + '">';*/
-            div.innerHTML = '<img class = "userImage" src="' + img + '" alt="Profile Image"">';
-
-            // console.log(userColor[i] + " — — — userColor[i]");
-            //console.log(userImageMarker[i] + " — — — userImage[i]");
-
-            /*div.innerHTML = '<img src=' + userImageMarker[1] + ' alt="Mountain View" style="width:30px;height:30px; border-radius: 50%; border: 2px solid red">';*/
-
-            var panes = marker.getPanes();
-            panes.overlayImage.appendChild(div);
-            marker.div = div;
-
-    console.log(img);
-
-/*            console.log(" COMEÇAAAAAAAAA — — — — — — —  — — ");
-            console.log(userName[i] + " == userName.length[i]");
-            console.log(" — — — — — — ");
-            console.log(userField[i] + " == fields.length[i]");
-            console.log(" — — — — — — ");
-            console.log(city[i] + " == city.length[i]");
-            console.log(" — — — — — — ");
-            console.log(userURL[i] + " == userURL.length[i]");
-            console.log(" — — — — — — ");
-            console.log(userImageMarker[i] + " == userImageMarker.length[i]");*/
-
-        }
-}
-
-
-
-//GOOGLE MAPS API   ———————————————————
-
-
-
-
-/*
-var map;
-
-
-function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
+    gmap = new google.maps.Map(document.getElementById('map'), {
         center: {
-            lat: 40.2033145,
-            lng: -8.4102573
+            lat: coimbralat,
+            lng: coimbralng
         },
         zoom: 10,
         disableDefaultUI: true,
@@ -649,93 +480,74 @@ function initMap() {
 ]
     });
 
-    markers();
-
     //centrar no resize
-    google.maps.event.addDomListener(window, 'load', initMap);
+    google.maps.event.addDomListener(window, 'load', initialize);
     google.maps.event.addDomListener(window, "resize", function () {
-        var center = map.getCenter();
-        google.maps.event.trigger(map, "resize");
-        map.setCenter(center);
+        var center = gmap.getCenter();
+        google.maps.event.trigger(gmap, "resize");
+        gmap.setCenter(center);
     });
 
+
     //zoom máximo e minimo do mapa
-    map.setOptions({
+    gmap.setOptions({
         minZoom: 3,
         maxZoom: 12
     });
-}
 
 
-function markers() {
-
-    //cria o numero de marcadores de acordo com o numero de users a mostrar
-    for (var k = 0; k < userImageMarker.length; k++) {
-        mark[k] = "marker" + k;
+    function HTMLMarker(lat, lng) {
+        this.lat = lat;
+        this.lng = lng;
+        this.pos = new google.maps.LatLng(lat, lng);
     }
 
-    for (var i = 0; i < mark.length; i++) {
+    HTMLMarker.prototype = new google.maps.OverlayView();
+    HTMLMarker.prototype.onRemove = function () {}
+
+
+    for (var i = 0; i < userName.length; i++) {
+
+        HTMLMarker.prototype.draw = function () {
+            var overlayProjection = this.getProjection();
+            var position = overlayProjection.fromLatLngToDivPixel(this.pos);
+            var panes = this.getPanes();
+            this.div.style.left = position.x + 'px';
+            this.div.style.top = position.y - 30 + 'px';
+        }
 
         var randomize = ((Math.random() * 2) - 1) / 10;
         var randomize2 = ((Math.random() * 2) - 1) / 10;
 
+        var htmlMarker = new HTMLMarker(coimbralat + randomize, coimbralng + randomize2);
+        htmlMarker.onAdd = overlay(userImageMarker[i], htmlMarker, i);
+        htmlMarker.setMap(gmap);
+    }
 
-        if (userPos.x[i] == undefined)
-            userPos.x[i] = 40.2033145;
-
-        if (userPos.y[i] == undefined)
-            userPos.y[i] = -8.4102573;
-
-
-        console.log("XXXXX   " + userPos.x[i]);
-        console.log("YYYYY   " + userPos.y[i]);
+}
 
 
-        var x = (userPos.x[i] + randomize);
-        var y = (userPos.y[i] + randomize2);
+function overlay(img, marker, i) {
+
+    return function () {
+
+        div = document.createElement('DIV');
+        div.style.position = 'absolute';
+        div.className = userField[i] + " roundCorners";
+
+        div.innerHTML = '<img class = "userImage" id="us' + i + '" src="' + img + '" alt="Profile Image" style="border-color:' + userColor[i] + '">';
 
 
-
-
-        var pos = {
-            lat: x,
-            lng: y
-        };
-
-        //console.log("userImageMarker:::::  " + userImageMarker[i]);
-
-
-        /* google.maps.event.addListener(map, 'zoom_changed', function () {
-                 var zoomLevel = map.getZoom();
-                 tamanho = map.getZoom();
-                 console.log("ZOMMMM é de :   " + zoomLevel);
-                 //this is where you will do your icon height and width change.
-                 // scaledSize: new google.maps.Size(tamanho, tamanho);
-                });*/
-
-
-/*
-
-        mark[i] = new google.maps.Marker({
-            position: pos,
-            optimized: false,
-            fillColor: "#0000FF",
-            map: map,
-            name: "marker" + i,
-            scaledSize: new google.maps.Size(50, 50), // scaled size
-            animation: google.maps.Animation.DROP,
-            icon: {
-                url: userImageMarker[i],
-                scaledSize: new google.maps.Size(50, 50)
-            }
-        });
+        var panes = marker.getPanes();
+        panes.overlayImage.appendChild(div);
+        marker.div = div;
 
     }
 }
 
 
 
-*/
+
 
 
 
@@ -754,18 +566,6 @@ function markers() {
 
 
 */
-
-
-
-
-/*setInterval(function () {
-    $("htmlMarker").mouseover(function () {
-        console.log("ANDAAAAA");
-    });
-}, 300);*/
-
-
-
 
 
 

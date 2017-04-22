@@ -53,7 +53,7 @@ function drawChart() {
         'title': 'Users by field',
         'width': 500,
         'height': 300,
-        colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6']
+        colors: ["#00BCD4"]
     };
 
     // Instantiate and draw our chart, passing in some options.
