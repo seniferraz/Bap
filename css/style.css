@@ -45,7 +45,15 @@ body {
     border: none;
     box-shadow: 1px 1px 2px 0px lightgrey;
     border-radius: 3px;
-    outline: none;
+    /*outline: none;*/
+    padding: 0.5vh 1vw;
+    margin: 0.5vh;
+}
+
+#fields {
+    border: none;
+    box-shadow: 1px 1px 2px 0px lightgrey;
+    border-radius: 3px;
     padding: 0.5vh 1vw;
     margin: 0.5vh;
 }

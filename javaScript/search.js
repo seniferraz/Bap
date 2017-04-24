@@ -44,10 +44,10 @@ var userPos = {
 
 //Campos de criação, respetiva cor, se é usado (existe nos resultados da pesquisa) e nº de users (dos resultados)
 var colors = {
-    field: ['Animation', 'Graphic Design', 'Branding', 'Photography', 'Architecture', "Interaction Design", 'Drawing', 'Illustration', 'Typography', 'Packaging', 'Digital Art', 'Film', 'Design', 'UI/UX', 'Advertising', 'Calligraphy', 'Art Direction', 'Interaction Design', 'Web Design', 'Fashion', 'Industrial Design'],
-    color: ['#F44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722', '#795548', '#9E9E9E', '#607D8B', '#000000', '#f500ff'],
-    used: ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'],
-    users: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    field: ['Advertising', 'Animation', 'Architecture', 'Art Direction', 'Branding', 'Calligraphy', 'Digital Art', 'Drawing', 'Editorial Design', 'Fashion', 'Film', 'Graphic Design', 'Illustration', 'Industrial Design', 'Interaction Design', 'Interior Design', 'Journalism', 'Motion Graphics', 'Packaging', 'Photography', 'Programming', 'Typography', 'UI/UX', 'Web Design'],
+    color: ['#F44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722', '#795548', '#9E9E9E', '#607D8B', '#f500FF', '#880E4F', '#4DB6AC', '#B388FF', '#FF8A80'],
+    used: ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'],
+    users: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 };
 
 
@@ -88,7 +88,6 @@ function search() { //quando se carrega em Search ou se faz enter num dos inputs
     query = $("#name").val();
     locationsInput = $("#city").val();
     fieldsInput = $("#fields").val();
-
     $(".spinner").show();
 
     getUserInfo();
@@ -108,7 +107,7 @@ function getUserInfo() {
             api_key: api_key,
             sort: 'followed',
             city: locationsInput,
-            field: fields,
+            field: fieldsInput,
             page: 1 //iterar para ver mais users (com for não deu)
         },
         timeout: 1500,
@@ -302,6 +301,10 @@ var gmap; //mapa tem que estar definido fora do initialize para o resize funcion
 var coimbralat = 40.2033145;
 var coimbralng = -8.4102573;
 
+var userpos;
+var contentString;
+var infowindow;
+var mark;
 
 function initialize() {
 
@@ -520,7 +523,14 @@ function initialize() {
         var randomize = ((Math.random() * 2) - 1) / 10;
         var randomize2 = ((Math.random() * 2) - 1) / 10;
 
-        var htmlMarker = new HTMLMarker(coimbralat + randomize, coimbralng + randomize2);
+
+        userpos = {
+            lat: coimbralat + randomize,
+            lng: coimbralng + randomize2
+        };
+
+
+        var htmlMarker = new HTMLMarker(userpos);
         htmlMarker.onAdd = overlay(userImageMarker[i], htmlMarker, i);
 
 
@@ -536,6 +546,26 @@ function initialize() {
 
 
         htmlMarker.setMap(gmap);
+
+
+
+
+        //infowindow
+        contentString = '<b>Name:</b> ' + userName[i] + '<br><a href="' + userURL[i] + '">Go to Behance</a>';
+
+        infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+
+        mark = new google.maps.Marker({
+            position: userpos,
+            map: gmap
+        });
+
+        mark.addListener('click', function () {
+            infowindow.open(gmap, mark);
+        });
+
     }
 
 
@@ -603,6 +633,7 @@ function overlay(img, marker, i) {
     }
 }
 
+/*
 setInterval(function () {
     $(".userImage").mouseover(function () {
         //$(".userImage").css("width", zoomLevel);
@@ -617,7 +648,7 @@ setInterval(function () {
     });
 }, 300);
 
-
+*/
 
 
 
