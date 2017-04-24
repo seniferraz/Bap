@@ -299,6 +299,10 @@ var gmap; //mapa tem que estar definido fora do initialize para o resize funcion
 var coimbralat = 40.2033145;
 var coimbralng = -8.4102573;
 
+var userpos;
+var contentString;
+var infowindow;
+var mark;
 
 function initialize() {
 
@@ -513,9 +517,36 @@ function initialize() {
         var randomize = ((Math.random() * 2) - 1) / 10;
         var randomize2 = ((Math.random() * 2) - 1) / 10;
 
-        var htmlMarker = new HTMLMarker(coimbralat + randomize, coimbralng + randomize2);
+
+        userpos = {
+            lat: coimbralat + randomize,
+            lng: coimbralng + randomize2
+        };
+
+
+        var htmlMarker = new HTMLMarker(userpos);
         htmlMarker.onAdd = overlay(userImageMarker[i], htmlMarker, i);
         htmlMarker.setMap(gmap);
+
+
+        
+
+        //infowindow
+        contentString = '<b>Name:</b> ' + userName[i] + '<br><a href="' + userURL[i] + '">Go to Behance</a>';
+
+        infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+
+        mark = new google.maps.Marker({
+            position: userpos,
+            map: gmap
+        });
+
+        mark.addListener('click', function () {
+            infowindow.open(gmap, mark);
+        });
+
     }
 
 }
@@ -539,6 +570,7 @@ function overlay(img, marker, i) {
     }
 }
 
+/*
 setInterval(function () {
     $(".userImage").mouseover(function () {
         $(".userImage").css("border-color", "blue");
@@ -553,7 +585,7 @@ setInterval(function () {
     });
 }, 300);
 
-
+*/
 
 
 
