@@ -1,11 +1,5 @@
 //  —— inicializações   —————————————————————————————
 
-$("#start").hover(function () {
-    console.log("foi para cima");
-    $("#startAnimation").show(400);
-    $("body").hide();
-});
-
 
 //Google Maps API key
 var googleMapsApiKey = 'AIzaSyA2VPJOkLkP7xVjMsgQY6n7BA4yRqu3tQg';
@@ -217,13 +211,13 @@ function processUserInfo(response) {
         var string = userImageMarker[i];
         var substring = "/img/profile/no-image";
 
-        
-        
+
+
         //------------------REVER - NÃO FUNCIONA PARA NÃO MOSTRAR NO MAPA -----------------------------------!!!!    
         if (string.includes(substring))
             break;
 
-        
+
         if ((userField[i] != "")) { //apenas mostra as pessoas com campos de criação definido
 
             $("#dados").append("<hr>");
@@ -545,6 +539,19 @@ function overlay(img, marker, i) {
     }
 }
 
+setInterval(function () {
+    $(".userImage").mouseover(function () {
+        $(".userImage").css("border-color", "blue");
+        console.log("tá");
+    });
+}, 300);
+
+setInterval(function () {
+    $(".userImage").mouseout(function () {
+        $(".userImage").css("border-color", "pink");
+        console.log("tá");
+    });
+}, 300);
 
 
 
