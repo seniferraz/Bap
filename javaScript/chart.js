@@ -50,20 +50,24 @@ function drawChart() {
 
     // Set chart options
     var options = {
-        'legend': 'left',
         'title': 'Users by field',
-        'width': 500,
-        'height': 300,
-        'chartArea': {left:200,},
+        'width': '100%',
+        'height': '100%',
+        chartArea: {
+            left: "33%",
+            right: "2%",
+            top: "10%",
+            height: "80%",
+            width: "100%"
+        }
+        // enableInteractivity: false          //desativar janela
         //'chartArea': {left:0,'width': '50%', 'height': '60%'},
     };
-
     // Instantiate and draw our chart, passing in some options.
     var chart = new google.visualization.BarChart(document.getElementById('chart'));
     chart.draw(data, options);
 }
 
-
-$(window).resize(function(){
-  drawChart();
+$(window).resize(function () {
+    drawChart();
 });
