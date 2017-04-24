@@ -35,35 +35,35 @@ function drawChart() {
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Field');
     data.addColumn('number', 'Users');
-    
-    //data.addColumn({ type: 'string', role: 'style' });
-    
+
+    data.addColumn({
+        type: 'string',
+        role: 'style'
+    });
+
     for (var k = 0; k < colors.field.length; k++) {
         if (colors.used[k] == 'true') {
-
-            data.addRows([[colors.field[k], colors.users[k]]]);
-
-            /*
-            data.addRows(2);
-
-            data.setValue(k, 0, colors.field[k]);
-            data.setValue(k, 1, colors.users[k]);
-            data.setValue(k, 2, colors.color[k]);
-            
-            */
+            data.addRows([[colors.field[k], colors.users[k], colors.color[k]]]);
         }
     }
 
+
     // Set chart options
     var options = {
+        'legend': 'left',
         'title': 'Users by field',
         'width': 500,
         'height': 300,
-        legend: 'none'
-        //colors: ["#00BCD4", "#f500ff"]
+        'chartArea': {left:200,},
+        //'chartArea': {left:0,'width': '50%', 'height': '60%'},
     };
 
     // Instantiate and draw our chart, passing in some options.
     var chart = new google.visualization.BarChart(document.getElementById('chart'));
     chart.draw(data, options);
 }
+
+
+$(window).resize(function(){
+  drawChart();
+});

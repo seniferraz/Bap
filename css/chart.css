@@ -3,8 +3,9 @@
     margin-top: 4vh;
     right: 1vw;
     width: 40vw;
+    z-index: 1;
+    background-color: blue;
 }
-
 
 #moreinfo {
     position: absolute;
@@ -21,7 +22,6 @@
 #moreinfo:hover {
     cursor: pointer;
 }
-
 
 #chart {
     float: right;
