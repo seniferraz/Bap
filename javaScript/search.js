@@ -36,6 +36,7 @@ var userField = []; //1º
 var userColor = [];
 
 
+
 var userPos = {
     x: [],
     y: []
@@ -154,32 +155,32 @@ function processUserInfo(response) {
 
         //https://developers.google.com/maps/documentation/javascript/geocoding
 
-        /*        $.getJSON({
-                    url: 'https://maps.googleapis.com/maps/api/geocode/json',
-                    data: {
-                        sensor: false,
-                        address: city[i]
-                    },
+        $.getJSON({
+            url: 'https://maps.googleapis.com/maps/api/geocode/json',
+            data: {
+                sensor: false,
+                address: city[i]
+            },
 
-                    success: function (data, textStatus) {
-                        //console.log(textStatus, data);
-                        //console.log(data.results[0].geometry.location);
-                        userLat = data.results[0].geometry.location.lat;
-                        userLng = data.results[0].geometry.location.lng;
+            success: function (data, textStatus) {
+                //console.log(textStatus, data);
+                //console.log(data.results[0].geometry.location);
+                userLat = data.results[0].geometry.location.lat;
+                userLng = data.results[0].geometry.location.lng;
 
-                        userPos.x[i] = data.results[0].geometry.location.lat;
-                        userPos.y[i] = data.results[0].geometry.location.lng;
+                userPos.x[i] = data.results[0].geometry.location.lat;
+                userPos.y[i] = data.results[0].geometry.location.lng;
 
 
-                        //console.log(userPos.x[i] + "userLat");
-                        //console.log(userPos.y[i] + "userLng");
-                    },
+                console.log(userPos.x[i] + "userLat");
+                console.log(userPos.y[i] + "userLng");
+            },
 
-                    error: function () {
-                        alert("error");
-                    }
-                });
-        */
+            error: function () {
+                alert("error");
+            }
+        });
+
 
 
         /*—————— FIM Geocoding ————————— */
@@ -301,7 +302,7 @@ var gmap; //mapa tem que estar definido fora do initialize para o resize funcion
 var coimbralat = 40.2033145;
 var coimbralng = -8.4102573;
 
-var userpos;
+var userposit;
 var contentString;
 var infowindow;
 var mark;
@@ -520,17 +521,23 @@ function initialize() {
             this.div.style.top = position.y - 30 + 'px';
         }
 
+        
         var randomize = ((Math.random() * 2) - 1) / 10;
         var randomize2 = ((Math.random() * 2) - 1) / 10;
 
+        
+        console.log(userPos.X[i] + "city[i]");
 
-        userpos = {
-            lat: coimbralat + randomize,
-            lng: coimbralng + randomize2
+        
+        console.log(userPos.x[i] + "———  userPos.x[i]");
+        userposit = {
+            lat: 40.2033145 + randomize,
+            lng: -8.4102573 + randomize2
+            
         };
 
 
-        var htmlMarker = new HTMLMarker(userpos);
+        var htmlMarker = new HTMLMarker(userposit);
         htmlMarker.onAdd = overlay(userImageMarker[i], htmlMarker, i);
 
 
@@ -558,7 +565,7 @@ function initialize() {
         });
 
         mark = new google.maps.Marker({
-            position: userpos,
+            position: userposit,
             map: gmap
         });
 
