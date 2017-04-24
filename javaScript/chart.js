@@ -47,7 +47,6 @@ function drawChart() {
         }
     }
 
-
     // Set chart options
     var options = {
         'title': 'Users by field',

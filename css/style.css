@@ -81,8 +81,8 @@ body {
 /*—————— FOTOS ————————— */
 
 .userImage {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     border: 2px solid;
 }
@@ -127,4 +127,8 @@ body {
     vertical-align: middle;
     margin-top: 4px;
     margin-right: 10px;
+}
+
+.userImage {
+    cursor: pointer;
 }

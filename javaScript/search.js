@@ -20,6 +20,9 @@ var fieldsInput;
 var userImageMarker = [];
 
 
+var tamanho;
+var gmap;
+
 // Geocoding
 var userLat;
 var userLng;
@@ -483,11 +486,15 @@ function initialize() {
     });
 
 
+
+
+
     //zoom máximo e minimo do mapa
     gmap.setOptions({
         minZoom: 3,
         maxZoom: 12
     });
+
 
 
     function HTMLMarker(lat, lng) {
@@ -515,13 +522,66 @@ function initialize() {
 
         var htmlMarker = new HTMLMarker(coimbralat + randomize, coimbralng + randomize2);
         htmlMarker.onAdd = overlay(userImageMarker[i], htmlMarker, i);
+
+
+        htmlMarker.info = new google.maps.InfoWindow({
+            content: "algo"
+        });
+
+
+
+        google.maps.event.addListener(htmlMarker, 'click', function () {
+            this.info.open(map, this);
+        });
+
+
         htmlMarker.setMap(gmap);
     }
+
+
+
+
+
 
 }
 
 
+
+
+
+
 function overlay(img, marker, i) {
+
+    google.maps.event.addListener(gmap, 'zoom_changed', function () {
+        zoomLevel = gmap.getZoom();
+        tamanho = gmap.getZoom();
+        console.log("ZOMMMM Level é de :   " + zoomLevel);
+
+
+        tamanha = Math.pow(zoomLevel, 2);
+        console.log("    TAMANHA       —— " + tamanha);
+
+
+        if (zoomLevel <= 9) {
+            $(".userImage").css("width", "10");
+            $(".userImage").css("height", "10");
+        }
+        if (zoomLevel == 10) {
+            $(".userImage").css("width", "20");
+            $(".userImage").css("height", "20");
+        }
+
+        if (zoomLevel == 11) {
+            $(".userImage").css("width", "30");
+            $(".userImage").css("height", "30");
+        }
+
+        if (zoomLevel >= 12) {
+            $(".userImage").css("width", "50");
+            $(".userImage").css("height", "50");
+        }
+    });
+
 
     return function () {
 
@@ -529,26 +589,30 @@ function overlay(img, marker, i) {
         div.style.position = 'absolute';
         div.className = userField[i] + " roundCorners";
 
-        div.innerHTML = '<img class = "userImage" id="us' + i + '" src="' + img + '" alt="Profile Image" style="border-color:' + userColor[i] + '">';
+        console.log("TAMNHO É " + tamanho);
+
+        div.innerHTML = '<img class = "userImage" id="us' + i + '" src="' + img + '" alt="Profile Image" style="border-color:' + userColor[i] + ';">';
 
 
         var panes = marker.getPanes();
         panes.overlayImage.appendChild(div);
         marker.div = div;
 
+
+
     }
 }
 
 setInterval(function () {
     $(".userImage").mouseover(function () {
-        $(".userImage").css("border-color", "blue");
+        //$(".userImage").css("width", zoomLevel);
         console.log("tá");
     });
 }, 300);
 
 setInterval(function () {
     $(".userImage").mouseout(function () {
-        $(".userImage").css("border-color", "pink");
+        //$(".userImage").css("border-color", "pink");
         console.log("tá");
     });
 }, 300);
