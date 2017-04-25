@@ -741,7 +741,6 @@ setInterval(function () {
 */
 
 
-
 // Autocomplete search — ainda não dá
 
 //https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete

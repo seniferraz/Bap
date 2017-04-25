@@ -4,15 +4,17 @@ body {
     margin: 0;
     padding: 0;
     text-rendering: optimizeLegibility !important;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-    font-family: sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 #procura {
-    margin-left: 2vw;
+    margin-left: 1vw;
     margin-top: 1vw;
+    width: 15vw;
     position: absolute;
     z-index: 1;
 }
@@ -22,31 +24,23 @@ body {
     z-index: 1;
 }
 
-.leftCol {
-    float: left;
-    margin-bottom: 0.5vh;
-    padding: 1.5vh 1vw 1.5vh 0;
-}
-
-.leftCol>p {
-    margin: 0;
-    padding-top: 1vh;
-    padding-bottom: 0.5vh;
-}
-
 .rightCol {
-    float: right;
     margin-bottom: 0.5vh;
-    padding: 2vh 0vw;
 }
 
 .rightCol>input {
+    font-family: 'Poppins', sans-serif;
     border: none;
     box-shadow: 1px 1px 2px 0px lightgrey;
     border-radius: 3px;
     /*outline: none;*/
-    padding: 0.5vh 1vw;
-    margin: 0.5vh;
+    padding: 0.6vh 1vw;
+    margin: 0.3vh;
+    width: 10vw;
+    -ms-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    -webkit-box-sizing: content-box;
 }
 
 
@@ -57,21 +51,35 @@ input {
 }
 
 #fields {
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
     border: none;
+    width: 12vw;
+    height: 3vh;
+    min-width: 80px;
     box-shadow: 1px 1px 2px 0px lightgrey;
     border-radius: 3px;
-    padding: 0.5vh 1vw;
+    padding: 1vh 1vw;
     margin: 0.5vh;
+    outline: none;
+    text-indent: 0.2vw;
+    -ms-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    height: inherit;
 }
 
 #search {
+    font-family: 'Poppins', sans-serif;
     border: none;
-    background-color: lightgrey;
+    background-color: dodgerblue;
     padding: 0.5vh 1vw;
     box-shadow: 1px 1px 2px 0px lightgrey;
     border-radius: 3px;
     outline: none;
-    margin-top: 1vw;
+    margin-top: 0.5vw;
+    font-weight: 500;
 }
 
 #search:hover {
