@@ -37,10 +37,10 @@ var userColor = [];
 
 
 // Geolocation
-var userPos = {
+/*var userPos = {
     x: [],
     y: []
-};
+};*/
 
 var longteste;
 
@@ -59,11 +59,11 @@ var colors = {
 // ——— — — — —                    — — — — — — —— — — 
 
 var usersData = [{
-        name: "Algo",
-        fields: [],
-        city: "",
-        imageURL: "",
-        color: ""
+    name: "Algo",
+    fields: [],
+    city: "",
+    imageURL: "",
+    color: ""
 }];
 
 var fieldColor = {
@@ -241,25 +241,27 @@ function processUserInfo(response) {
                 userLat = data.results[0].geometry.location.lat;
                 userLng = data.results[0].geometry.location.lng;
 
-
+                /*
                 limiteNordesteLat = data.results[0].geometry.bounds.northeast.lat;
                 limiteNordesteLng = data.results[0].geometry.bounds.northeast.lng;
 
                 limiteSudoesteLat = data.results[0].geometry.bounds.southwest.lat;
                 limiteSudoesteLng = data.results[0].geometry.bounds.southwest.lng;
 
+                
                 console.log(limiteNordesteLat + " ———— limiteNordesteLat");
                 console.log(limiteNordesteLng + " ———— limiteNordesteLng");
                 console.log(limiteSudoesteLat + " ———— limiteSudoesteLat");
                 console.log(limiteSudoesteLng + " ———— limiteSudoesteLng");
+                */
 
 
                 tipodeterra = data.results[0].address_components[0].types;
 
                 //console.log(data.results[0] + " ———— TIPO DE TERRA");
 
-                userPos.x[i] = userLat;
-                userPos.y[i] = userLng;
+                //userPos.x[i] = userLat;
+                //userPos.y[i] = userLng;
 
                 //console.log(userLat + "userLat");
                 //console.log(userLng+ "userLng");
@@ -383,7 +385,7 @@ function logError(actividade) {
 //  —— GOOGLE MAPS API   ———————————————————
 
 
-var overlay;
+//var overlay;
 var gmap; //mapa tem que estar definido fora do initialize para o resize funcionar
 
 //ponto central (latitude e lonigtude) de Coimbra - ponto inicial
@@ -395,12 +397,29 @@ var contentString;
 var infowindow;
 var mark;
 
-function initialize() {
+var vezesinitialize = 0;
 
+var latCenter;
+var lngCenter;
+
+function initialize() {
+    
+    console.log(vezesinitialize + " vezes initialize");
+    
+    //antes de ser feita uma pesquisa (quando se entra no site), o centro é Coimbra, depois é a cidade procura
+    if (vezesinitialize <= 1) { // corre sempre 2 vezes no início (0 e 1)
+        latCenter = coimbralat;
+        lngCenter = coimbralng;
+    } else {
+        latCenter = userLat;
+        lngCenter = userLng;
+    }
+    
+    
     gmap = new google.maps.Map(document.getElementById('map'), {
         center: {
-            lat: coimbralat,
-            lng: coimbralng
+            lat: latCenter,
+            lng: lngCenter
         },
         zoom: 10,
         disableDefaultUI: true,
@@ -569,8 +588,9 @@ function initialize() {
 ]
     });
 
-    //centrar no resize
     google.maps.event.addDomListener(window, 'load', initialize);
+
+    //centrar no resize
     google.maps.event.addDomListener(window, "resize", function () {
         var center = gmap.getCenter();
         google.maps.event.trigger(gmap, "resize");
@@ -606,38 +626,37 @@ function initialize() {
         }
 
 
+        console.log(userLat + "    ———  userLAT");
+
+        
         var randomize = ((Math.random() * 2) - 1) / 10;
         var randomize2 = ((Math.random() * 2) - 1) / 10;
 
-
-        console.log(userLat + "    ———  userLAT");
-
-
+        //posições dos users = posições da cidade + valores aleatórios, para ficarem distribuídos
         userposit = {
             lat: userLat + randomize,
             lng: userLng + randomize2
 
         };
-
-
+        
+        //faz HTMLMarker na posição do user
         var htmlMarker = new HTMLMarker(userposit);
         htmlMarker.onAdd = overlay(userImageMarker[i], htmlMarker, i);
+        htmlMarker.setMap(gmap);
 
 
+/*        
         htmlMarker.info = new google.maps.InfoWindow({
             content: "algo"
         });
-
-
 
         google.maps.event.addListener(htmlMarker, 'click', function () {
             this.info.open(map, this);
         });
 
-
         htmlMarker.setMap(gmap);
 
-
+*/
 
 
         //infowindow
@@ -657,8 +676,8 @@ function initialize() {
         });
 
     }
-
-
+    
+    vezesinitialize++;
 }
 
 
