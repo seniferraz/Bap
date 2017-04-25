@@ -36,11 +36,13 @@ var userField = []; //1º
 var userColor = [];
 
 
-
+// Geolocation
 var userPos = {
     x: [],
     y: []
 };
+
+var longteste;
 
 
 //Campos de criação, respetiva cor, se é usado (existe nos resultados da pesquisa) e nº de users (dos resultados)
@@ -167,13 +169,17 @@ function processUserInfo(response) {
                 //console.log(data.results[0].geometry.location);
                 userLat = data.results[0].geometry.location.lat;
                 userLng = data.results[0].geometry.location.lng;
+                
+                tipodeterra = data.results[0].address_components[0].types;
+                
+                console.log(data.results[0] + " ———— TIPO DE TERRA");
 
-                userPos.x[i] = data.results[0].geometry.location.lat;
-                userPos.y[i] = data.results[0].geometry.location.lng;
-
-
-                console.log(userPos.x[i] + "userLat");
-                console.log(userPos.y[i] + "userLng");
+                userPos.x[i] = userLat;
+                userPos.y[i] = userLng;
+                
+                
+                //console.log(userLat + "userLat");
+                //console.log(userLng+ "userLng");
             },
 
             error: function () {
@@ -489,14 +495,10 @@ function initialize() {
         gmap.setCenter(center);
     });
 
-
-
-
-
     //zoom máximo e minimo do mapa
     gmap.setOptions({
         minZoom: 3,
-        maxZoom: 12
+        maxZoom: 13
     });
 
 
@@ -521,19 +523,18 @@ function initialize() {
             this.div.style.top = position.y - 30 + 'px';
         }
 
-        
+
         var randomize = ((Math.random() * 2) - 1) / 10;
         var randomize2 = ((Math.random() * 2) - 1) / 10;
 
-        
-        console.log(userPos.X[i] + "city[i]");
 
-        
-        console.log(userPos.x[i] + "———  userPos.x[i]");
+        console.log(userLat + "    ———  userLAT");
+
+
         userposit = {
-            lat: 40.2033145 + randomize,
-            lng: -8.4102573 + randomize2
-            
+            lat: userLat + randomize,
+            lng: userLng + randomize2
+
         };
 
 
@@ -576,46 +577,27 @@ function initialize() {
     }
 
 
-
-
-
-
 }
 
 
 
-
-
-
 function overlay(img, marker, i) {
-
+    
+    //alterar tamanho de imagem de acordo com zoom
     google.maps.event.addListener(gmap, 'zoom_changed', function () {
         zoomLevel = gmap.getZoom();
-        tamanho = gmap.getZoom();
-        console.log("ZOMMMM Level é de :   " + zoomLevel);
-
-
-        tamanha = Math.pow(zoomLevel, 2);
-        console.log("    TAMANHA       —— " + tamanha);
-
+        //console.log("ZOMMMM Level é de :   " + zoomLevel);
 
         if (zoomLevel <= 9) {
-            $(".userImage").css("width", "10");
-            $(".userImage").css("height", "10");
-        }
-        if (zoomLevel == 10) {
-            $(".userImage").css("width", "20");
-            $(".userImage").css("height", "20");
+            $(".userImage").css("width", "10").css("height", "10");
         }
 
-        if (zoomLevel == 11) {
-            $(".userImage").css("width", "30");
-            $(".userImage").css("height", "30");
+        if (zoomLevel > 9 && zoomLevel < 12) {
+            $(".userImage").css("width", (zoomLevel - 8) * 10).css("height", (zoomLevel - 8) * 10);
         }
 
         if (zoomLevel >= 12) {
-            $(".userImage").css("width", "50");
-            $(".userImage").css("height", "50");
+            $(".userImage").css("width", "50").css("height", "50");
         }
     });
 
@@ -626,7 +608,7 @@ function overlay(img, marker, i) {
         div.style.position = 'absolute';
         div.className = userField[i] + " roundCorners";
 
-        console.log("TAMNHO É " + tamanho);
+        //console.log("TAMNHO É " + tamanho);
 
         div.innerHTML = '<img class = "userImage" id="us' + i + '" src="' + img + '" alt="Profile Image" style="border-color:' + userColor[i] + ';">';
 
