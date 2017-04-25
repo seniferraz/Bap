@@ -265,6 +265,9 @@ function processUserInfo(response) {
 
                 //console.log(userLat + "userLat");
                 //console.log(userLng+ "userLng");
+
+                initialize();
+
             },
             error: function () {
                 alert("error");
@@ -340,8 +343,6 @@ function processUserInfo(response) {
 
     $("#moreinfo").show();
 
-    initialize();
-
 }
 
 
@@ -403,9 +404,9 @@ var latCenter;
 var lngCenter;
 
 function initialize() {
-    
+
     console.log(vezesinitialize + " vezes initialize");
-    
+
     //antes de ser feita uma pesquisa (quando se entra no site), o centro é Coimbra, depois é a cidade procura
     if (vezesinitialize <= 1) { // corre sempre 2 vezes no início (0 e 1)
         latCenter = coimbralat;
@@ -414,8 +415,8 @@ function initialize() {
         latCenter = userLat;
         lngCenter = userLng;
     }
-    
-    
+
+
     gmap = new google.maps.Map(document.getElementById('map'), {
         center: {
             lat: latCenter,
@@ -628,7 +629,7 @@ function initialize() {
 
         console.log(userLat + "    ———  userLAT");
 
-        
+
         var randomize = ((Math.random() * 2) - 1) / 10;
         var randomize2 = ((Math.random() * 2) - 1) / 10;
 
@@ -638,25 +639,25 @@ function initialize() {
             lng: userLng + randomize2
 
         };
-        
+
         //faz HTMLMarker na posição do user
         var htmlMarker = new HTMLMarker(userposit);
         htmlMarker.onAdd = overlay(userImageMarker[i], htmlMarker, i);
         htmlMarker.setMap(gmap);
 
 
-/*        
-        htmlMarker.info = new google.maps.InfoWindow({
-            content: "algo"
-        });
+        /*        
+                htmlMarker.info = new google.maps.InfoWindow({
+                    content: "algo"
+                });
 
-        google.maps.event.addListener(htmlMarker, 'click', function () {
-            this.info.open(map, this);
-        });
+                google.maps.event.addListener(htmlMarker, 'click', function () {
+                    this.info.open(map, this);
+                });
 
-        htmlMarker.setMap(gmap);
+                htmlMarker.setMap(gmap);
 
-*/
+        */
 
 
         //infowindow
@@ -676,7 +677,7 @@ function initialize() {
         });
 
     }
-    
+
     vezesinitialize++;
 }
 
