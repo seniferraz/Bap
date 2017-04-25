@@ -2,7 +2,10 @@
     position: absolute;
     margin-top: 2vh;
     right: 1vw;
-    width: vw;
+    width: 30vw;
+    height: 30vh;
+    
+    min-width: 300px;
     z-index: 1;
     
     padding-bottom: 35vh;
@@ -14,12 +17,12 @@
     position: absolute;
     z-index: 2;
     border: none;
-    background-color: darkseagreen;
+    background-color: dodgerblue;
     padding: 0.5vh 1vw;
     box-shadow: 1px 1px 2px 0px lightgrey;
     border-radius: 3px;
     outline: none;
-    right: 1vw;
+    right: 0vw;
 }
 
 #moreinfo:hover {

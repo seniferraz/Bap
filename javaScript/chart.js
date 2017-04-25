@@ -7,9 +7,10 @@ $(function () {
         if ($("#chart").css('display') == 'none') {
             $("#chart").show();
             $("#moreinfo").html("&#x2715;"); //cruz para fechar janela
+            $("#moreinfo").css('background-color', "transparent").css("box-shadow", "none").css("padding", "0").css("right", "1vw").css("top", "1vh").css("font-size", "12pt");
         } else {
             $("#chart").hide();
-            $("#moreinfo").html("More informations");
+            $("#moreinfo").html("More informations").css('background-color', "dodgerblue").css("box-shadow", "1px 1px 2px 0px lightgrey").css("padding", "0.5vh 1vw").css("font-size", "9pt");
         }
     });
 });
@@ -49,13 +50,15 @@ function drawChart() {
 
     // Set chart options
     var options = {
-        'title': 'Users by field',
+        legend: "none",
+        'title': 'Users by field of ' + locationsInput,
         'width': '100%',
         'height': '100%',
         chartArea: {
             left: "33%",
-            right: "2%",
-            top: "10%",
+            right: "20%",
+            top: "30%",
+            bottom: "20%",
             height: "80%",
             width: "100%"
         }
