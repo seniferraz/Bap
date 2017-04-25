@@ -54,16 +54,87 @@ var colors = {
 };
 
 
-/*
 
-var cor = [];
-cor["Animation"] = "#F44336";
-cor["GraphicDesign"] = "#E91E63";
-cor["Branding"] = "#9C27B0";
+// — — —— —— —    novos arrays    — — — —  — — — — — 
+// ——— — — — —                    — — — — — — —— — — 
 
-console.log(cor.Animation + "rrrr");
+var usersData = [{
+        name: "Algo",
+        fields: [],
+        city: "",
+        imageURL: "",
+        color: ""
+}];
 
-*/
+var fieldColor = {
+    "Advertising": "#F44336",
+    "Animation": "#E91E63",
+    "Architecture": "#9C27B0",
+    "Art Direction": "#673AB7",
+    "Branding": "#3F51B5",
+    "Calligraphy": "#2196F3",
+    "Digital Art": "#03A9F4",
+    "Drawing": "#00BCD4",
+    "Editorial Design": "#009688",
+    "Fashion": "#4CAF50",
+    "Film": "#8BC34A",
+    "Graphic Design": "#CDDC39",
+    "Illustration": "#FFEB3B",
+    "Industrial Design": "#FFC107",
+    "Interaction Design": "#FF9800",
+    "Interior Design": "#FF5722",
+    "Journalism": "#795548",
+    "Motion Graphics": "#9E9E9E",
+    "Photography": "#607D8B",
+    "Animation": "#f500FF",
+    "Programming": "#880E4F",
+    "Typography": "#4DB6AC",
+    "UI/UX": "#B388FF",
+    "Web Design": "#FF8A80",
+};
+
+
+var numberOfUser = {
+    "Advertising": "0",
+    "Animation": "0",
+    "Architecture": "0",
+    "Art Direction": "0",
+    "Branding": "0",
+    "Calligraphy": "0",
+    "Digital Art": "0",
+    "Drawing": "0",
+    "Editorial Design": "0",
+    "Fashion": "0",
+    "Film": "0",
+    "Graphic Design": "0",
+    "Illustration": "0",
+    "Industrial Design": "0",
+    "Interaction Design": "0",
+    "Interior Design": "0",
+    "Journalism": "0",
+    "Motion Graphics": "0",
+    "Photography": "0",
+    "Animation": "0",
+    "Programming": "0",
+    "Typography": "0",
+    "UI/UX": "0",
+    "Web Design": "0",
+};
+
+
+//Não sei se esta bem, o professor tinha objeto
+
+var usedFields = [
+    "Advertising", "mais", "menos"
+];
+
+
+//check
+//console.log(usersData.name[1] + " — —  rrrr");
+
+
+// — — —— —— —   novos arrays fim   -— — — ——— — —
+// ——— — — — —                      — — — — — — —— — 
 
 
 $(function () { //quando a página carregou
@@ -169,27 +240,27 @@ function processUserInfo(response) {
                 //console.log(data.results[0].geometry.location);
                 userLat = data.results[0].geometry.location.lat;
                 userLng = data.results[0].geometry.location.lng;
-                
-                
+
+
                 limiteNordesteLat = data.results[0].geometry.bounds.northeast.lat;
                 limiteNordesteLng = data.results[0].geometry.bounds.northeast.lng;
-                
+
                 limiteSudoesteLat = data.results[0].geometry.bounds.southwest.lat;
                 limiteSudoesteLng = data.results[0].geometry.bounds.southwest.lng;
-                
+
                 console.log(limiteNordesteLat + " ———— limiteNordesteLat");
                 console.log(limiteNordesteLng + " ———— limiteNordesteLng");
                 console.log(limiteSudoesteLat + " ———— limiteSudoesteLat");
                 console.log(limiteSudoesteLng + " ———— limiteSudoesteLng");
-                
-                
+
+
                 tipodeterra = data.results[0].address_components[0].types;
-                
+
                 //console.log(data.results[0] + " ———— TIPO DE TERRA");
 
                 userPos.x[i] = userLat;
                 userPos.y[i] = userLng;
-                
+
                 //console.log(userLat + "userLat");
                 //console.log(userLng+ "userLng");
             },
@@ -593,7 +664,7 @@ function initialize() {
 
 
 function overlay(img, marker, i) {
-    
+
     //alterar tamanho de imagem de acordo com zoom
     google.maps.event.addListener(gmap, 'zoom_changed', function () {
         zoomLevel = gmap.getZoom();

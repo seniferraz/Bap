@@ -10,7 +10,6 @@ body {
     font-family: sans-serif;
 }
 
-
 #procura {
     margin-left: 2vw;
     margin-top: 1vw;
@@ -48,6 +47,13 @@ body {
     /*outline: none;*/
     padding: 0.5vh 1vw;
     margin: 0.5vh;
+}
+
+
+/*eliminar borda azul*/
+
+input {
+    outline: none;
 }
 
 #fields {
@@ -95,11 +101,13 @@ body {
     border: 2px solid;
 }
 
+
 /*
 .userImage:hover {
     border-color: blue !important;
 }
 */
+
 
 /*—————— LEGENDA ————————— */
 
