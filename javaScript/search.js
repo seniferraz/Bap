@@ -170,18 +170,29 @@ function processUserInfo(response) {
                 userLat = data.results[0].geometry.location.lat;
                 userLng = data.results[0].geometry.location.lng;
                 
+                
+                limiteNordesteLat = data.results[0].geometry.bounds.northeast.lat;
+                limiteNordesteLng = data.results[0].geometry.bounds.northeast.lng;
+                
+                limiteSudoesteLat = data.results[0].geometry.bounds.southwest.lat;
+                limiteSudoesteLng = data.results[0].geometry.bounds.southwest.lng;
+                
+                console.log(limiteNordesteLat + " ———— limiteNordesteLat");
+                console.log(limiteNordesteLng + " ———— limiteNordesteLng");
+                console.log(limiteSudoesteLat + " ———— limiteSudoesteLat");
+                console.log(limiteSudoesteLng + " ———— limiteSudoesteLng");
+                
+                
                 tipodeterra = data.results[0].address_components[0].types;
                 
-                console.log(data.results[0] + " ———— TIPO DE TERRA");
+                //console.log(data.results[0] + " ———— TIPO DE TERRA");
 
                 userPos.x[i] = userLat;
                 userPos.y[i] = userLng;
                 
-                
                 //console.log(userLat + "userLat");
                 //console.log(userLng+ "userLng");
             },
-
             error: function () {
                 alert("error");
             }
