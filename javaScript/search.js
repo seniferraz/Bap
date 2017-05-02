@@ -616,18 +616,9 @@ function initialize() {
     HTMLMarker.prototype.onRemove = function () {}
 
 
+
+
     for (var i = 0; i < userName.length; i++) {
-
-        HTMLMarker.prototype.draw = function () {
-            var overlayProjection = this.getProjection();
-            var position = overlayProjection.fromLatLngToDivPixel(this.pos);
-            var panes = this.getPanes();
-            this.div.style.left = position.x + 'px';
-            this.div.style.top = position.y - 30 + 'px';
-        }
-
-
-        console.log(userLat + "    ———  userLAT");
 
 
         var randomize = ((Math.random() * 2) - 1) / 10;
@@ -639,6 +630,51 @@ function initialize() {
             lng: userLng + randomize2
 
         };
+
+
+
+        HTMLMarker.prototype.draw = function () {
+            var overlayProjection = this.getProjection();
+            var position = overlayProjection.fromLatLngToDivPixel(this.pos);
+            var panes = this.getPanes();
+            this.div.style.left = position.x + 'px';
+            this.div.style.top = position.y - 30 + 'px';
+
+            console.dir(this);
+
+
+            // O ouro está aqui
+
+            console.log(userposit.lat + " . . " + userposit.lng + "  POS DE");
+
+            var infowindow = new google.maps.InfoWindow({
+                content: "contentString " + userURL[i],
+                position: userposit,
+            });
+
+
+            infowindow.addClass = "WindowClass";
+
+
+            this.div.addEventListener("mouseover", function () {
+                console.log("teste");
+                infowindow.open(gmap, this.div);
+
+                //passar posição no open ou no this.div
+            });
+
+
+            /*this.div.addEventListener("mouseout", function () {
+                console.log("teste");
+                infowindow.close(gmap, this.div);
+            });*/
+        }
+
+
+
+
+        console.log(userLat + "    ———  userLAT");
+
 
         //faz HTMLMarker na posição do user
         var htmlMarker = new HTMLMarker(userposit);
@@ -667,14 +703,18 @@ function initialize() {
             content: contentString
         });
 
-        mark = new google.maps.Marker({
+        /*mark = new google.maps.Marker({
             position: userposit,
-            map: gmap
+            map: gmap,
+            icon: {
+                url: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTDiu3Io_QQfJmb-jxmIsS-quJz81Xxf5oYbZUw6HMsYIh-YurN",
+                scaledSize: new google.maps.Size(10, 10)
+            }
         });
 
         mark.addListener('click', function () {
             infowindow.open(gmap, mark);
-        });
+        });*/
 
     }
 
