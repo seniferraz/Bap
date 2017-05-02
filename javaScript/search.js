@@ -647,8 +647,20 @@ function initialize() {
 
             console.log(userposit.lat + " . . " + userposit.lng + "  POS DE");
 
+
+            var contentString =
+                '<div id="content">' +
+                'nome <br>' +
+                'Campos de criação' +
+                '<p>Behance <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">' +
+                'link</a> ' +
+                '</p>' +
+                '</div>';
+
+
+
             var infowindow = new google.maps.InfoWindow({
-                content: "contentString " + userURL[i],
+                content: contentString,
                 position: userposit,
             });
 
@@ -658,10 +670,15 @@ function initialize() {
 
             this.div.addEventListener("mouseover", function () {
                 console.log("teste");
+
                 infowindow.open(gmap, this.div);
+
 
                 //passar posição no open ou no this.div
             });
+
+
+
 
 
             /*this.div.addEventListener("mouseout", function () {

@@ -1,0 +1,14 @@
+.gm-style>div:first-child>div+div>div:last-child>div>div:first-child>div {
+    background: yellow !important;
+    box-shadow: none;
+    
+}
+
+.gm-style .gm-style-iw {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+}
+
+p#firstHeading.nome {
+    margin: 0px !important;
+}
