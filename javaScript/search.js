@@ -4,8 +4,8 @@
 //Google Maps API key
 var googleMapsApiKey = 'AIzaSyA2VPJOkLkP7xVjMsgQY6n7BA4yRqu3tQg';
 
-var api_key = 'pGGIf6rZKW1YcIXnIrDHk7fTbvjwXsht';
-//var api_key = 'Hr4r14bPbRdZq220clN8zGAvKvrO0TAz';
+//var api_key = 'pGGIf6rZKW1YcIXnIrDHk7fTbvjwXsht';
+var api_key = 'Hr4r14bPbRdZq220clN8zGAvKvrO0TAz';
 
 //URL pedido Behance
 var URL = 'https://api.behance.net/v2/users';
@@ -199,7 +199,6 @@ function search() { //quando se carrega em Search ou se faz enter num dos inputs
     $(".spinner").show();
 
     getUserInfo();
-
 }
 
 
@@ -229,6 +228,14 @@ function processUserInfo(response) {
 
     //a cada nova pesquisa
 
+    userName = [];
+    fields = []; //top 3
+    city = [];
+    userURL = [];
+    userField = []; //1º
+    userColor = [];
+
+
     //reposição dos valores "used" e "users" de cada field para mostragem na legenda e no gráfico
     colors.used = ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'];
     colors.users = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -257,21 +264,18 @@ function processUserInfo(response) {
 
     for (var i = 0; i < userName.length; i++) {
 
+
+
         //console.log(city[i] + " ——  ——— — — — — — — cidade atual");
 
         global = i;
 
-        console.log("lenghrt _1 " + i);
+        console.log("TAMANHO È _: " + userName.length);
 
         /*—————— Geocoding ————————— */
 
         //https://developers.google.com/maps/documentation/javascript/geocoding
 
-
-
-
-
-        // if (locationsInput.length == 0) {
 
         $.getJSON({
             url: 'https://maps.googleapis.com/maps/api/geocode/json',
@@ -318,11 +322,9 @@ function processUserInfo(response) {
                 initialize();
             },
             error: function () {
-                alert("error");
+                alert("erro no geocoding");
             }
         });
-        // }
-
 
 
         passagem = 0;
@@ -339,9 +341,7 @@ function processUserInfo(response) {
                 //para adicionar à barra de legenda e aos gráficos
 
                 // ——— Não pode ser aqui, só pode ser considerado true, aqueles que são mostrados
-
                 colors.used[k] = 'true';
-
                 colors.users[k]++;
                 break;
 
@@ -349,15 +349,12 @@ function processUserInfo(response) {
                 userColor[i] = '#22ff44';
                 //console.log(userColor);
             }
-
         }
 
 
         //detetar se o utilizador tem foto de perfil
         var string = userImageMarker[i];
         var substring = "/img/profile/no-image";
-
-
 
         //------------------REVER - NÃO FUNCIONA PARA NÃO MOSTRAR NO MAPA -----------------------------------!!!!    
         if (string.includes(substring))
@@ -381,7 +378,6 @@ function processUserInfo(response) {
         }
 
         $(".spinner").hide();
-
     }
 
 
@@ -392,7 +388,6 @@ function processUserInfo(response) {
     drawChart();
 
     $("#moreinfo").show();
-
 }
 
 
@@ -667,6 +662,13 @@ function initialize() {
     HTMLMarker.prototype.onRemove = function () {}
 
 
+
+
+
+
+    // — — — — — — — —  dados para desenhar 
+
+
     if ($("#city").val().length == 0) {
         bom11[passagem] = userLatTeste[userName.length];
         bom22[passagem] = userLngTeste[userName.length];
@@ -681,16 +683,12 @@ function initialize() {
     }
 
 
+    console.log("TAMANHO È  em baixo_: " + userName.length);
 
 
-
-
-    //enquanto não determinou a localização de todos os users, não desenha
 
     //quando determinou a localização de todos os users desenha
-    if (passagem == global) {
-
-        console.log("ahah catcheite");
+    if (passagem == userName.length - 1) {
 
         /*posLimNLat[passagem] = limiteNordesteLat[12];
         posLimNLng[passagem] = limiteNordesteLng[12];
