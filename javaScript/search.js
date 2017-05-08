@@ -235,30 +235,23 @@ function processUserInfo(response) {
 
     //processa dados do utilizador (response) e mostra-os
     for (var i = 0; i < response.users.length; i++) {
+        // if (undefined != response.users[i].fields[0]) {
 
+        userName[i] = response.users[i].display_name;
+        fields[i] = response.users[i].fields; //top 3
+        city[i] = response.users[i].city;
+        userURL[i] = response.users[i].url;
 
+        //campo de criação mais popular de cada user - 1º do top 3
+        userField[i] = response.users[i].fields[0];
 
-
-        if (response.users[i].fields.length > 0) {
-
-            userName[i] = response.users[i].display_name;
-            fields[i] = response.users[i].fields; //top 3
-            city[i] = response.users[i].city;
-            userURL[i] = response.users[i].url;
-
-            //campo de criação mais popular de cada user - 1º do top 3
-            userField[i] = response.users[i].fields[0];
-
-            //ir buscar foto de perfil de cada utilizador
-            for (var s in response.users[i].images) {
-                userImageMarker[i] = response.users[i].images[s];
-                break;
-                //para guardar a segunda imagem de cada user (tamanhos ≠s)
-            }
+        //ir buscar foto de perfil de cada utilizador
+        for (var s in response.users[i].images) {
+            userImageMarker[i] = response.users[i].images[s];
+            break;
+            //para guardar a segunda imagem de cada user (tamanhos ≠s)
         }
-        console.log("treta da maior")
-
-
+        //  }
     }
 
 
@@ -357,25 +350,25 @@ function processUserInfo(response) {
         var substring = "/img/profile/no-image";
 
         //------------------REVER - NÃO FUNCIONA PARA NÃO MOSTRAR NO MAPA -----------------------------------!!!!    
-        if (string.includes(substring))
-            //break;
+        //if (string.includes(substring))
+        //break;
 
 
-            if ((userField[i] != "")) { //apenas mostra as pessoas com campos de criação definido
+        if ((userField[i] != "")) { //apenas mostra as pessoas com campos de criação definido
 
-                $("#dados").append("<hr>");
-                $("#dados").append("<p>" + userName[i] + "</p>");
-                $("#dados").append("<p><a href=" + userURL[i] + ">Link Behance</a></p>");
+            $("#dados").append("<hr>");
+            $("#dados").append("<p>" + userName[i] + "</p>");
+            $("#dados").append("<p><a href=" + userURL[i] + ">Link Behance</a></p>");
 
-                $("#dados").append('<img class = "userImage" id="users' + i + '" src=' + userImageMarker[i] + ' height="90" width="90" alt="Profile Image">');
-                $("#users" + i).css("border-color", userColor[i]); //atribuir borda da respetiva cor à foto do user
+            $("#dados").append('<img class = "userImage" id="users' + i + '" src=' + userImageMarker[i] + ' height="90" width="90" alt="Profile Image">');
+            $("#users" + i).css("border-color", userColor[i]); //atribuir borda da respetiva cor à foto do user
 
-                $("#dados").append("<p> City: " + city[i] + "</p>");
-                $("#dados").append("<p> Fields: " + fields[i] + "</p>");
-                $("#dados").append("<p> FIELD MAIS POPULAR: " + userField[i] + "</p>");
-                $("#dados").append("<p> COR DO FIELD: " + userColor[i] + "</p>");
+            $("#dados").append("<p> City: " + city[i] + "</p>");
+            $("#dados").append("<p> Fields: " + fields[i] + "</p>");
+            $("#dados").append("<p> FIELD MAIS POPULAR: " + userField[i] + "</p>");
+            $("#dados").append("<p> COR DO FIELD: " + userColor[i] + "</p>");
 
-            }
+        }
 
         $(".spinner").hide();
     }
