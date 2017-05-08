@@ -35,15 +35,6 @@ var userURL = [];
 var userField = []; //1º
 var userColor = [];
 
-
-
-var userPos = {
-    x: [],
-    y: []
-}
-
-
-
 var passagem = 0;
 var bom11 = [];
 var bom22 = [];
@@ -75,8 +66,6 @@ var limiteSudoesteLng = [];
 var longteste;
 
 
-
-
 //Campos de criação, respetiva cor, se é usado (existe nos resultados da pesquisa) e nº de users (dos resultados)
 var colors = {
     field: ['Advertising', 'Animation', 'Architecture', 'Art Direction', 'Branding', 'Calligraphy', 'Digital Art', 'Drawing', 'Editorial Design', 'Fashion', 'Film', 'Graphic Design', 'Illustration', 'Industrial Design', 'Interaction Design', 'Interior Design', 'Journalism', 'Motion Graphics', 'Packaging', 'Photography', 'Programming', 'Typography', 'UI/UX', 'Web Design'],
@@ -88,7 +77,6 @@ var colors = {
 
 
 // — — —— —— —    novos arrays    — — — —  — — — — — 
-// ——— — — — —                    — — — — — — —— — — 
 
 var usersData = [{
     name: "Algo",
@@ -166,7 +154,6 @@ var usedFields = [
 
 
 // — — —— —— —   novos arrays fim   -— — — ——— — —
-// ——— — — — —                      — — — — — — —— — 
 
 
 $(function () { //quando a página carregou
@@ -282,12 +269,12 @@ function processUserInfo(response) {
 
 
                 //ver os limites da cidade de cada user, para não desenhar fora do mapa
-                
-               /* limiteNordesteLat[i] = data.results[0].geometry.bounds.northeast.lat;
-                limiteNordesteLng[i] = data.results[0].geometry.bounds.northeast.lng;
 
-                limiteSudoesteLat[i] = data.results[0].geometry.bounds.southwest.lat;
-                limiteSudoesteLng[i] = data.results[0].geometry.bounds.southwest.lng;*/
+                /* limiteNordesteLat[i] = data.results[0].geometry.bounds.northeast.lat;
+                 limiteNordesteLng[i] = data.results[0].geometry.bounds.northeast.lng;
+
+                 limiteSudoesteLat[i] = data.results[0].geometry.bounds.southwest.lat;
+                 limiteSudoesteLng[i] = data.results[0].geometry.bounds.southwest.lng;*/
 
 
                 //console.log(limiteNordesteLat + " ———— limiteNordesteLat");
@@ -434,7 +421,6 @@ var coimbralng = -8.4102573;
 var userposit;
 var contentString;
 var infowindow;
-var mark;
 
 var vezesinitialize = 0;
 
@@ -443,7 +429,7 @@ var lngCenter;
 
 function initialize() {
 
-    //console.log(vezesinitialize + " vezes initialize");
+    console.log(vezesinitialize + " vezes initialize");
 
     //antes de ser feita uma pesquisa (quando se entra no site), o centro é Coimbra, depois é a cidade procura
     if (vezesinitialize <= 1) { // corre sempre 2 vezes no início (0 e 1)
@@ -626,7 +612,7 @@ function initialize() {
 ]
     });
 
-    google.maps.event.addDomListener(window, 'load', initialize);
+    //google.maps.event.addDomListener(window, 'load', initialize);
 
     //centrar no resize
     google.maps.event.addDomListener(window, "resize", function () {
@@ -661,13 +647,13 @@ function initialize() {
 
         bom11[passagem] = userLatTeste[12];
         bom22[passagem] = userLngTeste[12];
-        
+
         console.log(bom11[passagem] + " BOM");
 
-       /* posLimNLat[passagem] = limiteNordesteLat[12];
-        posLimNLng[passagem] = limiteNordesteLng[12];
-        posLimSLat[passagem] = limiteSudoesteLat[12];
-        posLimSLng[passagem] = limiteSudoesteLng[12];*/
+        /* posLimNLat[passagem] = limiteNordesteLat[12];
+         posLimNLng[passagem] = limiteNordesteLng[12];
+         posLimSLat[passagem] = limiteSudoesteLat[12];
+         posLimSLng[passagem] = limiteSudoesteLng[12];*/
     }
 
     //quando determinou a localização de todos os users desenha
@@ -685,6 +671,9 @@ function initialize() {
         console.log("passagem");
 
         for (var i = 0; i < userName.length; i++) {
+
+            console.log("i " + i);
+
             var randomize = ((Math.random() * 2) - 1) / 10;
             var randomize2 = ((Math.random() * 2) - 1) / 10;
 
@@ -692,12 +681,12 @@ function initialize() {
             //latGold = Math.random() * (posLimNLat[i] - posLimSLat[i]) + posLimSLat[i];
             //lngGold = Math.random() * (posLimNLng[i] - posLimSLng[i]) + posLimSLng[i];
 
-            
+
             //posições dos users = posições da cidade + valores aleatórios, para ficarem distribuídos
             userposit = {
-                 lat: bom11[i] + randomize,
-                 lng: bom22[i] + randomize2
-             };
+                lat: bom11[i] + randomize,
+                lng: bom22[i] + randomize2
+            };
 
             /*userposit = {
                 lat: latGold,
@@ -721,48 +710,51 @@ function initialize() {
                 //console.dir(this);
 
 
-                // O ouro está aqui
-                //console.log(userposit.lat + " . . " + userposit.lng + "  POS DE");
+                for (var p = 0; p < userName.length; p++) {
+                    console.log("p " + p);
 
-                var contentString =
-                    '<div id="contentInfo">' +
-                    '<p id="firstHeading"> <b>Nome</b> </p>' +
-                    'Campos de criação</p>' +
-                    '<p>Behance <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">' +
-                    'link</a> ' +
-                    '</p>' +
-                    '</div>';
+                    // O ouro está aqui
+                    console.log(userposit.lat + " . . " + userposit.lng + "  POS DE");
 
-                var infowindow = new google.maps.InfoWindow({
-                    content: contentString,
-                    position: userposit1,
-                });
+                    console.log("userName[" + p + "]" + " " + userName[p]);
+
+                    //infowindow
+                    contentString =
+                        '<div id="contentInfo">' +
+                        '<p id="firstHeading"> <b>' + userName[p] + "  -  " + p + '</b></p>' +
+                        '<p><b>Fields:</b>  ' + fields[p] + '</p>' +
+                        '<p><b>City:</b>  ' + city[p] + '</p>' +
+                        '<p><a href="' + userURL[p] + '">Go to Behance</a></p>' +
+                        '</div>';
+
+                    infowindow = new google.maps.InfoWindow({
+                        content: contentString,
+                        position: userposit1,
+                    });
 
 
-                google.maps.event.addListener(gmap, 'zoom_changed', function () {
-                    infowindow.close(gmap, this.div);
-                });
+                    google.maps.event.addListener(gmap, 'zoom_changed', function () {
+                        infowindow.close(gmap, this.div);
+                    });
 
-                /* $("#map>div>div>div:nth-child(1)>div:nth-child(4)>div:nth-child(4)>div>div:nth-child(1)>div:nth-child(3)>div:nth-child(2)>div").css("background-color", "red", 'important');*/
+                    /* $("#map>div>div>div:nth-child(1)>div:nth-child(4)>div:nth-child(4)>div>div:nth-child(1)>div:nth-child(3)>div:nth-child(2)>div").css("background-color", "red", 'important');*/
 
-                infowindow.addClass = "WindowClass";
+                    infowindow.addClass = "WindowClass";
 
-                this.div.addEventListener("mouseover", function () {
-                    console.log("teste");
-                    infowindow.open(gmap, this.div);
-                    //passar posição no open ou no this.div
-                });
+                    this.div.addEventListener("mouseover", function () {
+                        console.log("teste");
+                        infowindow.open(gmap, this.div);
+                        //passar posição no open ou no this.div
+                    });
 
-                /*this.div.addEventListener("mouseout", function () {
-                    console.log("teste");
-                    infowindow.close(gmap, this.div);
-                });*/
+                    /*this.div.addEventListener("mouseout", function () {
+                        console.log("teste");
+                        infowindow.close(gmap, this.div);
+                    });*/
+                }
             }
 
-
-
-
-
+            
             //console.log(userLat + "    ———  userLAT");
 
 
@@ -785,26 +777,18 @@ function initialize() {
 
             */
 
-
+            
+            /*
+            
             //infowindow
             contentString = '<b>Name:</b> ' + userName[i] + '<br><a href="' + userURL[i] + '">Go to Behance</a>';
 
             infowindow = new google.maps.InfoWindow({
                 content: contentString
             });
+            
+            */
 
-            /*mark = new google.maps.Marker({
-                position: userposit,
-                map: gmap,
-                icon: {
-                    url: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTDiu3Io_QQfJmb-jxmIsS-quJz81Xxf5oYbZUw6HMsYIh-YurN",
-                    scaledSize: new google.maps.Size(10, 10)
-                }
-            });
-
-            mark.addListener('click', function () {
-                infowindow.open(gmap, mark);
-            });*/
 
         }
 
