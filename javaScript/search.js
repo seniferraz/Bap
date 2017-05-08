@@ -36,6 +36,36 @@ var userField = []; //1º
 var userColor = [];
 
 
+
+var userPos = {
+    x: [],
+    y: []
+}
+
+
+
+var passagem = 0;
+var bom11 = [];
+var bom22 = [];
+
+var posLimNLat = [];
+var posLimNLng = [];
+var posLimSLat = [];
+var posLimSLng = [];
+
+
+
+//desenhar users
+var userLatTeste = [];
+var userLngTeste = [];
+
+var limiteNordesteLat = [];
+var limiteNordesteLng = [];
+var limiteSudoesteLat = [];
+var limiteSudoesteLng = [];
+
+
+
 // Geolocation
 /*var userPos = {
     x: [],
@@ -43,6 +73,8 @@ var userColor = [];
 };*/
 
 var longteste;
+
+
 
 
 //Campos de criação, respetiva cor, se é usado (existe nos resultados da pesquisa) e nº de users (dos resultados)
@@ -223,6 +255,8 @@ function processUserInfo(response) {
 
     for (var i = 0; i < userName.length; i++) {
 
+        console.log(city[i] + " ——  ——— — — — — — — cidade atual");
+
 
         /*—————— Geocoding ————————— */
 
@@ -241,19 +275,25 @@ function processUserInfo(response) {
                 userLat = data.results[0].geometry.location.lat;
                 userLng = data.results[0].geometry.location.lng;
 
-                /*
-                limiteNordesteLat = data.results[0].geometry.bounds.northeast.lat;
-                limiteNordesteLng = data.results[0].geometry.bounds.northeast.lng;
 
-                limiteSudoesteLat = data.results[0].geometry.bounds.southwest.lat;
-                limiteSudoesteLng = data.results[0].geometry.bounds.southwest.lng;
+                userLatTeste[i] = data.results[0].geometry.location.lat;
+                userLngTeste[i] = data.results[0].geometry.location.lng;
 
+
+
+                //ver os limites da cidade de cada user, para não desenhar fora do mapa
                 
-                console.log(limiteNordesteLat + " ———— limiteNordesteLat");
-                console.log(limiteNordesteLng + " ———— limiteNordesteLng");
-                console.log(limiteSudoesteLat + " ———— limiteSudoesteLat");
-                console.log(limiteSudoesteLng + " ———— limiteSudoesteLng");
-                */
+               /* limiteNordesteLat[i] = data.results[0].geometry.bounds.northeast.lat;
+                limiteNordesteLng[i] = data.results[0].geometry.bounds.northeast.lng;
+
+                limiteSudoesteLat[i] = data.results[0].geometry.bounds.southwest.lat;
+                limiteSudoesteLng[i] = data.results[0].geometry.bounds.southwest.lng;*/
+
+
+                //console.log(limiteNordesteLat + " ———— limiteNordesteLat");
+                //console.log(limiteNordesteLng + " ———— limiteNordesteLng");
+                //console.log(limiteSudoesteLat + " ———— limiteSudoesteLat");
+                //console.log(limiteSudoesteLng + " ———— limiteSudoesteLng");
 
 
                 tipodeterra = data.results[0].address_components[0].types;
@@ -263,11 +303,7 @@ function processUserInfo(response) {
                 //userPos.x[i] = userLat;
                 //userPos.y[i] = userLng;
 
-                //console.log(userLat + "userLat");
-                //console.log(userLng+ "userLng");
-
                 initialize();
-
             },
             error: function () {
                 alert("error");
@@ -275,7 +311,7 @@ function processUserInfo(response) {
         });
 
 
-
+        passagem = 0;
         /*—————— FIM Geocoding ————————— */
 
 
@@ -346,6 +382,8 @@ function processUserInfo(response) {
 }
 
 
+
+
 function ShowLegend() { //preenche o footer com a legenda das cores dos fields
 
     $("#footer").empty();
@@ -405,7 +443,7 @@ var lngCenter;
 
 function initialize() {
 
-    console.log(vezesinitialize + " vezes initialize");
+    //console.log(vezesinitialize + " vezes initialize");
 
     //antes de ser feita uma pesquisa (quando se entra no site), o centro é Coimbra, depois é a cidade procura
     if (vezesinitialize <= 1) { // corre sempre 2 vezes no início (0 e 1)
@@ -422,166 +460,166 @@ function initialize() {
             lat: latCenter,
             lng: lngCenter
         },
-        zoom: 9,
+        zoom: 10,
         disableDefaultUI: true,
         //draggableCursor: 'grab',
         //https://developers.google.com/maps/documentation/javascript/controls
-styles: [
-    {
-        "elementType": "geometry",
-        "stylers": [
+        styles: [
             {
-                "color": "#f5f5f5"
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#f5f5f5"
       }
     ]
   },
-    {
-        "elementType": "labels.icon",
-        "stylers": [
             {
-                "visibility": "off"
+                "elementType": "labels.icon",
+                "stylers": [
+                    {
+                        "visibility": "off"
       }
     ]
   },
-    {
-        "elementType": "labels.text.fill",
-        "stylers": [
             {
-                "color": "#616161"
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#616161"
       }
     ]
   },
-    {
-        "elementType": "labels.text.stroke",
-        "stylers": [
             {
-                "color": "#f5f5f5"
+                "elementType": "labels.text.stroke",
+                "stylers": [
+                    {
+                        "color": "#f5f5f5"
       }
     ]
   },
-    {
-        "featureType": "administrative.land_parcel",
-        "elementType": "labels.text.fill",
-        "stylers": [
             {
-                "color": "#bdbdbd"
+                "featureType": "administrative.land_parcel",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#bdbdbd"
       }
     ]
   },
-    {
-        "featureType": "poi",
-        "elementType": "geometry",
-        "stylers": [
             {
-                "color": "#eeeeee"
+                "featureType": "poi",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#eeeeee"
       }
     ]
   },
-    {
-        "featureType": "poi",
-        "elementType": "labels.text.fill",
-        "stylers": [
             {
-                "color": "#757575"
+                "featureType": "poi",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#757575"
       }
     ]
   },
-    {
-        "featureType": "poi.park",
-        "elementType": "geometry",
-        "stylers": [
             {
-                "color": "#e5e5e5"
+                "featureType": "poi.park",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#e5e5e5"
       }
     ]
   },
-    {
-        "featureType": "poi.park",
-        "elementType": "labels.text.fill",
-        "stylers": [
             {
-                "color": "#9e9e9e"
+                "featureType": "poi.park",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#9e9e9e"
       }
     ]
   },
-    {
-        "featureType": "road",
-        "elementType": "geometry",
-        "stylers": [
             {
-                "color": "#ffffff"
+                "featureType": "road",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#ffffff"
       }
     ]
   },
-    {
-        "featureType": "road.arterial",
-        "elementType": "labels.text.fill",
-        "stylers": [
             {
-                "color": "#757575"
+                "featureType": "road.arterial",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#757575"
       }
     ]
   },
-    {
-        "featureType": "road.highway",
-        "elementType": "geometry",
-        "stylers": [
             {
-                "color": "#dadada"
+                "featureType": "road.highway",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#dadada"
       }
     ]
   },
-    {
-        "featureType": "road.highway",
-        "elementType": "labels.text.fill",
-        "stylers": [
             {
-                "color": "#616161"
+                "featureType": "road.highway",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#616161"
       }
     ]
   },
-    {
-        "featureType": "road.local",
-        "elementType": "labels.text.fill",
-        "stylers": [
             {
-                "color": "#9e9e9e"
+                "featureType": "road.local",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#9e9e9e"
       }
     ]
   },
-    {
-        "featureType": "transit.line",
-        "elementType": "geometry",
-        "stylers": [
             {
-                "color": "#e5e5e5"
+                "featureType": "transit.line",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#e5e5e5"
       }
     ]
   },
-    {
-        "featureType": "transit.station",
-        "elementType": "geometry",
-        "stylers": [
             {
-                "color": "#eeeeee"
+                "featureType": "transit.station",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#eeeeee"
       }
     ]
   },
-    {
-        "featureType": "water",
-        "elementType": "geometry",
-        "stylers": [
             {
-                "color": "#c9c9c9"
+                "featureType": "water",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#c9c9c9"
       }
     ]
   },
-    {
-        "featureType": "water",
-        "elementType": "labels.text.fill",
-        "stylers": [
             {
-                "color": "#9e9e9e"
+                "featureType": "water",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "color": "#9e9e9e"
       }
     ]
   }
@@ -600,7 +638,7 @@ styles: [
     //zoom máximo e minimo do mapa
     gmap.setOptions({
         minZoom: 3,
-        maxZoom: 13
+        maxZoom: 16
     });
 
 
@@ -616,125 +654,163 @@ styles: [
 
 
 
+    //enquanto não determinou a localização de todos os users, não desenha
+    if (passagem < userName.length - 1) {
+        console.log(passagem + " passagem");
+        console.log("passagem");
 
-    for (var i = 0; i < userName.length; i++) {
-
-        var randomize = ((Math.random() * 2) - 1) / 10;
-        var randomize2 = ((Math.random() * 2) - 1) / 10;
-
-        //posições dos users = posições da cidade + valores aleatórios, para ficarem distribuídos
-        userposit = {
-            lat: userLat + randomize,
-            lng: userLng + randomize2
-
-        };
-
+        bom11[passagem] = userLatTeste[12];
+        bom22[passagem] = userLngTeste[12];
         
-        //temos de mudar a posição de acordo com zoom
-        userposit1 = {
-            lat: userLat + randomize + 0.004,
-            lng: userLng + randomize2 + 0.002
+        console.log(bom11[passagem] + " BOM");
 
-        };
-
-        HTMLMarker.prototype.draw = function () {
-            var overlayProjection = this.getProjection();
-            var position = overlayProjection.fromLatLngToDivPixel(this.pos);
-            var panes = this.getPanes();
-            this.div.style.left = position.x + 'px';
-            this.div.style.top = position.y - 30 + 'px';
-
-            //console.dir(this);
-
-        
-            // O ouro está aqui
-            console.log(userposit.lat + " . . " + userposit.lng + "  POS DE");
-
-            var contentString =
-                '<div id="contentInfo">' +
-                '<p id="firstHeading"> <b>Nome</b> </p>' +
-                'Campos de criação</p>' +
-                '<p>Behance <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">' +
-                'link</a> ' +
-                '</p>' +
-                '</div>';
-
-            var infowindow = new google.maps.InfoWindow({
-                content: contentString,
-                position: userposit1,
-            });
-
-
-            google.maps.event.addListener(gmap, 'zoom_changed', function () {
-                infowindow.close(gmap, this.div);
-            });
-
-           /* $("#map>div>div>div:nth-child(1)>div:nth-child(4)>div:nth-child(4)>div>div:nth-child(1)>div:nth-child(3)>div:nth-child(2)>div").css("background-color", "red", 'important');*/
-
-            infowindow.addClass = "WindowClass";
-
-            this.div.addEventListener("mouseover", function () {
-                console.log("teste");
-                infowindow.open(gmap, this.div);
-                //passar posição no open ou no this.div
-            });
-
-            /*this.div.addEventListener("mouseout", function () {
-                console.log("teste");
-                infowindow.close(gmap, this.div);
-            });*/
-        }
-
-
-
-
-
-        console.log(userLat + "    ———  userLAT");
-
-
-        //faz HTMLMarker na posição do user
-        var htmlMarker = new HTMLMarker(userposit);
-        htmlMarker.onAdd = overlay(userImageMarker[i], htmlMarker, i);
-        htmlMarker.setMap(gmap);
-
-
-        /*        
-                htmlMarker.info = new google.maps.InfoWindow({
-                    content: "algo"
-                });
-
-                google.maps.event.addListener(htmlMarker, 'click', function () {
-                    this.info.open(map, this);
-                });
-
-                htmlMarker.setMap(gmap);
-
-        */
-
-
-        //infowindow
-        contentString = '<b>Name:</b> ' + userName[i] + '<br><a href="' + userURL[i] + '">Go to Behance</a>';
-
-        infowindow = new google.maps.InfoWindow({
-            content: contentString
-        });
-
-        /*mark = new google.maps.Marker({
-            position: userposit,
-            map: gmap,
-            icon: {
-                url: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTDiu3Io_QQfJmb-jxmIsS-quJz81Xxf5oYbZUw6HMsYIh-YurN",
-                scaledSize: new google.maps.Size(10, 10)
-            }
-        });
-
-        mark.addListener('click', function () {
-            infowindow.open(gmap, mark);
-        });*/
-
+       /* posLimNLat[passagem] = limiteNordesteLat[12];
+        posLimNLng[passagem] = limiteNordesteLng[12];
+        posLimSLat[passagem] = limiteSudoesteLat[12];
+        posLimSLng[passagem] = limiteSudoesteLng[12];*/
     }
 
+    //quando determinou a localização de todos os users desenha
+    if (passagem == userName.length - 1) {
+
+        bom11[passagem] = userLatTeste[12];
+        bom22[passagem] = userLngTeste[12];
+
+        /*posLimNLat[passagem] = limiteNordesteLat[12];
+        posLimNLng[passagem] = limiteNordesteLng[12];
+        posLimSLat[passagem] = limiteSudoesteLat[12];
+        posLimSLng[passagem] = limiteSudoesteLng[12];
+*/
+        console.log(passagem + " passagem");
+        console.log("passagem");
+
+        for (var i = 0; i < userName.length; i++) {
+            var randomize = ((Math.random() * 2) - 1) / 10;
+            var randomize2 = ((Math.random() * 2) - 1) / 10;
+
+            //latGold = Math.floor(Math.random() * 6) + 1  
+            //latGold = Math.random() * (posLimNLat[i] - posLimSLat[i]) + posLimSLat[i];
+            //lngGold = Math.random() * (posLimNLng[i] - posLimSLng[i]) + posLimSLng[i];
+
+            
+            //posições dos users = posições da cidade + valores aleatórios, para ficarem distribuídos
+            userposit = {
+                 lat: bom11[i] + randomize,
+                 lng: bom22[i] + randomize2
+             };
+
+            /*userposit = {
+                lat: latGold,
+                lng: lngGold
+            };
+*/
+
+            //temos de mudar a posição de acordo com zoom
+            userposit1 = {
+                lat: userLat + randomize + 0.004,
+                lng: userLng + randomize2 + 0.002
+            };
+
+            HTMLMarker.prototype.draw = function () {
+                var overlayProjection = this.getProjection();
+                var position = overlayProjection.fromLatLngToDivPixel(this.pos);
+                var panes = this.getPanes();
+                this.div.style.left = position.x + 'px';
+                this.div.style.top = position.y - 30 + 'px';
+
+                //console.dir(this);
+
+
+                // O ouro está aqui
+                //console.log(userposit.lat + " . . " + userposit.lng + "  POS DE");
+
+                var contentString =
+                    '<div id="contentInfo">' +
+                    '<p id="firstHeading"> <b>Nome</b> </p>' +
+                    'Campos de criação</p>' +
+                    '<p>Behance <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">' +
+                    'link</a> ' +
+                    '</p>' +
+                    '</div>';
+
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString,
+                    position: userposit1,
+                });
+
+
+                google.maps.event.addListener(gmap, 'zoom_changed', function () {
+                    infowindow.close(gmap, this.div);
+                });
+
+                /* $("#map>div>div>div:nth-child(1)>div:nth-child(4)>div:nth-child(4)>div>div:nth-child(1)>div:nth-child(3)>div:nth-child(2)>div").css("background-color", "red", 'important');*/
+
+                infowindow.addClass = "WindowClass";
+
+                this.div.addEventListener("mouseover", function () {
+                    console.log("teste");
+                    infowindow.open(gmap, this.div);
+                    //passar posição no open ou no this.div
+                });
+
+                /*this.div.addEventListener("mouseout", function () {
+                    console.log("teste");
+                    infowindow.close(gmap, this.div);
+                });*/
+            }
+
+
+
+
+
+            //console.log(userLat + "    ———  userLAT");
+
+
+            //faz HTMLMarker na posição do user
+            var htmlMarker = new HTMLMarker(userposit);
+            htmlMarker.onAdd = overlay(userImageMarker[i], htmlMarker, i);
+            htmlMarker.setMap(gmap);
+
+
+            /*        
+                    htmlMarker.info = new google.maps.InfoWindow({
+                        content: "algo"
+                    });
+
+                    google.maps.event.addListener(htmlMarker, 'click', function () {
+                        this.info.open(map, this);
+                    });
+
+                    htmlMarker.setMap(gmap);
+
+            */
+
+
+            //infowindow
+            contentString = '<b>Name:</b> ' + userName[i] + '<br><a href="' + userURL[i] + '">Go to Behance</a>';
+
+            infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+
+            /*mark = new google.maps.Marker({
+                position: userposit,
+                map: gmap,
+                icon: {
+                    url: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTDiu3Io_QQfJmb-jxmIsS-quJz81Xxf5oYbZUw6HMsYIh-YurN",
+                    scaledSize: new google.maps.Size(10, 10)
+                }
+            });
+
+            mark.addListener('click', function () {
+                infowindow.open(gmap, mark);
+            });*/
+
+        }
+
+    }
     vezesinitialize++;
+    passagem++;
 }
 
 
