@@ -35,6 +35,11 @@ var userURL = [];
 var userField = []; //1º
 var userColor = [];
 
+
+
+var global;
+
+
 var passagem = 0;
 var bom11 = [];
 var bom22 = [];
@@ -64,6 +69,8 @@ var limiteSudoesteLng = [];
 };*/
 
 var longteste;
+
+
 
 
 //Campos de criação, respetiva cor, se é usado (existe nos resultados da pesquisa) e nº de users (dos resultados)
@@ -153,7 +160,7 @@ var usedFields = [
 //console.log(usersData.name[1] + " — —  rrrr");
 
 
-// — — —— —— —   novos arrays fim   -— — — ——— — —
+// — — —— —— —   novos arrays fim   — — — ——— — —
 
 
 $(function () { //quando a página carregou
@@ -255,10 +262,7 @@ function processUserInfo(response) {
 
         global = i;
 
-        //console.log("TAMANHO È _: " + userName.length);
-
-        //console.log(city[i] + " ——  ——— — — — — — — cidade atual");
-
+        console.log("TAMANHO É _: " + userName.length);
 
         /*—————— Geocoding ————————— */
 
@@ -270,6 +274,7 @@ function processUserInfo(response) {
             data: {
                 sensor: false,
                 address: city[i]
+                //address: locationsInput
             },
 
             success: function (data, textStatus) {
@@ -392,14 +397,6 @@ function ShowLegend() { //preenche o footer com a legenda das cores dos fields
             // $("#footer").append("<p>" + colors.field[k] + "</p>");
             $("#shape" + k + "").css("border-color", colors.color[k]);
         }
-
-        /*$("#shape" + k + "").css("border-color", colors.color[k]);*/
-
-        /*        $("#shape" + k + "").hover(function(){
-                $(this).css("border-color", "black");
-                }, function(){
-                $(this).css("border-color", colors.color[k]);
-            });*/
     }
 }
 
@@ -420,7 +417,6 @@ function logError(actividade) {
 //  —— GOOGLE MAPS API   ———————————————————
 
 
-//var overlay;
 var gmap; //mapa tem que estar definido fora do initialize para o resize funcionar
 
 //ponto central (latitude e lonigtude) de Coimbra - ponto inicial
@@ -430,6 +426,7 @@ var coimbralng = -8.4102573;
 var userposit;
 var contentString;
 var infowindow;
+var mark;
 
 var vezesinitialize = 0;
 
@@ -438,7 +435,7 @@ var lngCenter;
 
 function initialize() {
 
-    console.log(vezesinitialize + " vezes initialize");
+    //console.log(vezesinitialize + " vezes initialize");
 
     //antes de ser feita uma pesquisa (quando se entra no site), o centro é Coimbra, depois é a cidade procura
     if (vezesinitialize <= 1) { // corre sempre 2 vezes no início (0 e 1)
@@ -648,7 +645,6 @@ function initialize() {
     HTMLMarker.prototype.onRemove = function () {}
 
 
-<<<<<<< HEAD
 
 
 
@@ -670,9 +666,10 @@ function initialize() {
     }
 
 
-    console.log("TAMANHO È  em baixo_: " + userName.length);
+    console.log("TAMANHO É  em baixo_: " + userName.length);
 
-    
+
+
     //quando determinou a localização de todos os users desenha
     if (passagem == userName.length - 1) {
 
@@ -685,9 +682,6 @@ function initialize() {
         console.log("passagem");
 
         for (var i = 0; i < userName.length; i++) {
-
-            console.log("i " + i);
-
             var randomize = ((Math.random() * 2) - 1) / 10;
             var randomize2 = ((Math.random() * 2) - 1) / 10;
 
@@ -723,7 +717,6 @@ function initialize() {
 
                 //console.dir(this);
 
-
                 for (var p = 0; p < userName.length; p++) {
                     console.log("p " + p);
 
@@ -731,6 +724,7 @@ function initialize() {
                     console.log(userposit.lat + " . . " + userposit.lng + "  POS DE");
 
                     console.log("userName[" + p + "]" + " " + userName[p]);
+
 
                     //infowindow
                     contentString =
@@ -751,7 +745,6 @@ function initialize() {
                         infowindow.close(gmap, this.div);
                     });
 
-                    /* $("#map>div>div>div:nth-child(1)>div:nth-child(4)>div:nth-child(4)>div>div:nth-child(1)>div:nth-child(3)>div:nth-child(2)>div").css("background-color", "red", 'important');*/
 
                     infowindow.addClass = "WindowClass";
 
@@ -768,7 +761,10 @@ function initialize() {
                 }
             }
 
-            
+
+
+
+
             //console.log(userLat + "    ———  userLAT");
 
 
@@ -791,18 +787,28 @@ function initialize() {
 
             */
 
-            
             /*
-            
             //infowindow
             contentString = '<b>Name:</b> ' + userName[i] + '<br><a href="' + userURL[i] + '">Go to Behance</a>';
 
             infowindow = new google.maps.InfoWindow({
                 content: contentString
             });
-            
             */
 
+            /*
+            mark = new google.maps.Marker({
+                    position: userposit,
+                    map: gmap,
+                    icon: {
+                        url: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTDiu3Io_QQfJmb-jxmIsS-quJz81Xxf5oYbZUw6HMsYIh-YurN",
+                        scaledSize: new google.maps.Size(10, 10)
+                    }
+                });
+
+                mark.addListener('click', function () {
+                    infowindow.open(gmap, mark);
+                });*/
 
         }
 
