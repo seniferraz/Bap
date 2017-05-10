@@ -696,13 +696,18 @@ function initialize() {
 
 
                     //infowindow.addClass = "WindowClass";
-                    
+
                     var infowindow = new google.maps.InfoWindow({
                         content: "oi",
-                        position: {lat: 0, lng:0}
+                        position: {
+                            lat: 0,
+                            lng: 0
+                        }
                     });;
 
-                    this.div.addEventListener("mouseover", function () {
+                    this.div.addEventListener("click", function () {
+                        //para fechar a aberta
+                        infowindow.close(gmap, this.div);
                         console.log("hover");
 
                         var divNum = this.id;
@@ -744,10 +749,10 @@ function initialize() {
                         infowindow.close(gmap, this.div);
                     });
 
-                    this.div.addEventListener("mouseout", function () {
+                    /*this.div.addEventListener("mouseout", function () {
                         console.log("out");
                         infowindow.close(gmap, this.div);
-                    });
+                    });*/
 
                 }
             }
