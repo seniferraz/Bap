@@ -16,28 +16,24 @@ var query;
 var locationsInput;
 var fieldsInput;
 
-//foto perfil user
-var userImageMarker = [];
-
 
 var tamanho;
 var gmap;
+
 
 // Geocoding
 var userLat;
 var userLng;
 
 
+//dados dos users (resultados)
 var userName = [];
 var fields = []; //top 3
 var city = [];
 var userURL = [];
 var userField = []; //1º
 var userColor = [];
-
-
-
-var global;
+var userImageMarker = []; //foto perfil user
 
 
 var passagem = 0;
@@ -50,7 +46,6 @@ var posLimSLat = [];
 var posLimSLng = [];
 
 
-
 //desenhar users
 var userLatTeste = [];
 var userLngTeste = [];
@@ -59,17 +54,6 @@ var limiteNordesteLat = [];
 var limiteNordesteLng = [];
 var limiteSudoesteLat = [];
 var limiteSudoesteLng = [];
-
-
-
-// Geolocation
-/*var userPos = {
-    x: [],
-    y: []
-};*/
-
-var longteste;
-
 
 
 
@@ -163,6 +147,7 @@ var usedFields = [
 // — — —— —— —   novos arrays fim   — — — ——— — —
 
 
+
 $(function () { //quando a página carregou
     $(".spinner").hide();
 
@@ -207,7 +192,7 @@ function getUserInfo() {
             sort: 'followed',
             city: locationsInput,
             field: fieldsInput,
-            page: 1 //iterar para ver mais users (com for não deu)
+            page: 1 //———————————————————————————iterar para ver mais users (com for não deu)
         },
         timeout: 1500,
         success: processUserInfo,
@@ -218,8 +203,7 @@ function getUserInfo() {
 
 function processUserInfo(response) {
 
-    //a cada nova pesquisa
-
+    //a cada nova pesquisa - limpas os arrays
     userName = [];
     fields = []; //top 3
     city = [];
@@ -228,14 +212,14 @@ function processUserInfo(response) {
     userColor = [];
 
 
-    //reposição dos valores "used" e "users" de cada field para mostragem na legenda e no gráfico
+    //reposição dos valores "used" e "users" de cada field — para mostragem na legenda e no gráfico
     colors.used = ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'];
     colors.users = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 
-    //processa dados do utilizador (response) e mostra-os
+    //processa dados do utilizador (response) e guarda-os em arrays
     for (var i = 0; i < response.users.length; i++) {
-        // if (undefined != response.users[i].fields[0]) {
+        // if (undefined != response.users[i].fields[0]) { //se user tiver fields (se não tiver fields/trabalhos não aparece)
 
         userName[i] = response.users[i].display_name;
         fields[i] = response.users[i].fields; //top 3
@@ -248,8 +232,7 @@ function processUserInfo(response) {
         //ir buscar foto de perfil de cada utilizador
         for (var s in response.users[i].images) {
             userImageMarker[i] = response.users[i].images[s];
-            break;
-            //para guardar a segunda imagem de cada user (tamanhos ≠s)
+            break; //para guardar a 2ª imagem de cada user (tamanhos ≠s)
         }
         //  }
     }
@@ -257,13 +240,9 @@ function processUserInfo(response) {
 
     for (var i = 0; i < userName.length; i++) {
 
-
-
         //console.log(city[i] + " ——  ——— — — — — — — cidade atual");
 
-        global = i;
-
-        console.log("TAMANHO É _: " + userName.length);
+        //console.log("TAMANHO É _: " + userName.length);
 
         /*—————— Geocoding ————————— */
 
@@ -402,11 +381,6 @@ function ShowLegend() { //preenche o footer com a legenda das cores dos fields
 }
 
 
-function log(message) {
-    $("#status").append(message + "<br>");
-}
-
-
 function logError(actividade) {
     return function (data) {
         $("#status").append("Erro ao " + actividade + ": " + data.statusText + "<br/>");
@@ -418,6 +392,8 @@ function logError(actividade) {
 //  —— GOOGLE MAPS API   ———————————————————
 
 
+
+
 var gmap; //mapa tem que estar definido fora do initialize para o resize funcionar
 
 //ponto central (latitude e lonigtude) de Coimbra - ponto inicial
@@ -426,7 +402,6 @@ var coimbralng = -8.4102573;
 
 var userposit;
 var contentString;
-var infowindow;
 var mark;
 
 var vezesinitialize = 0;
@@ -674,7 +649,8 @@ function initialize() {
         posLimNLng[passagem] = limiteNordesteLng[12];
         posLimSLat[passagem] = limiteSudoesteLat[12];
         posLimSLng[passagem] = limiteSudoesteLng[12];
-*/
+        */
+
         console.log(passagem + " passagem");
         console.log("passagem");
 
@@ -697,13 +673,8 @@ function initialize() {
                 lat: latGold,
                 lng: lngGold
             };
-*/
+            */
 
-            //temos de mudar a posição de acordo com zoom
-            userposit1 = {
-                lat: userLat + randomize + 0.004,
-                lng: userLng + randomize2 + 0.002
-            };
 
             HTMLMarker.prototype.draw = function () {
                 var overlayProjection = this.getProjection();
@@ -723,43 +694,63 @@ function initialize() {
                     //console.log("userName[" + p + "]" + " " + userName[p]);
 
 
-                    //infowindow
-                    contentString =
-                        '<div id="contentInfo">' +
-                        '<p id="firstHeading"> <b>' + userName[p] + "  -  " + p + '</b></p>' +
-                        '<p><b>Fields:</b>  ' + fields[p] + '</p>' +
-                        '<p><b>City:</b>  ' + city[p] + '</p>' +
-                        '<p><a href="' + userURL[p] + '">Go to Behance</a></p>' +
-                        '</div>';
 
-                    infowindow = new google.maps.InfoWindow({
-                        content: contentString,
-                        position: userposit1,
+                    //infowindow.addClass = "WindowClass";
+                    
+                    var infowindow = new google.maps.InfoWindow({
+                        content: "oi",
+                        position: {lat: 0, lng:0}
+                    });;
+
+                    this.div.addEventListener("mouseover", function () {
+                        console.log("hover");
+
+                        var divNum = this.id;
+                        console.log(divNum + " id é este .... .. . . . . . ");
+
+                        //infowindow
+                        contentString =
+                            '<div id="contentInfo">' +
+                            '<p id="firstHeading"> <b>' + userName[divNum] + "  -  " + divNum + '</b></p>' +
+                            '<p><b>Fields:</b>  ' + fields[divNum] + '</p>' +
+                            '<p><b>City:</b>  ' + city[divNum] + '</p>' +
+                            '<p><a href="' + userURL[divNum] + '">Go to Behance</a></p>' +
+                            '</div>';
+
+                        console.log("divNum " + divNum);
+
+                        //temos de mudar a posição de acordo com zoom
+                        userposit1 = {
+                            lat: bom11[divNum] + randomize + 0.004,
+                            lng: bom22[divNum] + randomize2 + 0.002
+                        };
+
+
+                        infowindow = new google.maps.InfoWindow({
+                            content: contentString,
+                            position: userposit1
+                        });
+
+
+                        //passar posição no open ou no this.div
+
+                        infowindow.open(gmap, this.div);
+
                     });
 
 
+                    //fecha windowinfo quando se faz zoom
                     google.maps.event.addListener(gmap, 'zoom_changed', function () {
                         infowindow.close(gmap, this.div);
                     });
 
-
-                    infowindow.addClass = "WindowClass";
-
-                    this.div.addEventListener("mouseover", function () {
-                        console.log("teste");
-                        infowindow.open(gmap, this.div);
-                        //passar posição no open ou no this.div
+                    this.div.addEventListener("mouseout", function () {
+                        console.log("out");
+                        infowindow.close(gmap, this.div);
                     });
 
-                    /*this.div.addEventListener("mouseout", function () {
-                        console.log("teste");
-                        infowindow.close(gmap, this.div);
-                    });*/
                 }
             }
-
-
-
 
 
             //console.log(userLat + "    ———  userLAT");
@@ -772,6 +763,7 @@ function initialize() {
         }
 
     }
+
     vezesinitialize++;
     passagem++;
 }
@@ -804,6 +796,7 @@ function overlay(img, marker, i) {
         div = document.createElement('DIV');
         div.style.position = 'absolute';
         div.className = userField[i] + " roundCorners";
+        div.id = i;
 
         //console.log("TAMNHO É " + tamanho);
 
