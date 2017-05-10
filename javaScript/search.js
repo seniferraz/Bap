@@ -248,8 +248,6 @@ function processUserInfo(response) {
 
 
     for (var i = 0; i < userName.length; i++) {
-        
-        passagem++;
 
         //console.log(city[i] + " ——  ——— — — — — — — cidade atual");
 
@@ -323,7 +321,7 @@ function processUserInfo(response) {
 
                 //userPos.x[i] = userLat;
                 //userPos.y[i] = userLng;
-                
+                //passagem++;
                 initialize();
             },
             error: function () {
@@ -841,7 +839,7 @@ function initialize() {
     }
 
     vezesinitialize++;
-    //passagem++;
+    passagem++;
 }
 
 
