@@ -57,6 +57,15 @@ var limiteSudoesteLng = [];
 
 
 
+var cityPosition = {
+    city: [],
+    lat: [],
+    lng: [],
+};
+
+
+
+
 //Campos de criação, respetiva cor, se é usado (existe nos resultados da pesquisa) e nº de users (dos resultados)
 var colors = {
     field: ['Advertising', 'Animation', 'Architecture', 'Art Direction', 'Branding', 'Calligraphy', 'Digital Art', 'Drawing', 'Editorial Design', 'Fashion', 'Film', 'Graphic Design', 'Illustration', 'Industrial Design', 'Interaction Design', 'Interior Design', 'Journalism', 'Motion Graphics', 'Packaging', 'Photography', 'Programming', 'Typography', 'UI/UX', 'Web Design'],
@@ -239,6 +248,8 @@ function processUserInfo(response) {
 
 
     for (var i = 0; i < userName.length; i++) {
+        
+        passagem++;
 
         //console.log(city[i] + " ——  ——— — — — — — — cidade atual");
 
@@ -247,6 +258,8 @@ function processUserInfo(response) {
         /*—————— Geocoding ————————— */
 
         //https://developers.google.com/maps/documentation/javascript/geocoding
+
+        console.log(city[i] + " . . . ,, city III ");
 
 
         $.getJSON({
@@ -260,6 +273,26 @@ function processUserInfo(response) {
             success: function (data, textStatus) {
                 //console.log(textStatus, data);
                 //console.log(data.results[0].geometry.location);
+
+
+
+                console.log(city[i] + " . . . ,, city baababab ");
+
+
+                cityPosition.city[i] = data.results[0].address_components[0].long_name;
+                cityPosition.lat[i] = data.results[0].geometry.location.lat;
+                cityPosition.lng[i] = data.results[0].geometry.location.lng;
+
+
+                console.log(cityPosition.city[i]);
+                console.log(cityPosition.lat[i]);
+                console.log(cityPosition.lng[i]);
+
+
+
+
+
+
                 userLat = data.results[0].geometry.location.lat;
                 userLng = data.results[0].geometry.location.lng;
 
@@ -290,7 +323,7 @@ function processUserInfo(response) {
 
                 //userPos.x[i] = userLat;
                 //userPos.y[i] = userLng;
-
+                
                 initialize();
             },
             error: function () {
@@ -623,6 +656,21 @@ function initialize() {
 
 
 
+
+    console.log(passagem + " -- Passagem");
+    cityPosition.city[passagem] = cityPosition.city[userName.length];
+    cityPosition.lat[passagem] = cityPosition.lat[userName.length];
+    cityPosition.lng[passagem] = cityPosition.lng[userName.length];
+
+
+    /*
+        console.log(cityPosition.city[passagem] + " :: city em baixo");
+        console.log(cityPosition.lat[passagem] + " :: lat em baixo");
+        console.log(cityPosition.lng[passagem] + " :: lng em baixo");
+
+    */
+
+
     // — — — — — — — —  dados para desenhar 
 
     if ($("#city").val().length == 0) {
@@ -634,12 +682,16 @@ function initialize() {
         bom11[passagem] = userLat;
         bom22[passagem] = userLng;
 
-        console.log(bom22[passagem] + "BOM");
-        console.log(bom11[passagem] + "BOM");
+        //console.log(bom22[passagem] + "BOM");
+        //console.log(bom11[passagem] + "BOM");
     }
 
 
     console.log("TAMANHO É  em baixo_: " + userName.length);
+
+    for (var i = 0; i < 12; i++) {
+        console.log(userName[i] + " - - - -  nomes que chegam a baixo")
+    }
 
 
     //quando determinou a localização de todos os users desenha
@@ -663,10 +715,29 @@ function initialize() {
             //lngGold = Math.random() * (posLimNLng[i] - posLimSLng[i]) + posLimSLng[i];
 
 
+
+            for (var k = 0; k < userName.length; k++) {
+                if (city[i] == cityPosition.city[k]) {
+                    var latz = cityPosition.lat[k];
+                    var lngz = cityPosition.lng[k];
+                    break;
+                }
+            }
+
+
+            console.log(city[i] + " - - cidade");
+            console.log(latz + " - - latz");
+            console.log(lngz + " - - lngz");
+
+
+
+
+
+
             //posições dos users = posições da cidade + valores aleatórios, para ficarem distribuídos
             userposit = {
-                lat: bom11[i] + randomize,
-                lng: bom22[i] + randomize2
+                lat: latz + randomize,
+                lng: lngz + randomize2
             };
 
             /*userposit = {
@@ -770,7 +841,7 @@ function initialize() {
     }
 
     vezesinitialize++;
-    passagem++;
+    //passagem++;
 }
 
 
