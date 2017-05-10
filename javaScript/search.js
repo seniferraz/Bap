@@ -648,10 +648,7 @@ function initialize() {
 
 
 
-
-
     // — — — — — — — —  dados para desenhar 
-
 
     if ($("#city").val().length == 0) {
         bom11[passagem] = userLatTeste[userName.length];
@@ -668,7 +665,6 @@ function initialize() {
 
 
     console.log("TAMANHO É  em baixo_: " + userName.length);
-
 
 
     //quando determinou a localização de todos os users desenha
@@ -773,44 +769,6 @@ function initialize() {
             var htmlMarker = new HTMLMarker(userposit);
             htmlMarker.onAdd = overlay(userImageMarker[i], htmlMarker, i);
             htmlMarker.setMap(gmap);
-
-
-            /*        
-                    htmlMarker.info = new google.maps.InfoWindow({
-                        content: "algo"
-                    });
-
-                    google.maps.event.addListener(htmlMarker, 'click', function () {
-                        this.info.open(map, this);
-                    });
-
-                    htmlMarker.setMap(gmap);
-
-            */
-
-            /*
-            //infowindow
-            contentString = '<b>Name:</b> ' + userName[i] + '<br><a href="' + userURL[i] + '">Go to Behance</a>';
-
-            infowindow = new google.maps.InfoWindow({
-                content: contentString
-            });
-            */
-
-            /*
-            mark = new google.maps.Marker({
-                    position: userposit,
-                    map: gmap,
-                    icon: {
-                        url: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTDiu3Io_QQfJmb-jxmIsS-quJz81Xxf5oYbZUw6HMsYIh-YurN",
-                        scaledSize: new google.maps.Size(10, 10)
-                    }
-                });
-
-                mark.addListener('click', function () {
-                    infowindow.open(gmap, mark);
-                });*/
-
         }
 
     }
@@ -860,44 +818,3 @@ function overlay(img, marker, i) {
 
     }
 }
-
-/*
-setInterval(function () {
-    $(".userImage").mouseover(function () {
-        //$(".userImage").css("width", zoomLevel);
-        console.log("tá");
-    });
-}, 300);
-
-setInterval(function () {
-    $(".userImage").mouseout(function () {
-        //$(".userImage").css("border-color", "pink");
-        console.log("tá");
-    });
-}, 300);
-
-*/
-
-
-
-
-
-
-/*
-
-——————————————————————————————————————————————————————————————————————
-——————————————————————————————————————————————————————————————————————
-——————————————————————————————————————————————————————————————————————
-——————————————————————————————————————————————————————————————————————
-——————————————————————————————————————————————————————————————————————
-——————————————————————————————————————————————————————————————————————
-——————————————————————————————————————————————————————————————————————
-——————————————————————————————————————————————————————————————————————
-
-
-*/
-
-
-// Autocomplete search — ainda não dá
-
-//https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete
