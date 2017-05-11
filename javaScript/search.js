@@ -249,12 +249,6 @@ function processUserInfo(response) {
 
     for (var i = 0; i < userName.length; i++) {
 
-        //console.log(city[i] + " ——  ——— — — — — — — cidade atual");
-
-        //console.log("TAMANHO É _: " + userName.length);
-
-        /*—————— Geocoding ————————— */
-
         //https://developers.google.com/maps/documentation/javascript/geocoding
 
         console.log(city[i] + " . . . ,, city III ");
@@ -754,90 +748,84 @@ function initialize() {
 
                 //console.dir(this);
 
-                for (var p = 0; p < userName.length; p++) {
-                    //console.log("p " + p);
+                //////for (var p = 0; p < userName.length; p++) {
 
-                    // O ouro está aqui
-                    // console.log(userposit.lat + " . . " + userposit.lng + "  POS DE");
-
-                    //console.log("userName[" + p + "]" + " " + userName[p]);
-
-
-
-                    //infowindow.addClass = "WindowClass";
-
-                    var infowindow = new google.maps.InfoWindow({
-                        content: "oi",
-                        position: {
-                            lat: 0,
-                            lng: 0
-                        }
-                    });;
-
-                    this.div.addEventListener("click", function () {
-                        //para fechar a aberta
-                        infowindow.close(gmap, this.div);
-                        console.log("hover");
-
-                        var divNum = this.id;
-                        console.log(divNum + " id é este .... .. . . . . . ");
-
-                        //infowindow
-                        contentString =
-                            '<div id="contentInfo">' +
-                            '<p id="firstHeading"> <b>' + userName[divNum] + "  -  " + divNum + '</b></p>' +
-                            '<p><b>Fields:</b>  ' + fields[divNum] + '</p>' +
-                            '<p><b>City:</b>  ' + city[divNum] + '</p>' +
-                            '<p><a href="' + userURL[divNum] + '">Go to Behance</a></p>' +
-                            '</div>';
-
-                        console.log("divNum " + divNum);
-
-                        //temos de mudar a posição de acordo com zoom
-                        userposit1 = {
-                            lat: bom11[divNum] + randomize + 0.004,
-                            lng: bom22[divNum] + randomize2 + 0.002
-                        };
+                var infowindow = new google.maps.InfoWindow({
+                    /*  content: "oi",
+                      position: {
+                          lat: 0,
+                          lng: 0
+                      }*/
+                });
 
 
-                        infowindow = new google.maps.InfoWindow({
-                            content: contentString,
-                            position: userposit1
-                        });
+                this.div.addEventListener("click", function (evt) {
+                    evt.stopImmediatePropagation();
+                    //para fechar a aberta
+                    infowindow.close(gmap, this.div);
+                    console.log("hover");
+
+                    var divNum = this.id;
+                    console.log(divNum + " id é este .... .. . . . . . ");
+
+                    //infowindow
+                    contentString =
+                        '<div id="contentInfo">' +
+                        '<p id="firstHeading"> <b>' + userName[divNum] + "  -  " + divNum + '</b></p>' +
+                        '<p><b>Fields:</b>  ' + fields[divNum] + '</p>' +
+                        '<p><b>City:</b>  ' + city[divNum] + '</p>' +
+                        '<p><a href="' + userURL[divNum] + '">Go to Behance</a></p>' +
+                        '</div>';
+
+                    console.log("divNum " + divNum);
+
+                    //temos de mudar a posição de acordo com zoom
+                    userposit1 = {
+                        lat: cityPosition.lat[divNum] + randomize,
+                        lng: cityPosition.lng[divNum] + randomize2
+
+                    };
 
 
-                        //passar posição no open ou no this.div
-
-                        infowindow.open(gmap, this.div);
-
+                    infowindow = new google.maps.InfoWindow({
+                        content: contentString,
+                        position: userposit1,
+                        anchor: new google.maps.Point(0, 0)
                     });
 
 
-                    //fecha windowinfo quando se faz zoom
-                    google.maps.event.addListener(gmap, 'zoom_changed', function () {
-                        infowindow.close(gmap, this.div);
-                    });
+                    //passar posição no open ou no this.div
 
-                    /*this.div.addEventListener("mouseout", function () {
-                        console.log("out");
-                        infowindow.close(gmap, this.div);
-                    });*/
+                    infowindow.open(gmap, this.div);
 
-                }
+                    //dar cor a infowindow de acordo com a cor do user
+                    $(".gm-style>div:first-child>div+div>div:last-child>div>div:first-child>div").css("background", userColor[divNum], 'important');
+                    $("#map>div>div>div:nth-child(1)>div:nth-child(4)>div:nth-child(4)>div>div:nth-child(1)>div:nth-child(3)>div:nth-child(1)>div").css("background", userColor[divNum], 'important');
+                    $("#map>div>div>div:nth-child(1)>div:nth-child(4)>div:nth-child(4)>div>div:nth-child(1)>div:nth-child(3)>div:nth-child(2)>div").css("background", userColor[divNum], 'important');
+                });
+
+
+                //fecha windowinfo quando se faz zoom
+                google.maps.event.addListener(gmap, 'zoom_changed', function () {
+                    // infowindow.close(gmap, this.div);
+                });
+
+                /*this.div.addEventListener("mouseout", function () {
+                    console.log("out");
+                    infowindow.close(gmap, this.div);
+                });*/
+
+                ////// }
             }
-
-
-            //console.log(userLat + "    ———  userLAT");
-
 
             //faz HTMLMarker na posição do user
             var htmlMarker = new HTMLMarker(userposit);
             htmlMarker.onAdd = overlay(userImageMarker[i], htmlMarker, i);
             htmlMarker.setMap(gmap);
+
         }
 
     }
-
     vezesinitialize++;
     passagem++;
 }
@@ -880,8 +868,6 @@ function overlay(img, marker, i) {
         var panes = marker.getPanes();
         panes.overlayImage.appendChild(div);
         marker.div = div;
-
-
 
     }
 }
