@@ -17,7 +17,7 @@ body {
 }
 
 #title {
-    padding: 0.2vh 1.5vw;
+    padding: 1vh 1.5vw;
     font-size: 5vw;
     color: black;
     width: 95vw;
@@ -60,27 +60,35 @@ a {
     font-size: large;
 }
 
-.option {
-    margin-left: 3.3vw;
-    width: 30vw;
-    float: left;
-}
-
-@media only screen and (max-width: 500px) {
-    .option {
-        width: 80vw;
-        margin-bottom: 3vh;
-        margin-left: 10vw;
-        font-size: 5vw;
-    }
-}
-
 #descriptions {
-    font-size: 2.5vw;
     z-index: 1;
     margin-top: 25vh;
 }
 
+.option {
+    margin-left: 3.3vw;
+    width: 30vw;
+    float: left;
+    font-size: 2.5vw;
+}
+
+@media only screen and (max-width: 1024px) {
+    .option {
+        width: 43vw;
+        margin-bottom: 3vh;
+        margin-left: 3.3vw;
+        font-size: 2.5vw;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .option {
+        width: 85vw;
+        margin-bottom: 3vh;
+        margin-left: 5vw;
+        font-size: 4vw;
+    }
+}
 
 /* círculo de trás cinzento */
 
