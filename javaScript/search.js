@@ -201,7 +201,7 @@ function getUserInfo() {
             sort: 'followed',
             city: locationsInput,
             field: fieldsInput,
-            page: 1     //———————————————————————————iterar para ver mais users (com for não deu)
+            page: 1 //———————————————————————————iterar para ver mais users (com for não deu)
         },
         timeout: 1500,
         success: processUserInfo,
@@ -272,7 +272,7 @@ function processUserInfo(response) {
                 cityPosition.lng[i] = data.results[0].geometry.location.lng;
 
                 geolocationGet++;
-                
+
                 console.log(cityPosition.city[i]);
                 console.log(cityPosition.lat[i]);
                 console.log(cityPosition.lng[i]);
@@ -283,7 +283,7 @@ function processUserInfo(response) {
                 userLng = data.results[0].geometry.location.lng;
 
 
-              
+
 
 
                 //ver os limites da cidade de cada user, para não desenhar fora do mapa
@@ -376,7 +376,7 @@ function processUserInfo(response) {
     //só corre o drawChart depois dos resultados da pesquisa serem processados, para estes poderem ser usados no gráfico
     drawChart();
 
-    
+
 }
 
 
@@ -786,7 +786,9 @@ function initialize() {
                     $("#map>div>div>div:nth-child(1)>div:nth-child(4)>div:nth-child(4)>div>div:nth-child(1)>div:nth-child(3)>div:nth-child(1)>div").css("background", userColor[divNum], 'important');
                     $("#map>div>div>div:nth-child(1)>div:nth-child(4)>div:nth-child(4)>div>div:nth-child(1)>div:nth-child(3)>div:nth-child(2)>div").css("background", userColor[divNum], 'important');
 
+                    $("#map > div > div > div:nth-child(1) > div:nth-child(4) > div:nth-child(4) > div > div:nth-child(3)").css("font-size", "14px", 'important').css("color", "white");
 
+                    $("#map > div > div > div:nth-child(1) > div:nth-child(4) > div:nth-child(4) > div > div:nth-child(3)").html("<b>&#x2715;<b>");
                     anterior = infowindow;
                 });
 
