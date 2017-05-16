@@ -55,7 +55,7 @@ var limiteNordesteLng = [];
 var limiteSudoesteLat = [];
 var limiteSudoesteLng = [];
 
-
+var first = true;
 
 var cityPosition = {
     city: [],
@@ -159,6 +159,7 @@ var usedFields = [
 
 $(function () { //quando a página carregou
     $(".spinner").hide();
+    $(".spinnermap").hide();
 
     $("#search").click(search); //pesquisa quando se carrega no botão
 
@@ -317,6 +318,7 @@ function processUserInfo(response) {
                 //userPos.y[i] = userLng;
                 //passagem++;
                 initialize();
+
             },
             error: function () {
                 alert("erro no geocoding");
@@ -689,6 +691,7 @@ function initialize() {
     //quando determinou a localização de todos os users desenha
     if (passagem == userName.length - 1) {
 
+
         /*posLimNLat[passagem] = limiteNordesteLat[12];
         posLimNLng[passagem] = limiteNordesteLng[12];
         posLimSLat[passagem] = limiteSudoesteLat[12];
@@ -762,7 +765,7 @@ function initialize() {
                 this.div.addEventListener("click", function (evt) {
                     evt.stopImmediatePropagation();
                     //para fechar a aberta
-                    infowindow.close(gmap, this.div);
+                    
                     console.log("hover");
 
                     var divNum = this.id;
@@ -795,7 +798,9 @@ function initialize() {
 
 
                     //passar posição no open ou no this.div
+                       // infowindow.close();
 
+                    
                     infowindow.open(gmap, this.div);
 
                     //dar cor a infowindow de acordo com a cor do user
@@ -825,9 +830,19 @@ function initialize() {
 
         }
 
+        $(".map").show();
+        $(".spinnermap").hide();
     }
     vezesinitialize++;
     passagem++;
+
+    console.log("passou");
+    /*if (first == true) {
+        $(".map").hide();
+        $(".spinnermap").show();
+        first = false;
+    }*/
+
 }
 
 
