@@ -700,10 +700,10 @@ function initialize() {
             }
 
 
-            console.log(city[i] + " - - cidade");
+            /*console.log(city[i] + " - - cidade");
             console.log(latz + " - - latz");
             console.log(lngz + " - - lngz");
-
+*/
 
 
 
@@ -747,7 +747,7 @@ function initialize() {
 
 
 
-                    console.log(anterior + " ANT");
+                    //console.log(anterior + " ANT");
 
 
                     console.dir(this);
@@ -834,6 +834,12 @@ function overlay(img, marker, i) {
             $(".userImage").css("width", (zoomLevel - 8) * 10).css("height", (zoomLevel - 8) * 10).css("margin-top", "-100px");
         }
 
+        if (zoomLevel > 9 && zoomLevel < 12) {
+            $(".userImage").css("width", (zoomLevel - 8) * 10).css("height", (zoomLevel - 8) * 10).css("margin-top", "-100px");
+        }
+
+        
+        
         if (zoomLevel >= 12) {
             $(".userImage").css("width", "50").css("height", "50");
         }
