@@ -94,6 +94,7 @@ input {
     cursor: all-scroll;
 }
 
+
 /*—————— FOTOS ————————— */
 
 .userImage {
@@ -114,46 +115,52 @@ input {
 /*—————— SPINNER MAP ————————— */
 
 .spinnermap {
-  width: 40px;
-  height: 40px;
-  position: relative;
-  margin: 100px auto;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    margin: 100px auto;
 }
 
-.double-bounce1, .double-bounce2 {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background-color: #333;
-  opacity: 0.6;
-  position: absolute;
-  top: 0;
-  left: 0;
-  
-  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
-  animation: sk-bounce 2.0s infinite ease-in-out;
+.double-bounce1,
+.double-bounce2 {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #333;
+    opacity: 0.6;
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+    animation: sk-bounce 2.0s infinite ease-in-out;
 }
 
 .double-bounce2 {
-  -webkit-animation-delay: -1.0s;
-  animation-delay: -1.0s;
+    -webkit-animation-delay: -1.0s;
+    animation-delay: -1.0s;
 }
 
 @-webkit-keyframes sk-bounce {
-  0%, 100% { -webkit-transform: scale(0.0) }
-  50% { -webkit-transform: scale(1.0) }
+    0%,
+    100% {
+        -webkit-transform: scale(0.0)
+    }
+    50% {
+        -webkit-transform: scale(1.0)
+    }
 }
 
 @keyframes sk-bounce {
-  0%, 100% { 
-    transform: scale(0.0);
-    -webkit-transform: scale(0.0);
-  } 50% { 
-    transform: scale(1.0);
-    -webkit-transform: scale(1.0);
-  }
+    0%,
+    100% {
+        transform: scale(0.0);
+        -webkit-transform: scale(0.0);
+    }
+    50% {
+        transform: scale(1.0);
+        -webkit-transform: scale(1.0);
+    }
 }
-
 
 
 /*—————— LEGENDA ————————— */
@@ -162,14 +169,21 @@ input {
     height: 25px;
     width: 100vw;
     background: white;
-    border: 1px solid black;
     bottom: 0;
     position: absolute;
     z-index: 10;
+    overflow-y:scroll;
+    font-size: 12px;
 }
 
 #footer>div:hover {
     border-color: black;
+}
+
+@media only screen and (max-width: 700px) {
+    #footer {
+        /*font-size: 2vw;*/
+    }
 }
 
 .legend {
@@ -189,13 +203,9 @@ input {
     float: left;
     vertical-align: middle;
     margin-right: 10px;
+    margin-top: 4px;
 }
 
 .userImage {
     cursor: pointer;
 }
-
-
-
-
-

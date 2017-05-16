@@ -390,10 +390,10 @@ function ShowLegend() { //preenche o footer com a legenda das cores dos fields
 
     for (var k = 0; k < colors.field.length; k++) {
         if (colors.used[k] == 'true') {
-            /*$("#footer").append('<span class="shapes" id="shape' + k + '"></span>');*/
-            $("#footer").append('<div class="legend" id="shape' + k + '"></div>');
-            $("#footer").append('<div class="fieldsLegend">' + colors.field[k] + '</div>');
-            // $("#footer").append("<p>" + colors.field[k] + "</p>");
+            $("#footer").append('<div id="footerlegend' + k + '"></div>');
+            $("#footerlegend" + k + "").append('<div class="legend" id="shape' + k + '"></div>');
+            $("#footerlegend" + k + "").append('<div class="fieldsLegend">' + colors.field[k] + '</div>');
+            $("#footerlegend" + k + "").css("display", "inline-block");
             $("#shape" + k + "").css("border-color", colors.color[k]);
         }
     }
