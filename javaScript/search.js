@@ -21,11 +21,6 @@ var tamanho;
 var gmap;
 
 
-// Geocoding
-var userLat;
-var userLng;
-
-
 //dados dos users (resultados)
 var userName = [];
 var fields = []; //top 3
@@ -46,6 +41,17 @@ var posLimSLat = [];
 var posLimSLng = [];
 
 
+// Geocoding
+var cityPosit = {};
+
+
+var cityPosition = {
+    city: [],
+    lat: [],
+    lng: [],
+};
+
+
 //desenhar users
 
 var limiteNordesteLat = [];
@@ -55,11 +61,6 @@ var limiteSudoesteLng = [];
 
 
 
-var cityPosition = {
-    city: [],
-    lat: [],
-    lng: [],
-};
 
 
 //usado para fechar infowindow
@@ -71,7 +72,7 @@ var geolocationGet = 0;
 
 //Campos de criação, respetiva cor, se é usado (existe nos resultados da pesquisa) e nº de users (dos resultados)
 var colors = {
-    field: ['Advertising', 'Animation', 'Architecture', 'Art Direction', 'Branding', 'Calligraphy', 'Digital Art', 'Drawing', 'Editorial Design', 'Fashion', 'Film', 'Graphic Design', 'Illustration', 'Industrial Design', 'Interaction Design', 'Interior Design', 'Journalism', 'Motion Graphics', 'Packaging', 'Photography', 'Programming', 'Typography', 'UI/UX', 'Web Design'],
+    field: ['Advertising', 'Animation', 'Architecture',  'UI/UX', 'Web Design', 'Art Direction', 'Branding', 'Calligraphy', 'Digital Art', 'Drawing', 'Editorial Design', 'Fashion', 'Film', 'Graphic Design', 'Illustration', 'Industrial Design', 'Interaction Design', 'Interior Design', 'Journalism', 'Motion Graphics', 'Packaging', 'Photography', 'Programming', 'Typography'],
     color: ['#F44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722', '#795548', '#9E9E9E', '#607D8B', '#f500FF', '#880E4F', '#4DB6AC', '#B388FF', '#FF8A80'],
     used: ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'],
     users: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -150,10 +151,6 @@ var usedFields = [
 ];
 
 
-//check
-//console.log(usersData.name[1] + " — —  rrrr");
-
-
 // — — —— —— —   novos arrays fim   — — — ——— — —
 
 
@@ -168,12 +165,6 @@ $(function () { //quando a página carregou
             search(); //ou quando se faz enter num input
         }
     });
-
-
-    $(".userImage").mouseover(function () {
-        console.log("ANDAAAAA");
-    });
-
 });
 
 
@@ -191,22 +182,29 @@ function search() { //quando se carrega em Search ou se faz enter num dos inputs
 
 //  —— BEHANCE API   —————————————————————————————
 
-
 function getUserInfo() {
-    $.ajax({
-        url: URL + "?q=" + query,
-        dataType: "jsonp",
-        data: {
-            api_key: api_key,
-            sort: 'followed',
-            city: locationsInput,
-            field: fieldsInput,
-            page: 1 //———————————————————————————iterar para ver mais users (com for não deu)
-        },
-        timeout: 1500,
-        success: processUserInfo,
-        error: logError("a procurar utilizador")
-    });
+
+    function userRequest(pagenumber) {
+        $.ajax({
+            url: URL + "?q=" + query,
+            dataType: "jsonp",
+            data: {
+                api_key: api_key,
+                sort: 'followed',
+                city: locationsInput,
+                field: fieldsInput,
+                page: pagenumber //———————————————————————————iterar para ver mais users (com for não deu)
+            },
+            timeout: 1500,
+            success: processUserInfo,
+            error: logError("a procurar utilizador")
+        });
+    }
+    
+    //for (var i = 1; i<3;i++){
+    userRequest(1);    
+    //}
+    
 }
 
 
@@ -222,8 +220,8 @@ function processUserInfo(response) {
 
 
     //reposição dos valores "used" e "users" de cada field — para mostragem na legenda e no gráfico
-    colors.used = ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'];
-    colors.users = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    colors.used = ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'];
+    colors.users = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 
     //processa dados do utilizador (response) e guarda-os em arrays
@@ -279,8 +277,16 @@ function processUserInfo(response) {
 
 
 
-                userLat = data.results[0].geometry.location.lat;
-                userLng = data.results[0].geometry.location.lng;
+
+
+                /*if(city[i] in cityPosition)*/
+                var cidadeAtual = data.results[0].address_components[0].long_name;
+
+                cityPosit[cidadeAtual] = {};
+                cityPosit[cidadeAtual].lat = data.results[0].geometry.location.lat;
+                cityPosit[cidadeAtual].lng = data.results[0].geometry.location.lng;
+
+                console.dir(cityPosit[cidadeAtual]);
 
 
 
@@ -300,13 +306,9 @@ function processUserInfo(response) {
                 //console.log(limiteSudoesteLat + " ———— limiteSudoesteLat");
                 //console.log(limiteSudoesteLng + " ———— limiteSudoesteLng");
 
-
-                tipodeterra = data.results[0].address_components[0].types;
-
                 //console.log(data.results[0] + " ———— TIPO DE TERRA");
 
-                //userPos.x[i] = userLat;
-                //userPos.y[i] = userLng;
+
                 //passagem++;
                 initialize();
             },
@@ -436,13 +438,14 @@ function initialize() {
 
     //console.log(vezesinitialize + " vezes initialize");
 
-    //antes de ser feita uma pesquisa (quando se entra no site), o centro é Coimbra, depois é a cidade procura
+    //antes de ser feita uma pesquisa (quando se entra no site), o centro é Coimbra
     if (vezesinitialize <= 1) { // corre sempre 2 vezes no início (0 e 1)
         latCenter = coimbralat;
         lngCenter = coimbralng;
     } else {
-        latCenter = userLat;
-        lngCenter = userLng;
+        //centra no primeiro user (mais seguido)
+        latCenter = cityPosit[city[0]].lat;
+        lngCenter = cityPosit[city[0]].lng;
     }
 
 
