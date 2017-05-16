@@ -72,7 +72,7 @@ var geolocationGet = 0;
 
 //Campos de criação, respetiva cor, se é usado (existe nos resultados da pesquisa) e nº de users (dos resultados)
 var colors = {
-    field: ['Advertising', 'Animation', 'Architecture',  'UI/UX', 'Web Design', 'Art Direction', 'Branding', 'Calligraphy', 'Digital Art', 'Drawing', 'Editorial Design', 'Fashion', 'Film', 'Graphic Design', 'Illustration', 'Industrial Design', 'Interaction Design', 'Interior Design', 'Journalism', 'Motion Graphics', 'Packaging', 'Photography', 'Programming', 'Typography'],
+    field: ['Advertising', 'Animation', 'Architecture', 'UI/UX', 'Web Design', 'Art Direction', 'Branding', 'Calligraphy', 'Digital Art', 'Drawing', 'Editorial Design', 'Fashion', 'Film', 'Graphic Design', 'Illustration', 'Industrial Design', 'Interaction Design', 'Interior Design', 'Journalism', 'Motion Graphics', 'Packaging', 'Photography', 'Programming', 'Typography'],
     color: ['#F44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722', '#795548', '#9E9E9E', '#607D8B', '#f500FF', '#880E4F', '#4DB6AC', '#B388FF', '#FF8A80'],
     used: ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'],
     users: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -200,11 +200,11 @@ function getUserInfo() {
             error: logError("a procurar utilizador")
         });
     }
-    
+
     //for (var i = 1; i<3;i++){
-    userRequest(1);    
+    userRequest(1);
     //}
-    
+
 }
 
 
@@ -666,11 +666,7 @@ function initialize() {
 
     // — — — — — — — —  dados para desenhar 
 
-    console.log("TAMANHO É  em baixo_: " + userName.length);
-
-    for (var i = 0; i < 12; i++) {
-        console.log(userName[i] + " - - - -  nomes que chegam a baixo")
-    }
+    //console.log("TAMANHO É  em baixo_: " + userName.length);
 
 
     //quando determinou a localização de todos os users desenha
@@ -764,12 +760,12 @@ function initialize() {
                         '<p id="firstHeading"> <b>' + userName[divNum] + "  -  " + divNum + '</b></p>' +
                         '<p><b>Fields:</b>  ' + fields[divNum] + '</p>' +
                         '<p><b>City:</b>  ' + city[divNum] + '</p>' +
-                        '<p><a href="' + userURL[divNum] + '">Go to Behance</a></p>' +
+                        '<p><a target="_blank" href="' + userURL[divNum] + ' ">Go to Behance</a></p>' +
                         '</div>';
 
                     console.log("divNum " + divNum);
 
-                    console.log(userposit[i] + " userposit[i]");
+                    //console.log(userposit[i] + " userposit[i]");
                     infowindow = new google.maps.InfoWindow({
                         content: contentString,
                         //temos de mudar a posição de acordo com zoom
@@ -799,7 +795,7 @@ function initialize() {
 
                 //fecha windowinfo quando se faz zoom
                 google.maps.event.addListener(gmap, 'zoom_changed', function () {
-                    infowindow.close(gmap, this.div);
+                    //infowindow.close(gmap, this.div);
                 });
 
                 /*this.div.addEventListener("mouseout", function () {
@@ -828,14 +824,14 @@ function overlay(img, marker, i) {
     //alterar tamanho de imagem de acordo com zoom
     google.maps.event.addListener(gmap, 'zoom_changed', function () {
         zoomLevel = gmap.getZoom();
-        //console.log("ZOMMMM Level é de :   " + zoomLevel);
+        console.log("ZOMMMM Level é de :   " + zoomLevel);
 
         if (zoomLevel <= 9) {
-            $(".userImage").css("width", "10").css("height", "10");
+            $(".userImage").css("width", "10").css("height", "10").css("margin-top", "100px");
         }
 
         if (zoomLevel > 9 && zoomLevel < 12) {
-            $(".userImage").css("width", (zoomLevel - 8) * 10).css("height", (zoomLevel - 8) * 10);
+            $(".userImage").css("width", (zoomLevel - 8) * 10).css("height", (zoomLevel - 8) * 10).css("margin-top", "-100px");
         }
 
         if (zoomLevel >= 12) {
