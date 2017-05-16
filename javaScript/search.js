@@ -700,10 +700,10 @@ function initialize() {
             }
 
 
-            console.log(city[i] + " - - cidade");
+            /*console.log(city[i] + " - - cidade");
             console.log(latz + " - - latz");
             console.log(lngz + " - - lngz");
-
+*/
 
 
 
@@ -724,8 +724,8 @@ function initialize() {
                 var overlayProjection = this.getProjection();
                 var position = overlayProjection.fromLatLngToDivPixel(this.pos);
                 var panes = this.getPanes();
-                this.div.style.left = position.x + 'px';
-                this.div.style.top = position.y - 30 + 'px';
+                this.div.style.left = position.x - 12 + 'px';
+                this.div.style.top = position.y + 'px';
 
                 //console.dir(this);
 
@@ -747,7 +747,7 @@ function initialize() {
 
 
 
-                    console.log(anterior + " ANT");
+                    //console.log(anterior + " ANT");
 
 
                     console.dir(this);
@@ -826,12 +826,46 @@ function overlay(img, marker, i) {
         zoomLevel = gmap.getZoom();
         console.log("ZOMMMM Level é de :   " + zoomLevel);
 
+
+        //zoom é de 3 a 16
+
+        // muda tamanho posição do user de acordo com zoom
+        if (zoomLevel == 8) {
+            $(".userImage").css("margin-top", "-35px").css("margin-left", "5px");
+        }
+
+        if (zoomLevel == 9) {
+            $(".userImage").css("margin-top", "-35px").css("margin-left", "5px");
+        }
+
+        if (zoomLevel == 10) {
+            $(".userImage").css("margin-top", "-20px").css("margin-left", "0px").css("margin-top", "1px");
+        }
+
+        if (zoomLevel == 11) {
+            $(".userImage").css("margin-top", "-40px").css("margin-left", "-4px").css("margin-top", "1px");
+        }
+
+        if (zoomLevel == 12) {
+            $(".userImage").css("margin-top", "-40px").css("margin-left", "-15px").css("margin-top", "1px");
+        }
+
+        /* if (zoomLevel == 13) {
+            $(".userImage").css("margin-top", "-40px").css("margin-left", "-15px").css("margin-top", "1px");
+        }
+        
+        if (zoomLevel == 14) {
+            $(".userImage").css("margin-top", "-40px").css("margin-left", "-15px").css("margin-top", "1px");
+        }
+*/
+
+        // muda tamanho do user de acordo com zoom
         if (zoomLevel <= 9) {
-            $(".userImage").css("width", "10").css("height", "10").css("margin-top", "100px");
+            $(".userImage").css("width", "10").css("height", "10");
         }
 
         if (zoomLevel > 9 && zoomLevel < 12) {
-            $(".userImage").css("width", (zoomLevel - 8) * 10).css("height", (zoomLevel - 8) * 10).css("margin-top", "-100px");
+            $(".userImage").css("width", (zoomLevel - 8) * 10).css("height", (zoomLevel - 8) * 10);
         }
 
         if (zoomLevel >= 12) {
