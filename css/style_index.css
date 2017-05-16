@@ -52,6 +52,8 @@ body {
     border-radius: 3px;
     outline: none;
     vertical-align: middle;
+    cursor: pointer;
+    font-size: large;
 }
 
 a {
@@ -84,11 +86,16 @@ a {
 @media only screen and (max-width: 700px) {
     .option {
         width: 85vw;
-        margin-bottom: 3vh;
+        margin-bottom: 8vh;
         margin-left: 5vw;
-        font-size: 4vw;
+        font-size: 5vw;
+    }
+
+    #descriptions {
+        margin-top: 19vh;
     }
 }
+
 
 /* círculo de trás cinzento */
 
