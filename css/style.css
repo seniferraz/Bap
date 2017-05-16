@@ -90,15 +90,9 @@ input {
 /*—————— MAPA ————————— */
 
 #map {
-    height: 80vh;
+    height: 100vh;
     cursor: all-scroll;
 }
-
-#map:hover {
-    height: 80vh;
-    cursor: all-scroll;
-}
-
 
 /*—————— FOTOS ————————— */
 
