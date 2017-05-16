@@ -47,15 +47,13 @@ var posLimSLng = [];
 
 
 //desenhar users
-var userLatTeste = [];
-var userLngTeste = [];
 
 var limiteNordesteLat = [];
 var limiteNordesteLng = [];
 var limiteSudoesteLat = [];
 var limiteSudoesteLng = [];
 
-var first = true;
+
 
 var cityPosition = {
     city: [],
@@ -64,6 +62,11 @@ var cityPosition = {
 };
 
 
+//usado para fechar infowindow
+var anterior;
+
+
+var geolocationGet = 0;
 
 
 //Campos de criação, respetiva cor, se é usado (existe nos resultados da pesquisa) e nº de users (dos resultados)
@@ -113,7 +116,6 @@ var fieldColor = {
     "Web Design": "#FF8A80",
 };
 
-
 var numberOfUser = {
     "Advertising": "0",
     "Animation": "0",
@@ -141,7 +143,6 @@ var numberOfUser = {
     "Web Design": "0",
 };
 
-
 //Não sei se esta bem, o professor tinha objeto
 
 var usedFields = [
@@ -158,8 +159,7 @@ var usedFields = [
 
 
 $(function () { //quando a página carregou
-    $(".spinner").hide();
-    $(".spinnermap").hide();
+    $(".spinnerContainer").hide();
 
     $("#search").click(search); //pesquisa quando se carrega no botão
 
@@ -183,7 +183,7 @@ function search() { //quando se carrega em Search ou se faz enter num dos inputs
     query = $("#name").val();
     locationsInput = $("#city").val();
     fieldsInput = $("#fields").val();
-    $(".spinner").show();
+    $(".spinnerContainer").show();
 
     getUserInfo();
 }
@@ -193,7 +193,6 @@ function search() { //quando se carrega em Search ou se faz enter num dos inputs
 
 
 function getUserInfo() {
-
     $.ajax({
         url: URL + "?q=" + query,
         dataType: "jsonp",
@@ -202,7 +201,7 @@ function getUserInfo() {
             sort: 'followed',
             city: locationsInput,
             field: fieldsInput,
-            page: 1 //———————————————————————————iterar para ver mais users (com for não deu)
+            page: 1     //———————————————————————————iterar para ver mais users (com for não deu)
         },
         timeout: 1500,
         success: processUserInfo,
@@ -267,22 +266,16 @@ function processUserInfo(response) {
                 //console.log(textStatus, data);
                 //console.log(data.results[0].geometry.location);
 
-
-
-                console.log(city[i] + " . . . ,, city baababab ");
-
-
+                console.log(geolocationGet + " cenas");
                 cityPosition.city[i] = data.results[0].address_components[0].long_name;
                 cityPosition.lat[i] = data.results[0].geometry.location.lat;
                 cityPosition.lng[i] = data.results[0].geometry.location.lng;
 
-
+                geolocationGet++;
+                
                 console.log(cityPosition.city[i]);
                 console.log(cityPosition.lat[i]);
                 console.log(cityPosition.lng[i]);
-
-
-
 
 
 
@@ -290,9 +283,7 @@ function processUserInfo(response) {
                 userLng = data.results[0].geometry.location.lng;
 
 
-                userLatTeste[i] = data.results[0].geometry.location.lat;
-                userLngTeste[i] = data.results[0].geometry.location.lng;
-
+              
 
 
                 //ver os limites da cidade de cada user, para não desenhar fora do mapa
@@ -318,7 +309,6 @@ function processUserInfo(response) {
                 //userPos.y[i] = userLng;
                 //passagem++;
                 initialize();
-
             },
             error: function () {
                 alert("erro no geocoding");
@@ -376,7 +366,7 @@ function processUserInfo(response) {
 
         }
 
-        $(".spinner").hide();
+        $(".spinnerContainer").hide();
     }
 
 
@@ -386,7 +376,7 @@ function processUserInfo(response) {
     //só corre o drawChart depois dos resultados da pesquisa serem processados, para estes poderem ser usados no gráfico
     drawChart();
 
-    $("#moreinfo").show();
+    
 }
 
 
@@ -427,7 +417,13 @@ var gmap; //mapa tem que estar definido fora do initialize para o resize funcion
 var coimbralat = 40.2033145;
 var coimbralng = -8.4102573;
 
-var userposit;
+//var userposit;
+
+var userposit = {
+    lat: [],
+    lng: []
+};
+
 var contentString;
 var mark;
 
@@ -667,20 +663,6 @@ function initialize() {
 
     // — — — — — — — —  dados para desenhar 
 
-    if ($("#city").val().length == 0) {
-        bom11[passagem] = userLatTeste[userName.length];
-        bom22[passagem] = userLngTeste[userName.length];
-    }
-
-    if ($("#city").val().length > 0) {
-        bom11[passagem] = userLat;
-        bom22[passagem] = userLng;
-
-        //console.log(bom22[passagem] + "BOM");
-        //console.log(bom11[passagem] + "BOM");
-    }
-
-
     console.log("TAMANHO É  em baixo_: " + userName.length);
 
     for (var i = 0; i < 12; i++) {
@@ -690,7 +672,6 @@ function initialize() {
 
     //quando determinou a localização de todos os users desenha
     if (passagem == userName.length - 1) {
-
 
         /*posLimNLat[passagem] = limiteNordesteLat[12];
         posLimNLng[passagem] = limiteNordesteLng[12];
@@ -727,10 +708,8 @@ function initialize() {
 
 
 
-
-
             //posições dos users = posições da cidade + valores aleatórios, para ficarem distribuídos
-            userposit = {
+            userposit[i] = {
                 lat: latz + randomize,
                 lng: lngz + randomize2
             };
@@ -765,9 +744,14 @@ function initialize() {
                 this.div.addEventListener("click", function (evt) {
                     evt.stopImmediatePropagation();
                     //para fechar a aberta
-                    
-                    console.log("hover");
 
+
+
+
+                    console.log(anterior + " ANT");
+
+
+                    console.dir(this);
                     var divNum = this.id;
                     console.log(divNum + " id é este .... .. . . . . . ");
 
@@ -782,37 +766,35 @@ function initialize() {
 
                     console.log("divNum " + divNum);
 
-                    //temos de mudar a posição de acordo com zoom
-                    userposit1 = {
-                        lat: cityPosition.lat[divNum] + randomize,
-                        lng: cityPosition.lng[divNum] + randomize2
-
-                    };
-
-
+                    console.log(userposit[i] + " userposit[i]");
                     infowindow = new google.maps.InfoWindow({
                         content: contentString,
-                        position: userposit1,
+                        //temos de mudar a posição de acordo com zoom
+                        position: userposit[divNum],
                         anchor: new google.maps.Point(0, 0)
                     });
 
 
                     //passar posição no open ou no this.div
-                       // infowindow.close();
-
-                    
-                    infowindow.open(gmap, this.div);
+                    if (anterior)
+                        anterior.close(gmap);
+                    infowindow.open(gmap);
+                    console.log(this.div + " THIS ");
 
                     //dar cor a infowindow de acordo com a cor do user
                     $(".gm-style>div:first-child>div+div>div:last-child>div>div:first-child>div").css("background", userColor[divNum], 'important');
                     $("#map>div>div>div:nth-child(1)>div:nth-child(4)>div:nth-child(4)>div>div:nth-child(1)>div:nth-child(3)>div:nth-child(1)>div").css("background", userColor[divNum], 'important');
                     $("#map>div>div>div:nth-child(1)>div:nth-child(4)>div:nth-child(4)>div>div:nth-child(1)>div:nth-child(3)>div:nth-child(2)>div").css("background", userColor[divNum], 'important');
+
+
+                    anterior = infowindow;
                 });
+
 
 
                 //fecha windowinfo quando se faz zoom
                 google.maps.event.addListener(gmap, 'zoom_changed', function () {
-                    // infowindow.close(gmap, this.div);
+                    infowindow.close(gmap, this.div);
                 });
 
                 /*this.div.addEventListener("mouseout", function () {
@@ -824,25 +806,14 @@ function initialize() {
             }
 
             //faz HTMLMarker na posição do user
-            var htmlMarker = new HTMLMarker(userposit);
+            var htmlMarker = new HTMLMarker(userposit[i]);
             htmlMarker.onAdd = overlay(userImageMarker[i], htmlMarker, i);
             htmlMarker.setMap(gmap);
-
         }
-
-        $(".map").show();
-        $(".spinnermap").hide();
     }
+    $("#moreinfo").show();
     vezesinitialize++;
     passagem++;
-
-    console.log("passou");
-    /*if (first == true) {
-        $(".map").hide();
-        $(".spinnermap").show();
-        first = false;
-    }*/
-
 }
 
 

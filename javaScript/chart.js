@@ -48,23 +48,44 @@ function drawChart() {
         }
     }
 
-    // Set chart options
-    var options = {
-        legend: "none",
-        'title': 'Users by field of ' + locationsInput,
-        'width': '100%',
-        'height': '100%',
-        chartArea: {
-            left: "33%",
-            right: "20%",
-            top: "30%",
-            bottom: "20%",
-            height: "80%",
-            width: "100%"
-        }
-        // enableInteractivity: false          //desativar janela
-        //'chartArea': {left:0,'width': '50%', 'height': '60%'},
-    };
+
+    // quando não tem cidade
+    if (locationsInput != "") {
+        // Set chart options
+        var options = {
+            legend: "none",
+            'title': 'Users by field of ' + locationsInput,
+            'width': '100%',
+            'height': '100%',
+            chartArea: {
+                left: "33%",
+                right: "20%",
+                top: "30%",
+                bottom: "20%",
+                height: "80%",
+                width: "100%"
+            }
+            // enableInteractivity: false          //desativar janela
+            //'chartArea': {left:0,'width': '50%', 'height': '60%'},
+        };
+    } else { //quando tem cidade
+        var options = {
+            legend: "none",
+            'title': 'Users by field',
+            'width': '100%',
+            'height': '100%',
+            chartArea: {
+                left: "33%",
+                right: "20%",
+                top: "30%",
+                bottom: "20%",
+                height: "80%",
+                width: "100%"
+            }
+        };
+    }
+
+
     // Instantiate and draw our chart, passing in some options.
     var chart = new google.visualization.BarChart(document.getElementById('chart'));
     chart.draw(data, options);
