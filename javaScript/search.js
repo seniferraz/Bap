@@ -418,16 +418,14 @@ var lngCenter;
 
 function initialize() {
 
-
-
     //console.log(vezesinitialize + " vezes initialize");
 
     //antes de ser feita uma pesquisa (quando se entra no site), o centro é Coimbra
-    if (vezesinitialize <= 1) { // corre sempre 2 vezes no início (0 e 1)
+    if (vezesinitialize == 0) {
         latCenter = coimbralat;
         lngCenter = coimbralng;
     } else {
-        //centra no primeiro user (mais seguido)
+        //depois centra no primeiro resultado (user mais seguido)
         latCenter = cityPosit[city[0]].lat;
         lngCenter = cityPosit[city[0]].lng;
     }
