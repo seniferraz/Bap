@@ -217,10 +217,9 @@ function processUserInfo(response) {
             $("#dados").append("<p> COR DO FIELD: " + userColor[i] + "</p>");
 
         }
-
     }
+    
     $(".spinnerContainer").hide();
-    $("#footer").show();
 
 
     ShowLegend();
