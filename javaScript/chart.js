@@ -15,22 +15,15 @@ $(function () {
     });
 });
 
-
 /*—————— Adaptação do código base para gráficos fornecido pelo Google Developers em "https://developers.google.com/chart/"  ————— */
-
 
 // Load the Visualization API and the corechart package.
 google.charts.load('current', {
     'packages': ['corechart']
 });
 
-// Set a callback to run when the Google Visualization API is loaded.
-//google.charts.setOnLoadCallback(drawChart);   ———   neste caso feito no search.js para usar dados dos resultados da pesquisa
-
-
 // Callback that creates and populates a data table, instantiates the bar chart, passes in the data and draws it.
 function drawChart() {
-
 
     // Create the data table.
     var data = new google.visualization.DataTable();
@@ -48,8 +41,7 @@ function drawChart() {
         }
     }
 
-
-    // quando não tem cidade
+    // quando não tem cidade não mostra by …
     if (locationsInput != "") {
         // Set chart options
         var options = {
@@ -65,8 +57,6 @@ function drawChart() {
                 height: "80%",
                 width: "100%"
             }
-            // enableInteractivity: false          //desativar janela
-            //'chartArea': {left:0,'width': '50%', 'height': '60%'},
         };
     } else { //quando tem cidade
         var options = {
@@ -84,7 +74,6 @@ function drawChart() {
             }
         };
     }
-
 
     // Instantiate and draw our chart, passing in some options.
     var chart = new google.visualization.BarChart(document.getElementById('chart'));

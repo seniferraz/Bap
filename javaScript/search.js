@@ -69,6 +69,14 @@ function search() { //quando se carrega em Search ou se faz enter num dos inputs
     $(".spinnerContainer").show();
 
     getUserInfo();
+
+    //se pesquisa não der resultados passados 3 segundos, mostra alerta
+    setTimeout(function () {
+        if ($(".spinnerContainer").is(":visible")) {
+            alert("Erro, por favor tente outra pesquisa.");
+            $(".spinnerContainer").hide();
+        }
+    }, 3000);
 }
 
 
@@ -88,8 +96,7 @@ function getUserInfo() {
                 page: pagenumber //———————————————————————————iterar para ver mais users (com for não deu)
             },
             timeout: 1500,
-            success: processUserInfo,
-            error: logError("a procurar utilizador")
+            success: processUserInfo
         });
     }
 
@@ -166,9 +173,6 @@ function processUserInfo(response) {
                     cityPosit[cidadeAtual].sudoesteLimitlng = data.results[0].geometry.bounds.southwest.lng;
                 }
                 initialize();
-            },
-            error: function () {
-                alert("erro no geocoding");
             }
         });
 
@@ -196,7 +200,7 @@ function processUserInfo(response) {
 
 
         //detetar se o utilizador tem foto de perfil
-        /*var string = userImageMarker[i];
+        var string = userImageMarker[i];
 
         if ((userField[i] != "")) { //apenas mostra as pessoas com campos de criação definido
 
@@ -212,7 +216,7 @@ function processUserInfo(response) {
             $("#dados").append("<p> FIELD MAIS POPULAR: " + userField[i] + "</p>");
             $("#dados").append("<p> COR DO FIELD: " + userColor[i] + "</p>");
 
-        }*/
+        }
 
         $(".spinnerContainer").hide();
     }
@@ -241,17 +245,7 @@ function ShowLegend() { //preenche o footer com a legenda das cores dos fields
 }
 
 
-function logError(actividade) {
-    return function (data) {
-        $("#footer").append("Erro ao " + actividade + ": " + data.statusText + "<br/>");
-        $("#footer").append("Utilizador não existe <br/>");
-    }
-}
-
-
 //  —— GOOGLE MAPS API   ———————————————————
-
-
 
 
 var gmap; //mapa tem que estar definido fora do initialize para o resize funcionar
