@@ -10,7 +10,7 @@ $(function () {
             $("#moreinfo").css('background-color', "transparent").css("box-shadow", "none").css("padding", "0").css("right", "1vw").css("top", "1vh").css("font-size", "12pt");
         } else {
             $("#chart").hide();
-            $("#moreinfo").html("More informations").css('background-color', "#00bcd4").css("box-shadow", "1px 1px 2px 0px lightgrey").css("padding", "0.5vh 1vw").css("font-size", "9pt");
+            $("#moreinfo").html("More informations").css('background-color', "#ff9800").css("box-shadow", "1px 1px 2px 0px lightgrey").css("padding", "0.5vh 1vw").css("font-size", "9pt");
         }
     });
 });
