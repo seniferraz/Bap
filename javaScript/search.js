@@ -167,6 +167,9 @@ $(function () { //quando a página carregou
             search(); //ou quando se faz enter num input
         }
     });
+
+
+    console.log(latinize('ỆᶍǍᶆṔƚÉ áéíóúýčďěňřšťžů'));
 });
 
 
@@ -179,6 +182,8 @@ function search() { //quando se carrega em Search ou se faz enter num dos inputs
     $(".spinnerContainer").show();
 
     getUserInfo();
+
+
 }
 
 
@@ -239,7 +244,11 @@ function processUserInfo(response) {
 
         userName[i] = response.users[i].display_name;
         fields[i] = response.users[i].fields; //top 3
-        city[i] = response.users[i].city;
+        city[i] = latinize(response.users[i].city);
+      /*  if (city[i] == "Lisboa")
+            city[i] = "Lisbon";
+        if (city[i] == "WPT295")
+            city[i] = "Lisbon";*/
         userURL[i] = response.users[i].url;
 
         //campo de criação mais popular de cada user - 1º do top 3
@@ -278,6 +287,7 @@ function processUserInfo(response) {
 
 
 
+
                 /*console.log(cityPosition.city[i]);
                 console.log(cityPosition.lat[i]);
                 console.log(cityPosition.lng[i]);
@@ -285,7 +295,7 @@ function processUserInfo(response) {
 
 
                 if (!(city[i] in cityPosition)) {
-                    var cidadeAtual = data.results[0].address_components[0].long_name;
+                    var cidadeAtual = latinize(data.results[0].address_components[0].long_name);
 
                     cityPosit[cidadeAtual] = {};
                     cityPosit[cidadeAtual].lat = data.results[0].geometry.location.lat;
@@ -298,7 +308,7 @@ function processUserInfo(response) {
                     cityPosit[cidadeAtual].sudoesteLimitlat = data.results[0].geometry.bounds.southwest.lat;
                     cityPosit[cidadeAtual].sudoesteLimitlng = data.results[0].geometry.bounds.southwest.lng;
 
-                    console.dir(cityPosit[cidadeAtual]);
+                    //console.dir(cityPosit[cidadeAtual]);
                 }
                 //passagem++;
                 initialize();
@@ -652,6 +662,9 @@ function initialize() {
         for (var i = 0; i < userName.length; i++) {
             var randomize = ((Math.random() * 2) - 1) / 10;
             var randomize2 = ((Math.random() * 2) - 1) / 10;
+
+
+            console.log(city[i] + " . .  city[i]");
 
 
             latGold = Math.random() * (cityPosit[city[i]].nordesteLimitlat - cityPosit[city[i]].sudoesteLimitlat) + cityPosit[city[i]].sudoesteLimitlat;
