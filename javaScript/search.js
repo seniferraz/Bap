@@ -218,8 +218,9 @@ function processUserInfo(response) {
 
         }
 
-        $(".spinnerContainer").hide();
     }
+    $(".spinnerContainer").hide();
+    $("#footer").show();
 
 
     ShowLegend();
