@@ -9,20 +9,24 @@
     z-index: 1;
     
     padding-bottom: 35vh;
-    height: 0;
     overflow:hidden;
+    
+    border-radius: 10px;
 }
 
 #moreinfo {
     position: absolute;
     z-index: 2;
     border: none;
-    background-color: dodgerblue;
+    background-color: #ff9800;
     padding: 0.5vh 1vw;
     box-shadow: 1px 1px 2px 0px lightgrey;
     border-radius: 3px;
     outline: none;
     right: 0vw;
+    font-size: 9pt;
+    right: 1vw;
+    top: 1vh;
 }
 
 #moreinfo:hover {

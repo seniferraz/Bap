@@ -15,6 +15,18 @@ body {
     z-index: 1;
 }
 
+@media only screen and (max-width: 1024px) {
+    #procura {
+        width: 25vw;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    #procura {
+        width: 38vw;
+    }
+}
+
 #dados {
     margin: 2vw;
     z-index: 1;
@@ -66,7 +78,7 @@ input {
 .buttonLayout {
     font-family: 'Poppins', sans-serif;
     border: none;
-    background-color: dodgerblue;
+    background-color: #cddc39;
     padding: 4px 6px;
     box-shadow: 1px 1px 2px 0px lightgrey;
     border-radius: 3px;
@@ -190,5 +202,5 @@ input {
 }
 
 #changeLayout {
-    background-color: orange;
+    background-color: #00bcd4;
 }
