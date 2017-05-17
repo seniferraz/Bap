@@ -59,15 +59,17 @@ var limiteNordesteLng = [];
 var limiteSudoesteLat = [];
 var limiteSudoesteLng = [];
 
-
-
+//mudar layout
+var lineDown = 0;
+var lineLeft = 0;
+var newlayout = false;
 
 
 //usado para fechar infowindow
 var anterior;
 
 
-var geolocationGet = 0;
+
 
 
 //Campos de criação, respetiva cor, se é usado (existe nos resultados da pesquisa) e nº de users (dos resultados)
@@ -201,11 +203,19 @@ function getUserInfo() {
         });
     }
 
-    //for (var i = 1; i<3;i++){
+    // for (var i = 1; i<3;i++){
     userRequest(1);
-    //}
-
+    //    }
 }
+
+//deteta clique no botão de mudar layout
+$("#changeLayout").click(function () {
+    newlayout = !newlayout;
+    //console.log(".buttonLayout");
+    search();
+    lineDown = 0;
+    lineLeft = 0;
+});
 
 
 function processUserInfo(response) {
@@ -226,7 +236,6 @@ function processUserInfo(response) {
 
     //processa dados do utilizador (response) e guarda-os em arrays
     for (var i = 0; i < response.users.length; i++) {
-        // if (undefined != response.users[i].fields[0]) { //se user tiver fields (se não tiver fields/trabalhos não aparece)
 
         userName[i] = response.users[i].display_name;
         fields[i] = response.users[i].fields; //top 3
@@ -241,7 +250,6 @@ function processUserInfo(response) {
             userImageMarker[i] = response.users[i].images[s];
             break; //para guardar a 2ª imagem de cada user (tamanhos ≠s)
         }
-        //  }
     }
 
 
@@ -249,7 +257,7 @@ function processUserInfo(response) {
 
         //https://developers.google.com/maps/documentation/javascript/geocoding
 
-        console.log(city[i] + " . . . ,, city III ");
+        console.log(i + "  " + city[i] + " . . . ,, city III ");
 
 
         $.getJSON({
@@ -264,51 +272,34 @@ function processUserInfo(response) {
                 //console.log(textStatus, data);
                 //console.log(data.results[0].geometry.location);
 
-                console.log(geolocationGet + " cenas");
-                cityPosition.city[i] = data.results[0].address_components[0].long_name;
+                /*cityPosition.city[i] = data.results[0].address_components[0].long_name;
                 cityPosition.lat[i] = data.results[0].geometry.location.lat;
-                cityPosition.lng[i] = data.results[0].geometry.location.lng;
+                cityPosition.lng[i] = data.results[0].geometry.location.lng;*/
 
-                geolocationGet++;
 
-                console.log(cityPosition.city[i]);
+
+                /*console.log(cityPosition.city[i]);
                 console.log(cityPosition.lat[i]);
                 console.log(cityPosition.lng[i]);
+                */
 
 
+                if (!(city[i] in cityPosition)) {
+                    var cidadeAtual = data.results[0].address_components[0].long_name;
 
+                    cityPosit[cidadeAtual] = {};
+                    cityPosit[cidadeAtual].lat = data.results[0].geometry.location.lat;
+                    cityPosit[cidadeAtual].lng = data.results[0].geometry.location.lng;
 
+                    //ver os limites da cidade de cada user, para não desenhar fora do mapa
 
-                /*if(city[i] in cityPosition)*/
-                var cidadeAtual = data.results[0].address_components[0].long_name;
+                    cityPosit[cidadeAtual].nordesteLimitlat = data.results[0].geometry.bounds.northeast.lat;
+                    cityPosit[cidadeAtual].nordesteLimitlng = data.results[0].geometry.bounds.northeast.lng
+                    cityPosit[cidadeAtual].sudoesteLimitlat = data.results[0].geometry.bounds.southwest.lat;
+                    cityPosit[cidadeAtual].sudoesteLimitlng = data.results[0].geometry.bounds.southwest.lng;
 
-                cityPosit[cidadeAtual] = {};
-                cityPosit[cidadeAtual].lat = data.results[0].geometry.location.lat;
-                cityPosit[cidadeAtual].lng = data.results[0].geometry.location.lng;
-
-                console.dir(cityPosit[cidadeAtual]);
-
-
-
-
-
-                //ver os limites da cidade de cada user, para não desenhar fora do mapa
-
-                /* limiteNordesteLat[i] = data.results[0].geometry.bounds.northeast.lat;
-                 limiteNordesteLng[i] = data.results[0].geometry.bounds.northeast.lng;
-
-                 limiteSudoesteLat[i] = data.results[0].geometry.bounds.southwest.lat;
-                 limiteSudoesteLng[i] = data.results[0].geometry.bounds.southwest.lng;*/
-
-
-                //console.log(limiteNordesteLat + " ———— limiteNordesteLat");
-                //console.log(limiteNordesteLng + " ———— limiteNordesteLng");
-                //console.log(limiteSudoesteLat + " ———— limiteSudoesteLat");
-                //console.log(limiteSudoesteLng + " ———— limiteSudoesteLng");
-
-                //console.log(data.results[0] + " ———— TIPO DE TERRA");
-
-
+                    console.dir(cityPosit[cidadeAtual]);
+                }
                 //passagem++;
                 initialize();
             },
@@ -371,10 +362,7 @@ function processUserInfo(response) {
     /*—————— Chart ————————— */
     //só corre o drawChart depois dos resultados da pesquisa serem processados, para estes poderem ser usados no gráfico
     drawChart();
-
-
 }
-
 
 
 
@@ -429,6 +417,8 @@ var latCenter;
 var lngCenter;
 
 function initialize() {
+
+
 
     //console.log(vezesinitialize + " vezes initialize");
 
@@ -644,28 +634,12 @@ function initialize() {
 
 
 
-    console.log(passagem + " -- Passagem");
-    cityPosition.city[passagem] = cityPosition.city[userName.length];
-    cityPosition.lat[passagem] = cityPosition.lat[userName.length];
-    cityPosition.lng[passagem] = cityPosition.lng[userName.length];
-
-
-    /*
-        console.log(cityPosition.city[passagem] + " :: city em baixo");
-        console.log(cityPosition.lat[passagem] + " :: lat em baixo");
-        console.log(cityPosition.lng[passagem] + " :: lng em baixo");
-
-    */
-
-
     // — — — — — — — —  dados para desenhar 
 
-    //console.log("TAMANHO É  em baixo_: " + userName.length);
 
 
     //quando determinou a localização de todos os users desenha
     if (passagem == userName.length - 1) {
-
         /*posLimNLat[passagem] = limiteNordesteLat[12];
         posLimNLng[passagem] = limiteNordesteLng[12];
         posLimSLat[passagem] = limiteSudoesteLat[12];
@@ -675,14 +649,15 @@ function initialize() {
         console.log(passagem + " passagem");
         console.log("passagem");
 
+        lineDown = 0;
+
         for (var i = 0; i < userName.length; i++) {
             var randomize = ((Math.random() * 2) - 1) / 10;
             var randomize2 = ((Math.random() * 2) - 1) / 10;
 
-            //latGold = Math.floor(Math.random() * 6) + 1  
-            //latGold = Math.random() * (posLimNLat[i] - posLimSLat[i]) + posLimSLat[i];
-            //lngGold = Math.random() * (posLimNLng[i] - posLimSLng[i]) + posLimSLng[i];
 
+            latGold = Math.random() * (cityPosit[city[i]].nordesteLimitlat - cityPosit[city[i]].sudoesteLimitlat) + cityPosit[city[i]].sudoesteLimitlat;
+            lngGold = Math.random() * (cityPosit[city[i]].nordesteLimitlng - cityPosit[city[i]].sudoesteLimitlng) + cityPosit[city[i]].sudoesteLimitlng;
 
 
             for (var k = 0; k < userName.length; k++) {
@@ -694,6 +669,16 @@ function initialize() {
             }
 
 
+            //console.log(city[i] + "   " + i + " . .. . .. . . city");
+            var cemas = cityPosit[city[i]].lat;
+            var cemas1 = cityPosit[city[i]].lng;
+
+
+
+            console.log(cemas + " LAT " + i);
+
+
+
             /*console.log(city[i] + " - - cidade");
             console.log(latz + " - - latz");
             console.log(lngz + " - - lngz");
@@ -702,16 +687,30 @@ function initialize() {
 
 
             //posições dos users = posições da cidade + valores aleatórios, para ficarem distribuídos
-            userposit[i] = {
+            /*userposit[i] = {
                 lat: latz + randomize,
                 lng: lngz + randomize2
-            };
+            };*/
 
-            /*userposit = {
-                lat: latGold,
-                lng: lngGold
-            };
-            */
+            if (newlayout === true) {
+                if (i % 5 == 0) {
+                    lineDown++;
+                    lineLeft = 0;
+                }
+
+                userposit[i] = {
+                    lat: cityPosit[city[i]].sudoesteLimitlat - (cityPosit[city[i]].sudoesteLimitlat - cityPosit[city[i]].nordesteLimitlat) + (lineDown * -0.03),
+                    lng: cityPosit[city[i]].sudoesteLimitlng + (lineLeft * 0.04)
+                };
+                lineLeft++;
+            } else {
+                userposit[i] = {
+                    lat: latGold,
+                    lng: lngGold
+                };
+            }
+
+
 
 
             HTMLMarker.prototype.draw = function () {
