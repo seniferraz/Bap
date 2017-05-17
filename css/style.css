@@ -7,10 +7,6 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-body {
-    font-family: 'Poppins', sans-serif;
-}
-
 #procura {
     margin-left: 1vw;
     margin-top: 1vw;
@@ -42,9 +38,6 @@ body {
     box-sizing: content-box;
     -webkit-box-sizing: content-box;
 }
-
-
-/*eliminar borda azul*/
 
 input {
     outline: none;
@@ -90,12 +83,12 @@ input {
 /*—————— MAPA ————————— */
 
 #map {
-    height: 80vh;
+    height: 100vh;
     cursor: all-scroll;
 }
 
 
-/*—————— FOTOS ————————— */
+/*—————— FOTOS USERS ————————— */
 
 .userImage {
     width: 20px;
@@ -103,13 +96,6 @@ input {
     border-radius: 50%;
     border: 2px solid;
 }
-
-
-/*
-.userImage:hover {
-    border-color: blue !important;
-}
-*/
 
 
 /*—————— SPINNER MAP ————————— */
@@ -163,7 +149,7 @@ input {
 }
 
 
-/*—————— LEGENDA ————————— */
+/*—————— FOOTER - LEGENDA ————————— */
 
 #footer {
     height: 30px;
@@ -179,21 +165,11 @@ input {
     max-width: 100%;
 }
 
-/*#footer>div:first-child {
-    margin-left: 10px;
-}*/
-
-@media only screen and (max-width: 700px) {
-    #footer {
-        /*font-size: 2vw;*/
-    }
-}
-
 .legend {
     margin-top: 3px;
     margin-left: 2px;
     border-radius: 50%;
-    border: 2.8px solid;
+    border: 2px solid;
     width: 15px;
     height: 15px;
     float: left;
