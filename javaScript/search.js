@@ -73,7 +73,7 @@ function search() { //quando se carrega em Search ou se faz enter num dos inputs
     //se pesquisa não der resultados passados 3 segundos, mostra alerta
     setTimeout(function () {
         if ($(".spinnerContainer").is(":visible")) {
-            alert("Erro, por favor tente outra pesquisa.");
+            alert("Error, please try again.");
             $(".spinnerContainer").hide();
         }
     }, 3000);

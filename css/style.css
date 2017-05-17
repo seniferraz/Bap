@@ -14,18 +14,6 @@ body {
     z-index: 1;
 }
 
-@media only screen and (max-width: 1024px) {
-    #procura {
-        width: 25vw;
-    }
-}
-
-@media only screen and (max-width: 700px) {
-    #procura {
-        width: 38vw;
-    }
-}
-
 #dados {
     margin: 2vw;
     z-index: 1;
@@ -41,13 +29,33 @@ body {
     box-shadow: 1px 1px 2px 0px lightgrey;
     border-radius: 3px;
     padding: 0.6vh 1vw;
-    margin: 0.3vh;
-    width: 10vw;
-    min-width: 94px;
+    margin: 0.5vh;
+    width: 125px;
     -ms-box-sizing: content-box;
     -moz-box-sizing: content-box;
     box-sizing: content-box;
     -webkit-box-sizing: content-box;
+}
+
+@media only screen and (max-width: 1024px) {
+    #procura {
+        width: 25vw;
+    }
+}
+
+@media only screen and (max-width: 850px) {
+    .rightCol>input {
+        width: 133px;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    #procura {
+        width: 38vw;
+    }
+    .rightCol>input {
+        width: 142px;
+    }
 }
 
 input {
@@ -58,12 +66,9 @@ input {
     font-family: 'Poppins', sans-serif;
     cursor: pointer;
     border: none;
-    width: 12vw;
-    height: 3vh;
-    min-width: 100px;
+    width: 150px;
     box-shadow: 1px 1px 2px 0px lightgrey;
     border-radius: 3px;
-    padding: 1vh 1vw;
     margin: 0.5vh;
     outline: none;
     text-indent: 0.2vw;
