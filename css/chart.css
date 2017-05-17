@@ -3,13 +3,11 @@
     margin-top: 2vh;
     right: 1vw;
     width: 30vw;
-    height: 30vh;
     
     min-width: 300px;
     z-index: 1;
     
     padding-bottom: 35vh;
-    overflow:hidden;
     
     border-radius: 10px;
 }
